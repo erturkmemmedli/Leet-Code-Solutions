@@ -1,5 +1,4 @@
 class Codec:
-    
     dictionary = {}
 
     def encode(self, longUrl):

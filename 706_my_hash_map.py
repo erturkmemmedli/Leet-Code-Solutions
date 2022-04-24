@@ -1,5 +1,4 @@
 class MyHashMap(object):
-    
     size = 20000
     prime = 19997 
     max_load_factor = 0.70

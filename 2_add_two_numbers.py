@@ -4,7 +4,6 @@ class ListNode:
         self.next = next
 
 class Solution(object):
-
     def __init__(self):
         self.remainder = 0
 		

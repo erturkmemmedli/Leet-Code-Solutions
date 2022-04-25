@@ -18,3 +18,9 @@ class UndergroundSystem(object):
 
     def getAverageTime(self, startStation, endStation):
         return self.travel[(startStation, endStation)][0]
+    
+# Your UndergroundSystem object will be instantiated and called as such:
+# obj = UndergroundSystem()
+# obj.checkIn(id,stationName,t)
+# obj.checkOut(id,stationName,t)
+# param_3 = obj.getAverageTime(startStation,endStation)

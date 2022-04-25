@@ -1,4 +1,5 @@
 class Solution(object):
+    
     def twoSum(self, nums, target):
         dictionary = {} 
         for i in range(len(nums)):

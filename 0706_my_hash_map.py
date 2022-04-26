@@ -46,7 +46,7 @@ class MyHashMap(object):
     def remove(self, key):
         hash_val = self.hash_func(key)
         i = 1
-        while self.table[hash_val] is not None  and self.table[hash_val] != -1:
+        while self.table[hash_val] is not None and self.table[hash_val] != -1:
             if self.table[hash_val][0] == key:
                 self.table[hash_val] = -1
                 self.num_of_keys -= 1

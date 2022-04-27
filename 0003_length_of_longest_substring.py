@@ -21,7 +21,6 @@ class Solution1(object):
         maximum = 0
         string = ''
         for i in range(len(s)):
-            print(string)
             if s[i] not in string:
                 string += s[i]
                 maximum = max(maximum, len(string))

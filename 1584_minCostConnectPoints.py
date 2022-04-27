@@ -50,3 +50,22 @@ class Solution:
                 self.result += edge.cost
                 self.Union(edge.u, edge.v, self.nodes)
         return self.result
+    
+ 
+# Alternative solution
+
+class Solution1:
+    def minCostConnectPoints(self, points):
+        dictionary = {}
+        cost = 0
+        for i, (x, y) in enumerate(points):
+            if i == 0:
+                dictionary[(x,y)] = 0
+            else:
+                dictionary[(x,y)] = float('inf')
+        while len(dictionary) != 0:
+            x, y = min(dictionary, key = dictionary.get)
+            cost += dictionary.pop((x, y))
+            for xi, yi in dictionary:
+                dictionary[(xi, yi)] = min(dictionary[(xi, yi)], abs(x - xi) + abs(y - yi))
+        return cost

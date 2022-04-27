@@ -36,5 +36,27 @@ class Solution:
 		
 # Alternative solution
 
-class Solution:
-    def longestPalindrome(self, s):
+class Solution1:
+    def longestPalindrome(self, s: str) -> str:
+        result = s[0]
+        pointer = 0
+        for i in range(1, len(s)):
+            if s[i] == s[i - 1]:
+                result = max(result, s[pointer : i+1], key = len)
+            else:
+                pointer = i
+            j = 1
+            while i - j >= 0 and i + j < len(s):
+                if i == pointer:
+                    if s[i-j] == s[i+j]:
+                        result = max(result, s[i-j : i+j+1], key = len)
+                        j += 1
+                    else:
+                        break
+                else:
+                    if s[pointer-j] == s[i+j]:
+                        result = max(result, s[pointer-j : i+j+1], key = len)
+                        j += 1
+                    else:
+                        break
+        return result

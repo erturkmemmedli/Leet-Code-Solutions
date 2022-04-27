@@ -49,8 +49,7 @@ class Solution:
             if self.Find(edge.u, self.nodes) != self.Find(edge.v, self.nodes):
                 self.result += edge.cost
                 self.Union(edge.u, edge.v, self.nodes)
-        return self.result
-    
+        return self.result 
  
 # Alternative solution
 

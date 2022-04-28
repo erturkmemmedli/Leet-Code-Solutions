@@ -60,3 +60,23 @@ class Solution1:
                     else:
                         break
         return result
+
+# Alternative solution
+
+class Solution2:
+    def longestPalindrome(self, s: str) -> str:
+        string = '-'.join('@{}!'.format(s))
+        palindrom = [0] * len(string)
+        center = 0
+        right = 0
+        for i in range(1, len(string) - 1):
+            mirror = 2 * center - i
+            if i < right:
+                palindrom[i] = min(right - i, palindrom[mirror])
+            while string[i - palindrom[i] - 1] == string[i + palindrom[i] + 1]:
+                palindrom[i] += 1
+            if palindrom[i] + i > right:
+                center = i
+                right = palindrom[i] + i
+        length, index = max((p, i) for i, p in enumerate(palindrom))
+        return string[index - length + 1: index + length : 2]

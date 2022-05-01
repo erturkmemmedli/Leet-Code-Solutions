@@ -37,7 +37,6 @@ class Solution1:
     def DFS(self, adj, visited, start, end, mult):
         if start == end:
             return mult
-        
         visited.add(start)
         if start in adj:
             for neighbor, value in adj[start]:

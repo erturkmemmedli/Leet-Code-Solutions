@@ -7,9 +7,9 @@ class Solution:
             k = len(nums) - 1
             temp = nums[i] + nums[j] + nums[k]
             while j < k:
+                temp = nums[i] + nums[j] + nums[k]
                 if temp == target:
                     return temp
-                temp = nums[i] + nums[j] + nums[k]
                 if abs(temp - target) < abs(output - target):
                     output = temp
                 if temp < target:

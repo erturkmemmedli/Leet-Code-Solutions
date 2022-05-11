@@ -18,8 +18,8 @@ class Solution:
         for i, num in enumerate(nums):
             if i == ex4:
                 continue
-            if i not in hashset:
-                hashset.add(i)
+            if num not in hashset:
+                hashset.add(num)
                 ex3 = i
                 trgt = target - num
                 self.twoSum(nums, trgt, ex3, ex4, output)
@@ -28,8 +28,8 @@ class Solution:
         output = set()
         hashset = set()
         for i, num in enumerate(nums):
-            if i not in hashset:
-                hashset.add(i)
+            if num not in hashset:
+                hashset.add(num)
                 ex4 = i
                 trgt = target - num
                 self.threeSum(nums, trgt, ex4, output) 

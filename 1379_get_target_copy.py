@@ -22,3 +22,12 @@ class Solution:
             if pop1.right:
                 Q1.append(pop1.right)
                 Q2.append(pop2.right)
+
+# Alternative solution
+
+class Solution1:
+    def getTargetCopy(self, original: TreeNode, cloned: TreeNode, target: TreeNode) -> TreeNode:
+        if target == original:
+            return cloned
+        if original is not None:
+            return self.getTargetCopy(original.left, cloned.left, target) or self.getTargetCopy(original.right, cloned.right, target)

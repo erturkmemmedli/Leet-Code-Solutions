@@ -2,7 +2,6 @@ from collections import deque
 
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
-
         color = [None for _ in range(len(graph))]
         for i in range(len(graph)):
             if color[i] is None:

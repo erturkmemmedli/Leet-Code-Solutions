@@ -37,3 +37,16 @@ class Solution:
             temp = 0
             j -= 1
         return count
+
+# Alternative solution
+
+class Solution1:
+    def countSubstrings(self, s):
+        count = 0
+        for i in range(len(s)):
+            for (a, b) in (i, i), (i, i + 1):
+                while a >= 0 and b < len(s) and s[a] == s[b]:
+                    a -= 1
+                    b += 1
+                count += (b - a) // 2
+        return count

@@ -5,7 +5,11 @@ class Solution:
         count = 0
         i = 0
         while i < len(s):
-            count = self.count_palindrom(s[:i+1], i, count)
+            cut = s[:i+1]
+            if cut.count(s[0]) == len(cut):
+                count = len(cut) * (len(cut) + 1) // 2
+            else:
+                count = self.count_palindrom(cut, i, count)
             i += 1
         return count
             

@@ -7,7 +7,7 @@ class Solution:
         for i in range(m):
             for j in range(n):
                 dp[i][j] = self.dfs(matrix, m, n, dp, i, j)
-        return max(self.dfs(matrix, m, n, dp, i, j) for i in range(m) for j in range(n))
+        return max(dp[i][j] for i in range(m) for j in range(n))
         
     def dfs(self, matrix, m, n, dp, i, j):
         if not dp[i][j]:

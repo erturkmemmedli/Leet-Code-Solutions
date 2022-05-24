@@ -47,3 +47,18 @@ class Solution:
                 temp += 2
                 maximum = max(maximum, temp)
         return maximum
+
+# Alternative solution
+
+class Solution1:
+    def longestValidParentheses(self, s: str) -> int:
+        dp = [0] * (len(s) + 1)
+        stack = []
+        for i, parantheses in enumerate(s):
+            if parantheses == '(':
+                stack.append(i)
+            else:
+                if stack:
+                    pop = stack.pop()
+                    dp[i + 1] = dp[pop] + (i - pop) + 1
+        return max(dp)

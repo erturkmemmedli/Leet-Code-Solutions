@@ -15,3 +15,11 @@ class Solution:
             if v < 0:
                 return False
         return True
+      
+# Alternative solution
+ 
+from collections import Counter
+
+class Solution1:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        return not (Counter(ransomNote) - Counter(magazine))

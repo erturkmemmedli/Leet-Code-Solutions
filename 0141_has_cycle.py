@@ -6,7 +6,6 @@
 
 class Solution:
     def __init__(self):
-        self.count = 0
         self.hashmap = {}
         
     def hasCycle(self, head: Optional[ListNode]) -> bool:
@@ -14,7 +13,7 @@ class Solution:
             return False
         if head in self.hashmap:
             return True
-        self.hashmap[head] = self.count
+        self.hashmap[head] = True
         return self.hasCycle(head.next)
 
 # Alternative solution

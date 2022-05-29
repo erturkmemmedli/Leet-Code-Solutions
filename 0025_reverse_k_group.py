@@ -34,7 +34,7 @@ class Solution:
 
 # Alternative solution
 
-class Solution:
+class Solution1:
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         dummy = node = ListNode(-1)
         dummy.next = left = right = head
@@ -50,3 +50,51 @@ class Solution:
                 node.next, node, left = prev, left, right
             else:
                 return dummy.next
+
+# Alternative solution
+
+class Solution2:
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if not head or not head.next or k == 1:
+            return head
+        cur, count = head, 0
+        while cur:
+            cur = cur.next
+            count += 1
+        if count < k:
+            return head
+        dummy = pre = ListNode(-1)
+        dummy.next = head
+        for i in range(count // k):
+            prev = None
+            for j in range(k - 1):
+                nxt = head.next
+                head.next = prev
+                prev = head
+                head = nxt
+            temp = head.next
+            head.next = prev
+            pre.next.next = temp
+            node = pre.next
+            pre.next = head
+            head = temp
+            pre = node
+        return dummy.next
+
+# Alernative solution:
+
+class Solution3:
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        curr = head
+        for _ in range(k):
+            if not curr: return head
+            curr = curr.next
+        curr = head
+        prev = None
+        for _ in range(k):
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        head.next = self.reverseKGroup(curr, k)
+        return prev

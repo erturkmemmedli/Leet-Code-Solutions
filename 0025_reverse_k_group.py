@@ -31,3 +31,22 @@ class Solution:
         self.count += 1
         self.recursive(head.next, k)
         return
+
+# Alternative solution
+
+class Solution:
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        dummy = node = ListNode(-1)
+        dummy.next = left = right = head
+        while True:
+            count = 0
+            while right and count < k:
+                right = right.next
+                count += 1
+            if count == k:
+                prev, curr = right, left
+                for _ in range(k):
+                    curr.next, curr, prev = prev, curr.next, curr
+                node.next, node, left = prev, left, right
+            else:
+                return dummy.next

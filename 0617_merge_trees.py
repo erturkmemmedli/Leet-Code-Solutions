@@ -23,3 +23,18 @@ class Solution:
                 Q.append((node1.left, node2.left))
                 Q.append((node1.right, node2.right))
         return root1
+
+# Alternative solution
+
+class Solution1:
+    def mergeTrees(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root1 or not root2:
+            return root1 or root2
+        if not root1.left and root2.left:
+            root1.left = TreeNode(0)
+        if not root1.right and root2.right:
+            root1.right = TreeNode(0)
+        root1.val = root1.val + root2.val
+        self.mergeTrees(root1.left, root2.left)
+        self.mergeTrees(root1.right, root2.right)
+        return root1

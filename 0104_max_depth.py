@@ -25,3 +25,14 @@ class Solution:
             if Q[0]:
                 Q.append(deque())
         return height
+
+# Alternative solution
+
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root: return 0
+        return self.DFS(root)
+    
+    def DFS(self, root):
+        if root is None: return 0
+        return max(1 + self.DFS(root.left), 1 + self.DFS(root.right))

@@ -10,4 +10,4 @@ class Solution:
             result.append(temp)
             return
         for i in range(len(nums)):
-            self.DFS(nums[i+1:] + nums[:i], result, temp + [nums[i]])
+            self.DFS(nums[:i] + nums[i+1:], result, temp + [nums[i]])

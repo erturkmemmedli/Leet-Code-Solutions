@@ -13,3 +13,9 @@ class Solution1:
             for col in range(m):
                 transposed_matrix[row][col] = matrix[col][row]
         return transposed_matrix
+
+# Alternative solution
+   
+class Solution:
+    def transpose(self, matrix: List[List[int]]) -> List[List[int]]:
+        return zip(*matrix)

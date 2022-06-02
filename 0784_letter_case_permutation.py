@@ -15,3 +15,22 @@ class Solution:
             else:
                 self.dfs(s[i+1:], n, result, temp + s[i].upper())
                 self.dfs(s[i+1:], n, result, temp + s[i].lower())
+
+# Alternative solution
+
+class Solution1:
+    def letterCasePermutation(self, s: str) -> List[str]:
+        result = []
+        self.backtrack(s, len(s), result, '')
+        return result
+    
+    def backtrack(self, s, n, result, temp):
+        if s == '':
+            result.append(temp)
+            return
+        else:
+            if not s[0].isalpha():
+                self.backtrack(s[1:], n, result, temp + s[0])
+            else:
+                self.backtrack(s[1:], n, result, temp + s[0].lower())
+                self.backtrack(s[1:], n, result, temp + s[0].upper())

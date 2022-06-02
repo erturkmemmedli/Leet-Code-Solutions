@@ -16,6 +16,6 @@ class Solution1:
 
 # Alternative solution
    
-class Solution:
+class Solution2:
     def transpose(self, matrix: List[List[int]]) -> List[List[int]]:
         return zip(*matrix)

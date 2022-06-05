@@ -1,5 +1,6 @@
 class Codec:
-    dictionary = {}
+    def __init__(self):
+        self.dictionary = {}
 
     def encode(self, longUrl):
         hash_val = str(hash(longUrl))

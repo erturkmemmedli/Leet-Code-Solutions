@@ -13,3 +13,11 @@ class Solution1:
         for i in range(1, len(nums)):
             result.append(nums[i] + result[i-1])
         return result
+
+# Alternative solution
+
+class Solution2:
+    def runningSum(self, nums: List[int]) -> List[int]:
+        for i in range(1, len(nums)):
+            nums[i] += nums[i-1]
+        return nums

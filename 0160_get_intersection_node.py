@@ -17,3 +17,14 @@ class Solution:
                 return temp
             temp = temp.next
         return
+
+# Alternative solution
+
+class Solution1:
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        node1 = headA
+        node2 = headB
+        while node1 != node2:
+            node1 = node1.next if node1 else headB
+            node2 = node2.next if node2 else headA
+        return node1

@@ -16,3 +16,19 @@ class Solution:
         for child in root.children:
             self.preorder(child)
         return self.output
+
+# Alternative solution
+
+from collections import deque
+
+class Solution1:
+    def preorder(self, root: 'Node') -> List[int]:
+        if not root: return []
+        stack = [root]
+        output = []
+        while stack:
+            node = stack.pop()
+            output.append(node.val)
+            for child in node.children[::-1]:
+                stack.append(child)
+        return output

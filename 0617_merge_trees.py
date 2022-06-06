@@ -38,3 +38,27 @@ class Solution1:
         self.mergeTrees(root1.left, root2.left)
         self.mergeTrees(root1.right, root2.right)
         return root1
+
+# Alternative solution
+
+class Solution2:
+    def mergeTrees(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root1 and not root2:
+            return
+        if not :
+            return root2
+        if root1 and root2:
+            root1.val = root1.val + root2.val
+        if root2 and root2.left:
+            if root1.left:
+                self.mergeTrees(root1.left, root2.left)
+            else:
+                root1.left = TreeNode(0)
+                self.mergeTrees(root1.left, root2.left)
+        if root2 and root2.right:
+            if root1.right:
+                self.mergeTrees(root1.right, root2.right)
+            else:
+                root1.right = TreeNode(0)
+                self.mergeTrees(root1.right, root2.right)
+        return root1

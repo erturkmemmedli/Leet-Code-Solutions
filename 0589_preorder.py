@@ -19,8 +19,6 @@ class Solution:
 
 # Alternative solution
 
-from collections import deque
-
 class Solution1:
     def preorder(self, root: 'Node') -> List[int]:
         if not root: return []

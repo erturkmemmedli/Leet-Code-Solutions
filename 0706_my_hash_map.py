@@ -75,7 +75,6 @@ class MyHashMap(object):
 # Alternative solution
 
 class MyHashMap1(object):
-
     def __init__(self):
         self.map = [None] * (10 ** 6 + 1)
 

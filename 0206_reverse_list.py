@@ -18,3 +18,18 @@ class Solution:
         left.next = None
         curr.next = prev
         return curr
+
+# Alternative solution
+
+class Solution1:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head or not head.next: return head
+        prev = head
+        curr = head.next
+        prev.next = None
+        while curr and prev:
+            node = curr.next
+            curr.next = prev
+            prev = curr
+            curr = node 
+        return prev

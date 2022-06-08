@@ -37,3 +37,31 @@ class Solution1:
             for k in range(i, -1, -1):
                 result.append(nums[k] ** 2)
         return result
+
+# Alternative solution
+
+class Solution2:
+    def sortedSquares(self, nums: List[int]) -> List[int]:
+        if nums[0] >= 0:
+            return [num ** 2 for num in nums]
+        if nums[-1] < 0:
+            return [num ** 2 for num in nums[::-1]]
+        for i in range(len(nums)):
+            if nums[i] >= 0:
+                index = min(i, i-1, key = lambda x: abs(nums[x]))
+                break
+        squares = [nums[index] ** 2]
+        left = index - 1
+        right = index + 1
+        while left >= 0 and right < len(nums):
+            if abs(nums[left]) <= nums[right]:
+                squares.append(nums[left] ** 2)
+                left -= 1
+            else:
+                squares.append(nums[right] ** 2)
+                right += 1
+        if right >= len(nums):
+            squares += [nums[i] ** 2 for i in range(left, -1, -1)]
+        elif left < 0:
+            squares += [nums[i] ** 2 for i in range(right, len(nums))]
+        return squares

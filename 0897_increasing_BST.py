@@ -14,7 +14,7 @@ class Solution:
         for i in range(1, len(tree)):
             temp.left = None
             temp.right = tree[i]
-            temp = tree[i]
+            temp = temp.right
         temp.left = None
         temp.right = None
         return node

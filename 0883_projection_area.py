@@ -8,3 +8,12 @@ class Solution:
                 array[j] = max(array[j], grid[i][j])
         side = sum(array)
         return top + front + side
+
+# Alternative solution
+
+class Solution1:
+    def projectionArea(self, grid: List[List[int]]) -> int:
+        top = sum([cell > 0 for array in grid for cell in array])
+        front = sum([max(array) for array in grid])
+        side = sum([max(pair) for pair in zip(*grid)])
+        return top + front + side

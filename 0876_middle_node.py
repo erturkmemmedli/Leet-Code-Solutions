@@ -15,3 +15,17 @@ class Solution:
         if head is None:
             return 0
         return 1 + self.counter(head.next, count)
+
+# Alternative solution
+
+class Solution1:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        temp = head
+        count = 0
+        while temp:
+            temp = temp.next
+            count += 1
+        node = head
+        for i in range(count//2):
+            node = node.next
+        return node

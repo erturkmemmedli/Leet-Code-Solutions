@@ -5,7 +5,7 @@ class Solution:
         if target < 0: return -1
         if target == 0: return len(nums)
         result, left, right, temp = 0, 0, 0, 0
-        while right < len(nums):
+        while right < len(nums) or temp == target:
             if temp == target:
                 result = max(result, right - left)
                 temp -= nums[left]
@@ -19,6 +19,4 @@ class Solution:
                 left += 1
                 if temp <= target or left >= right:
                     right += 1
-        if temp == target:
-            result = max(result, right - left)
         return -1 if not result else len(nums) - result

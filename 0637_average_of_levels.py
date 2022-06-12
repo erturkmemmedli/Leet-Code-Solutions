@@ -43,3 +43,24 @@ class Solution1:
             storage[depth][1] += 1
             self.dfs(node.left, storage, depth + 1)
             self.dfs(node.right, storage, depth + 1)
+
+# Alternative solution
+
+from collections import deque
+
+class Solution2:
+    def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
+        Q = deque([root])
+        result = []
+        while Q:
+            n = len(Q)
+            summ = 0
+            for _ in range(n):
+                node = Q.popleft()
+                summ += node.val
+                if node.left:
+                    Q.append(node.left)
+                if node.right:
+                    Q.append(node.right)
+            result.append(summ/n)
+        return result

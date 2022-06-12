@@ -10,3 +10,15 @@ class Solution:
         for k, v in x.items():
             result += [k] * v
         return result 
+
+# Alternative solution
+
+from collections import Counter
+
+class Solution1:
+    def commonChars(self, words: List[str]) -> List[str]:
+        x = Counter(words[0])
+        for word in words:
+            x = x - (x - Counter(word))
+            if not x: return []
+        return list(x.elements())

@@ -25,3 +25,4 @@ class Solution1:
                 else:
                     nums[i], nums[zero] = nums[zero], nums[i]
                     zero += 1
+        return nums

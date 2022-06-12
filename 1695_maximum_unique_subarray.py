@@ -7,18 +7,13 @@ class Solution:
         temp = 0
         result = 0
         for num in nums:
-            if num not in myset:
-                myset.add(num)
-                queue.append(num)
-                temp += num
-                result = max(temp, result)
-            else:
+            if num in myset:
                 while num in myset:
                     pop = queue.popleft()
                     temp -= pop
                     myset.remove(pop)
-                myset.add(num)
-                queue.append(num)
-                temp += num
-                result = max(temp, result)
+            myset.add(num)
+            queue.append(num)
+            temp += num
+            result = max(temp, result)
         return result

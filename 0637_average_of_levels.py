@@ -25,3 +25,21 @@ class Solution:
                     Q[0].append(obj.right)
             result.append(sum(nums)/len(nums))
         return result
+
+# Alternative solution
+
+class Solution1:
+    def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
+        storage = []
+        depth = 0
+        self.dfs(root, storage, depth)
+        return [s/l for s, l in storage]
+        
+    def dfs(self, node, storage, depth):
+        if node:
+            if len(storage) <= depth:
+                storage.append([0, 0])
+            storage[depth][0] += node.val
+            storage[depth][1] += 1
+            self.dfs(node.left, storage, depth + 1)
+            self.dfs(node.right, storage, depth + 1)

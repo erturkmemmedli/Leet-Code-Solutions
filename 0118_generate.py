@@ -20,3 +20,14 @@ class Solution1:
             temp.append(1)
             dp.append(temp)
         return dp
+
+# Alternative solution
+
+class Solution2:
+    def generate(self, numRows: int) -> List[List[int]]:
+        triangle = [[1]]
+        temp = []
+        for i in range(1, numRows):
+            temp = [1] + [triangle[i-1][j] + triangle[i-1][j-1] for j in range(1,i)] + [1]
+            triangle.append(temp)
+        return triangle

@@ -76,16 +76,13 @@ class MyHashMap(object):
 
 class MyHashMap1(object):
     def __init__(self):
-        self.map = [None] * (10 ** 6 + 1)
+        self.hashmap = [None] * 10 ** 6
 
-    def put(self, key, value):
-        self.map[key] = value
+    def put(self, key: int, value: int) -> None:
+        self.hashmap[key-1] = value
 
-    def get(self, key):
-        if self.map[key] is None:
-            return -1
-        else:
-            return self.map[key]
+    def get(self, key: int) -> int:
+        return self.hashmap[key-1] if self.hashmap[key-1] != None else -1 
 
-    def remove(self, key):
-        self.map[key] = None
+    def remove(self, key: int) -> None:
+        self.hashmap[key-1] = None

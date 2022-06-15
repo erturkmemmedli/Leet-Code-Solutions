@@ -1,5 +1,54 @@
 class MyHashSet:
     def __init__(self):
+        self.size = 1024
+        self.max_load_factor = 0.75
+        self.num_of_keys = 0
+        self.hash_table = [[] for _ in range(self.size)]
+    
+    def hash_function(self, key):
+        return 31 * key % self.size
+
+    def add(self, key: int) -> None:
+        hash_value = self.hash_function(key)
+        if key not in self.hash_table[hash_value]:
+            self.hash_table[hash_value].append(key)
+            self.num_of_keys += 1
+            self.rehash()
+
+    def remove(self, key: int) -> None:
+        hash_value = self.hash_function(key)
+        try:
+            self.hash_table[hash_value].remove(key)
+            self.num_of_keys -= 1
+        except:
+            return
+
+    def contains(self, key: int) -> bool:
+        hash_value = self.hash_function(key)
+        if key in self.hash_table[hash_value]:
+            return True
+        return False
+    
+    def rehash(self):
+        if self.num_of_keys / self.size > self.max_load_factor:
+            temp = self.hash_table.copy()
+            self.num_of_keys = 0
+            self.size *= 2
+            self.hash_table = [[] for _ in range(self.size)]
+            for i in temp:
+                for j in i:
+                    self.add(j)
+
+# Your MyHashSet object will be instantiated and called as such:
+# obj = MyHashSet()
+# obj.add(key)
+# obj.remove(key)
+# param_3 = obj.contains(key)
+
+# Alternative solution
+
+class MyHashSet1:
+    def __init__(self):
         self.size = 20000
         self.prime = 19997
         self.max_load_factor = 0.7
@@ -17,7 +66,7 @@ class MyHashSet:
         if self.hash_table[hash_value] == None:
             self.hash_table[hash_value] = key
             self.num_of_keys += 1
-            self.rehash()
+            #self.rehash()
             return
         i = 1
         while self.hash_table[hash_value] != None:
@@ -28,7 +77,7 @@ class MyHashSet:
             i += 1
         self.hash_table[hash_value] = key
         self.num_of_keys += 1
-        self.rehash()
+        #self.rehash()
 
     def remove(self, key: int) -> None:
         hash_value = self.hash_funcion(key)
@@ -61,15 +110,9 @@ class MyHashSet:
             for val in temp:
                 if val != None and val != -1: self.add(val)
 
-# Your MyHashSet object will be instantiated and called as such:
-# obj = MyHashSet()
-# obj.add(key)
-# obj.remove(key)
-# param_3 = obj.contains(key)
-
 # Alternative solution
 
-class MyHashSet1:
+class MyHashSet2:
     def __init__(self):
         self.table = [False] * (10 ** 6 + 1)
 

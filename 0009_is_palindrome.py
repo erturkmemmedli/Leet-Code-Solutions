@@ -23,3 +23,20 @@ class Solution1:
             start += 1
             end -= 1
         return True
+
+# Alternative solution
+
+class Solution2:
+    def isPalindrome(self, x: int) -> bool:
+        if x < 0: return False
+        n = x
+        head = -1
+        while n:
+            n = n // 10
+            head += 1
+        tail = 1
+        while tail <= head:
+            if x // 10 ** head % 10 != x % 10 ** tail // 10 ** (tail - 1): return False
+            tail += 1
+            head -= 1
+        return True

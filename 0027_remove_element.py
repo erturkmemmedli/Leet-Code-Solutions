@@ -14,3 +14,19 @@ class Solution:
                 j += 1
         return i
                 
+# Alternative solution
+
+class Solution1:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        i = len(nums) - 1
+        j = len(nums) - 1
+        count = 0
+        while j >= 0:
+            if nums[j] == val:
+                nums[i], nums[j] = nums[j], nums[i]
+                count += 1
+                j -= 1
+                i -= 1
+            else:
+                j -= 1
+        return len(nums) - count   

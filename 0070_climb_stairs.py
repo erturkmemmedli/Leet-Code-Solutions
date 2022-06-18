@@ -16,3 +16,13 @@ class Solution1:
         for i in range(3, n + 1):
             prev, answer = answer, answer + prev
         return answer
+
+# Alternative solution
+
+class Solution2:
+    def climbStairs(self, n: int) -> int:
+        prev = 0
+        next = 1
+        for _ in range(n):
+            prev, next = next, prev+next
+        return next

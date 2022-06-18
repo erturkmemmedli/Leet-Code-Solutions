@@ -16,3 +16,13 @@ class Solution1:
             count += n & 1
             n = n >> 1
         return count
+
+# Alternative solution
+
+class Solution2:
+    def hammingWeight(self, n: int) -> int:
+        count = 0
+        while n:
+            count += 1
+            n = n & n-1
+        return count

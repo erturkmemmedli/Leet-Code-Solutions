@@ -44,3 +44,29 @@ class MyQueue1:
 
     def empty(self) -> bool:
         return not len(self.queue)
+
+# Alternative solution
+
+class MyQueue2:
+    def __init__(self):
+        self.stackIn = []
+        self.stackOut = []
+
+    def push(self, x: int) -> None:
+        self.stackIn.append(x)
+
+    def pop(self) -> int:
+        self.transport()
+        return self.stackOut.pop()
+
+    def peek(self) -> int:
+        self.transport()
+        return self.stackOut[-1]
+
+    def empty(self) -> bool:
+        return not self.stackIn and not self.stackOut
+        
+    def transport(self):
+        if not self.stackOut:
+            while self.stackIn:
+                self.stackOut.append(self.stackIn.pop())

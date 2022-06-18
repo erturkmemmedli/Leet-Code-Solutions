@@ -12,3 +12,11 @@ class Solution:
                 if not hashmap[num]:
                     del(hashmap[num])
         return array
+
+# Alternative solution
+
+from collections import Counter
+
+class Solution1:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        return (Counter(nums1) - (Counter(nums1) - Counter(nums2))).elements()

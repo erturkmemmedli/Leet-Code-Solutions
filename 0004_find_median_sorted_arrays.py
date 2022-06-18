@@ -28,3 +28,14 @@ class Solution(object):
             elif nums1_left[-1] > nums2_right[0]:
                 l2 = m2 + 1
                 m2 = (l2 + r2) // 2
+
+# Alternative solution
+
+class Solution1(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        merged = nums1 + nums2
+        merged.sort()
+        if len(merged) % 2 == 1:
+            return merged[len(merged) // 2]
+        else:
+            return (merged[len(merged) // 2 - 1] + merged[len(merged) // 2]) / 2

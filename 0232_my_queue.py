@@ -25,7 +25,6 @@ class MyQueue:
 # param_3 = obj.peek()
 # param_4 = obj.empty()
 
-
 # Alternative solution
 
 class MyQueue1:

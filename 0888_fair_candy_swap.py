@@ -3,7 +3,6 @@ class Solution:
         alice = sum(aliceSizes)
         bob = sum(bobSizes)
         mid = (alice + bob) // 2
-        target = abs(alice - mid)
         sett = set(aliceSizes)
         for num in bobSizes:
             if mid - bob + num in sett:

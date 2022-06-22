@@ -19,3 +19,19 @@ class Solution:
                 node = head.next
         head.next = None
         return output
+
+# Alternative solution
+
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head: return
+        prev = head
+        curr = prev.next
+        while curr:
+            if curr.val == prev.val:
+                prev.next = curr.next
+                curr = curr.next
+            else:
+                prev = curr
+                curr = curr.next
+        return head

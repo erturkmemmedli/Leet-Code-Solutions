@@ -40,3 +40,24 @@ class Solution1:
                         image[r][c] = new
                         self.dfs(image, r, c, m, n, old, new, visited)
         return
+
+# Alternative solution
+
+from collections import deque
+
+class Solution2:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        m = len(image)
+        n = len(image[0])
+        start = image[sr][sc]
+        Q = deque([[sr, sc]])
+        visited = set()
+        while Q:
+            row, col = Q.popleft()
+            if (row, col) not in visited:
+                visited.add((row, col))
+                image[row][col] = color
+                for r, c in [row-1,col], [row+1,col], [row,col-1], [row,col+1]:
+                    if 0 <= r < m and 0 <= c < n and image[r][c] == start:
+                        Q.append([r, c])
+        return image

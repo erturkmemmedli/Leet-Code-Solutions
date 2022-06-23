@@ -8,3 +8,19 @@ class Solution:
                 else:
                     dp[i][j] = max(dp[i-1][j-1], dp[i][j-1], dp[i-1][j])
         return dp[-1][-1] == len(s)
+
+# Alternative solution
+
+class Solution1:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        i = 0
+        j = 0
+        while j < len(t):
+            if i == len(s):
+                break
+            if s[i] == t[j]:
+                i += 1
+                j += 1
+            else:
+                j += 1
+        return i == len(s)

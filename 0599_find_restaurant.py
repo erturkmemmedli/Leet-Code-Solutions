@@ -39,9 +39,9 @@ class Solution2:
         temp = float('inf')
         for v, k in enumerate(list2):
             minimum = dictionary.get(k, float('inf'))
-            if minimum < temp:
-                temp = minimum
+            if minimum + v < temp:
+                temp = minimum + v
                 result = [k]
-            elif minimum == temp:
-                result.append(v)
+            elif minimum + v == temp:
+                result.append(k)
         return result

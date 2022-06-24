@@ -37,9 +37,7 @@ class MinStack1:
 
     def push(self, val: int) -> None:
         self.stack.append(val)
-        if not self.minimum:
-            self.minimum.append(val)
-        elif self.minimum[-1] >= val:
+        if not self.minimum or self.minimum[-1] >= val:
             self.minimum.append(val)
 
     def pop(self) -> None:

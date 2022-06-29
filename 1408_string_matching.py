@@ -50,3 +50,31 @@ class Solution1:
                 p.append(0)
                 j += 1
         return p
+
+# Alternative solution
+
+class Solution2:
+    def stringMatching(self, words: List[str]) -> List[str]:
+        words.sort(key = len)
+        output = []
+        for i in range(len(words)-1):
+            string = "-".join(words[i:])
+            if self.KMP(string, words[i]):
+                output.append(words[i])
+        return output
+        
+    def KMP(self, string, pattern):
+        s = len(string)
+        p = len(pattern)
+        kmp = [0] * s
+        for i in range(1, s):
+            j = kmp[i-1]
+            while 0 < j < p and string[i] != pattern[j]:
+                j = kmp[j-1]
+            if j == p:
+                j = kmp[j-1]
+            if string[i] == pattern[j]:
+                j += 1
+            kmp[i] = j
+            if kmp[-1] == p: return True
+        return kmp.count(p)

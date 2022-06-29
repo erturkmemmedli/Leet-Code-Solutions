@@ -69,12 +69,10 @@ class Solution2:
         kmp = [0] * s
         for i in range(1, s):
             j = kmp[i-1]
-            while 0 < j < p and string[i] != pattern[j]:
-                j = kmp[j-1]
-            if j == p:
+            while j > 0 and string[i] != pattern[j]:
                 j = kmp[j-1]
             if string[i] == pattern[j]:
                 j += 1
             kmp[i] = j
-            if kmp[-1] == p: return True
-        return kmp.count(p)
+            if kmp[i] == p: return True
+        return False

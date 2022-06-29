@@ -22,11 +22,11 @@ class Solution1:
         output = set()
         for i in range(len(words)-1):
             for j in range(i+1, len(words)):
-                if self.KMP_algo("-" + words[i], words[j], KMP_dict):
+                if self.KMP("-" + words[i], words[j], KMP_dict):
                     output.add(words[i])
         return output
                     
-    def KMP_algo(self, pattern, string, dictionary):
+    def KMP(self, pattern, string, dictionary):
         i, j = 0, 0
         while i < len(string) and j < len(pattern)-1:
             if string[i] == pattern[j+1]:
@@ -76,3 +76,36 @@ class Solution2:
             kmp[i] = j
             if kmp[i] == p: return True
         return False
+    
+# Alternative solution
+
+class Solution3:
+    def stringMatching(self, words: List[str]) -> List[str]:
+        words.sort(key = len)
+        output = []
+        for i in range(len(words)-1):
+            string = "-".join(words[i+1:])
+            if self.KMP(string, words[i]):
+                output.append(words[i])
+        return output
+    
+    def KMP(self, string, pattern):
+        total = pattern + string
+        lps = self.KMP_prefix(total)
+        for i in range(len(pattern)+1, len(total)):
+            if lps[i] == len(pattern):
+                return True
+        return False
+        
+    def KMP_prefix(self, pattern):
+        prefix = [0] * len(pattern)
+        border = 0
+        for i in range(1, len(pattern)):
+            while border > 0 and pattern[i] != pattern[border]:
+                border = prefix[border - 1]
+            if pattern[i] == pattern[border]:
+                border += 1
+            else:
+                border = 0
+            prefix[i] = border
+        return prefix

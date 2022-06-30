@@ -57,3 +57,19 @@ class Solution1:
         val = 1 + max(self.calculate(node.left), self.calculate(node.right))
         self.hashtable[node] = val
         return val
+
+# Alternative solution
+
+class Solution2:
+    def __init__(self):
+        self.maximum = 0
+        
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        self.calculate(root)
+        return self.maximum
+        
+    def calculate(self, node):
+        if not node: return 0
+        left, right = self.calculate(node.left), self.calculate(node.right)
+        self.maximum = max(self.maximum, left + right)
+        return 1 + max(left, right)

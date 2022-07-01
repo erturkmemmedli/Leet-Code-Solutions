@@ -84,3 +84,28 @@ class Trie:
                 return -1
             temp = temp.children[index]
         return temp.end
+
+# Alternative solution
+
+class Solution4:
+    def strStr(self, haystack: str, needle: str) -> int:
+        if len(needle) > len(haystack): return -1
+        n = len(needle)
+        string = needle + '$' + haystack
+        return self.KMP(string, n)
+         
+    def KMP(self, string, n):
+        l = len(string)
+        prefix = [0] * l
+        j = 0
+        for i in range(1, l):
+            while j > 0 and string[i] != string[j]:
+                j = prefix[j - 1]
+            if string[i] == string[j]:
+                j += 1
+            else:
+                j = 0
+            prefix[i] = j
+            if prefix[i] == n:
+                return i - 2 * n
+        return -1

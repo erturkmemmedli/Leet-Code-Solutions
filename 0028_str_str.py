@@ -40,3 +40,47 @@ class Solution2:
                 border = 0
             prefix[i] = border
         return prefix
+
+# Alternative solution
+
+class Solution3:
+    def strStr(self, haystack: str, needle: str) -> int:
+        if len(needle) > len(haystack): return -1
+        trie = Trie()
+        for i in range(len(haystack)):
+            trie.insert(haystack[i:], i)
+        return trie.search(needle)
+        
+class TrieNode:
+    def __init__(self):
+        self.children = [None] * 26
+        self.end = -1
+              
+class Trie:
+    def __init__(self):
+        self.root = self.get_node()
+    
+    def get_node(self):
+        return TrieNode()
+    
+    def indexing(self, char):
+        return ord(char) - ord('a')
+    
+    def insert(self, word, val):
+        temp = self.root
+        for i in range(len(word)):
+            index = self.indexing(word[i])
+            if not temp.children[index]:
+                temp.children[index] = self.get_node()
+            temp = temp.children[index]
+            if temp.end == -1:
+                temp.end = val
+            
+    def search(self, word):
+        temp = self.root
+        for i in range(len(word)):
+            index = self.indexing(word[i])
+            if not temp.children[index]:
+                return -1
+            temp = temp.children[index]
+        return temp.end

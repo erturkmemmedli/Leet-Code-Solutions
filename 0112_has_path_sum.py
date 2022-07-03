@@ -26,3 +26,20 @@ class Solution1:
         if not root.left and not root.right and root.val == targetSum: return True
         targetSum -= root.val
         return self.hasPathSum(root.left, targetSum) or self.hasPathSum(root.right, targetSum)
+
+# Alternative solution
+
+class Solution2:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root: return False
+        return self.helper(root, targetSum)
+    
+    def helper(self, root, x):
+        if not root:
+            return True if x == 0 else False
+        if root.left and root.right:
+            return self.helper(root.left, x - root.val) or self.helper(root.right, x - root.val)
+        elif not root.right:
+            return self.helper(root.left, x - root.val)
+        elif not root.left:
+            return self.helper(root.right, x - root.val)

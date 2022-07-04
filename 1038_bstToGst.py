@@ -33,3 +33,21 @@ class Solution:
         root.val = vals.pop()
         self.inorder(root.right, vals)
         return root
+
+# Alternative solution
+
+class Solution1:
+    def __init__(self):
+        self.summ = 0
+        
+    def bstToGst(self, root: TreeNode) -> TreeNode:
+        self.reverse_inorder(root)
+        return root
+
+    def reverse_inorder(self, root):
+        if not root: return
+        self.reverse_inorder(root.right)
+        self.summ += root.val
+        root.val = self.summ
+        self.reverse_inorder(root.left)
+        return root

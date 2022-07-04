@@ -27,3 +27,17 @@ class Solution1:
             second = second.next.next
             if first == second: return True
         return False
+
+# Alternative solution
+
+class Solution2:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        if not head or not head.next: return False
+        start = head.next
+        end = head.next.next
+        return self.isCycle(start, end)
+    
+    def isCycle(self, start, end):
+        if not start or not end or not end.next: return False
+        if start == end: return True
+        return self.isCycle(start.next, end.next.next)

@@ -44,7 +44,7 @@ class Solution1:
                         return False
                     stack_5 -= 1
                 else:
-                    if len(stack_5) < 3:
+                    if stack_5 < 3:
                         return False
                     stack_5 -= 3
         return True

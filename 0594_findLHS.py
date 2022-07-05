@@ -17,3 +17,17 @@ class Solution:
                     i += 1
                 j += 1
         return maximum
+
+# Alternative solution
+
+from collections import Counter
+
+class Solution1:
+    def findLHS(self, nums: List[int]) -> int:
+        c = Counter(nums)
+        c = sorted(c.items())
+        out = 0
+        for i in range(1, len(c)):
+            if c[i][0] - c[i-1][0] == 1:
+                out = max(out, c[i][1] + c[i-1][1])
+        return out

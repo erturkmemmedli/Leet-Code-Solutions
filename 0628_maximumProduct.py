@@ -43,3 +43,10 @@ class Solution2:
                 return min1 * min2 * max1
             else:
                 return max1 * max2 * max3
+
+# Alternative solution
+
+class Solution3:
+    def maximumProduct(self, nums: List[int]) -> int:
+        nums.sort()
+        return max(nums[0] * nums[1] * nums[-1], nums[-1] * nums[-2] * nums[-3])

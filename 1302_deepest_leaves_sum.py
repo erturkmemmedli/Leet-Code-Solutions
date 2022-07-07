@@ -31,3 +31,21 @@ class Solution:
                 Q[-1].append(node.left)
             if node.right:
                 Q[-1].append(node.right)
+
+# Alternative solution
+
+from collections import deque
+
+class Solution1:
+    def deepestLeavesSum(self, root: Optional[TreeNode]) -> int:
+        Q = deque([[root]])
+        while Q:
+            level = Q.popleft()
+            pack = []
+            for node in level:
+                if node.left:
+                    pack.append(node.left)
+                if node.right:
+                    pack.append(node.right)
+            if pack: Q.append(pack)
+        return sum([node.val for node in level])

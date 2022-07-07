@@ -11,3 +11,11 @@ class Solution:
             count += 1
             n = n & n-1
         return count
+
+# Alternative solution
+
+class Solution1:
+    def isPowerOfFour(self, n: int) -> bool:
+        if n == 0: return False
+        if n == 1: return True
+        return self.isPowerOfFour(n//4) if n % 4 == 0 else False

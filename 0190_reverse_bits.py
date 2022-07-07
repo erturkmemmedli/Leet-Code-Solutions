@@ -11,3 +11,12 @@ class Solution:
                 step += 1
                 n = n >> 1
         return result
+
+# Alternative solution
+
+class Solution1:
+    def reverseBits(self, n: int) -> int:
+        x = bin(n)[2:]
+        x = (32 - len(x)) * '0' + x
+        x = x[::-1]
+        return int(x, 2)

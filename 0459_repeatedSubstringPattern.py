@@ -10,3 +10,9 @@ class Solution:
                         return True
             j += 1
         return False
+
+# Alternative solution
+
+class Solution1:
+    def repeatedSubstringPattern(self, s: str) -> bool:
+        return s in s[1:] + s[:-1]

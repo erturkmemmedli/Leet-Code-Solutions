@@ -31,3 +31,13 @@ class Solution1:
             return cloned
         if original is not None:
             return self.getTargetCopy(original.left, cloned.left, target) or self.getTargetCopy(original.right, cloned.right, target)
+
+# Alternative solution
+
+class Solution2:
+    def getTargetCopy(self, original: TreeNode, cloned: TreeNode, target: TreeNode) -> TreeNode:
+        if not original:
+            return
+        if original.val == target.val:
+            return cloned
+        return self.getTargetCopy(original.left, cloned.left, target) or self.getTargetCopy(original.right, cloned.right, target)

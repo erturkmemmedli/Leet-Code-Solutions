@@ -41,3 +41,20 @@ class Solution1:
                 stack2.pop()
         string2 = ''.join(stack2)
         return string1 == string2
+
+# Alternative solution
+
+class Solution2:
+    def backspaceCompare(self, s: str, t: str) -> bool:
+        stack_s = self.stack(s)
+        stack_t = self.stack(t)
+        return stack_s == stack_t
+
+    def stack(self, sting):
+        stack = []
+        for char in sting:
+            if char != "#":
+                stack.append(char)
+            elif stack:
+                stack.pop()
+        return stack

@@ -9,8 +9,7 @@ class Solution:
         for v in D.values():
             if len(v) == 1:
                 continue
-            for i in range(len(v)):
-                for j in range(i+1, len(v)):
-                    if v[j] - v[i] <= k:
-                        return True
+            for i in range(1, len(v)):
+                if v[i] - v[i-1] <= k:
+                    return True
         return False

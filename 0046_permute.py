@@ -45,3 +45,19 @@ class Solution2:
         else:
             for i, n in enumerate(nums):
                 self.backtrack(nums[i+1:] + nums[:i], result, temp + [n])
+
+# Alternative solution
+
+class Solution3:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        output = []
+        element = []
+        self.dfs(nums, output, element)
+        return output
+        
+    def dfs(self, nums, output, element):
+        if not nums:
+            output.append(element)
+            return
+        for i in range(len(nums)):
+            self.dfs(nums[i+1:] + nums[:i], output, element + [nums[i]])

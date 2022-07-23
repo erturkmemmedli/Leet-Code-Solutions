@@ -13,3 +13,9 @@ class Solution:
         if left ** 2 > x: return left - 1
         if right ** 2 < x: return right
         return x
+
+# Alternative solution
+
+class Solution1:
+    def mySqrt(self, x: int) -> int:
+        return int(x ** 0.5)

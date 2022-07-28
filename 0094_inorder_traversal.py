@@ -15,3 +15,18 @@ class Solution:
         self.List.append(root.val)
         self.inorderTraversal(root.right)
         return self.List
+
+# Alternative solution
+
+class Solution1:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        output = []
+        self.inorder(root, output)
+        return output
+    
+    def inorder(self, node, output):
+        if not node: return
+        self.inorder(node.left, output)
+        output.append(node.val)
+        self.inorder(node.right, output)
+        return node

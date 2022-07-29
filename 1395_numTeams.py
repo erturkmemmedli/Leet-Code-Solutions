@@ -19,3 +19,26 @@ class Solution:
                 else:
                     count += less[j]
         return count
+
+# Alternative solution
+
+from sortedcontainers import SortedList
+from bisect import bisect_left
+
+class Solution1:
+    def numTeams(self, rating: List[int]) -> int:
+        right = SortedList(rating)
+        left = SortedList()
+        count = 0
+        for soldier in rating:
+            right.remove(soldier)
+            low_R, high_R = self.separate(right, soldier)
+            low_L, high_L = self.separate(left, soldier)
+            left.add(soldier)
+            count += low_R * high_L + low_L * high_R        
+        return count
+    
+    def separate(self, liste, soldier):
+        low = liste.bisect_left(soldier)
+        high = len(liste) - low
+        return low, high

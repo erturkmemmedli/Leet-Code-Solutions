@@ -18,3 +18,23 @@ class Solution:
                 if result >= 2 ** 31 - 1:
                     return 0
             return result
+        
+# Alternative solution
+
+class Solution1:
+    def reverse(self, x: int) -> int:
+        negative = True if x < 0 else False
+        x = abs(x)
+        power = 0
+        temp = x
+        while temp:
+            temp //= 10
+            power += 1
+        result = 0
+        while power > 0:
+            mod = x % 10
+            x = x // 10
+            result += mod * 10 ** (power - 1)
+            power -= 1
+        result = -result if negative else result
+        return result if -2**31  <= result <= 2**31 - 1 else 0

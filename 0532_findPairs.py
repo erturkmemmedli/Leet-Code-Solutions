@@ -19,3 +19,18 @@ class Solution:
             if i == j:
                 j += 1
         return count
+
+# Alternative solution
+
+from collections import Counter
+
+class Solution1:
+    def findPairs(self, nums: List[int], k: int) -> int:
+        counter = Counter(nums)
+        count = 0
+        for key, val in counter.items():
+            if k > 0 and key + k in counter:
+                count += 1
+            elif k == 0 and val > 1:
+                count += 1    
+        return count

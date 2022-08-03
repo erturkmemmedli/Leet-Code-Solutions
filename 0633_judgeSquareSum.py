@@ -3,9 +3,10 @@ class Solution:
         a = int(c ** 0.5)
         b = 0
         while a >= b:
-            if a ** 2 + b ** 2 == c:
+            sq_sum = a ** 2 + b ** 2
+            if sq_sum == c:
                 return True
-            elif a ** 2 + b ** 2 < c:
+            elif sq_sum < c:
                 b += 1
             else:
                 a -= 1

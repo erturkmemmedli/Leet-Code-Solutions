@@ -7,6 +7,6 @@ class Solution:
                 return True
             elif a ** 2 + b ** 2 < c:
                 b += 1
-            elif a ** 2 + b ** 2 > c:
+            else:
                 a -= 1
         return False

@@ -50,3 +50,18 @@ class Solution1:
         self.inorder(node.left, L)
         L.append(node.val)
         self.inorder(node.right, L)
+
+# Alternative solution
+
+class Solution2:
+    def getAllElements(self, root1: TreeNode, root2: TreeNode) -> List[int]:
+        L = []
+        self.inorder(root1, L)
+        self.inorder(root2, L)
+        return sorted(L)
+        
+    def inorder(self, node, L):
+        if not node: return
+        self.inorder(node.left, L)
+        L.append(node.val)
+        self.inorder(node.right, L)

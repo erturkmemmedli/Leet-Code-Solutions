@@ -3,13 +3,12 @@ class Solution:
         output = set()
         path = []
         summ = 0
-        candidates = list(set(sorted(candidates)))
-        self.dfs(sorted(candidates, reverse = True), target, output, path, summ)
+        self.dfs(sorted(list(set(candidates)), reverse = True), target, output, path, summ)
         return output
     
     def dfs(self, candidates, target, output, path, summ):
         if summ == target:
-            output.add(tuple(sorted(path)))
+            output.add(tuple(path))
             return
         if summ > target:
             return

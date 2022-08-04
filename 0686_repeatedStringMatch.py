@@ -28,3 +28,15 @@ class Solution:
             if prefix[i] == n:
                 return i - 2 * n
         return -1
+
+# Alternative solution
+
+class Solution1:
+    def repeatedStringMatch(self, a: str, b: str) -> int:
+        temp, count = "", 0
+        while len(temp) < len(a) + len(b):
+            temp += a
+            count += 1
+            if b in temp:
+                return count
+        return -1

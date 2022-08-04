@@ -128,3 +128,24 @@ class Solution1:
         else:
             var_2 += factor_1
         return var_2
+
+    
+# Alternative solution
+
+class Solution2:
+    def robotSim(self, commands: list, obstacles: list) -> int:
+        x, y, dx, dy, maxx = 0, 0, 0, 1, 0
+        obstacles = set(map(tuple, obstacles))
+        for command in commands:
+            if command == -2:
+                dx, dy = -dy, dx
+            elif command == -1:
+                dx, dy = dy, -dx
+            else:
+                for i in range(command):
+                    if (x+dx, y+dy) in obstacles:
+                        break
+                    x += dx
+                    y += dy
+                    maxx = max(maxx, x**2 + y**2)  
+        return maxx

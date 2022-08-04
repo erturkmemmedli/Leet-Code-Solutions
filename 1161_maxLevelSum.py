@@ -10,9 +10,7 @@ from collections import deque
 class Solution:
     def maxLevelSum(self, root: Optional[TreeNode]) -> int:
         Q = deque([[root]])
-        level = 0
-        depth = 0
-        maxx = -float('inf')
+        level, depth, maxx = 0, 0, -float('inf')
         while Q:
             nodes = Q.popleft()
             level += 1

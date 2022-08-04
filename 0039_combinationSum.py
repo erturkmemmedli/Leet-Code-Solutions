@@ -3,7 +3,6 @@ class Solution:
         output = set()
         path = []
         summ = 0
-        visited = set()
         candidates = list(set(sorted(candidates)))
         self.dfs(sorted(candidates, reverse = True), target, output, path, summ)
         return output

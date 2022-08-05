@@ -24,3 +24,19 @@ class Solution:
             else:
                 roman = self.calculation(roman, int(number[i]), 'X', 'V', 'I')
         return roman
+    
+# Alternative solution
+
+class Solution1:
+    def intToRoman(self, num: int) -> str:
+        Map = {1000: 'M', 900: 'CM', 500: 'D',
+               400: 'CD', 100: 'C', 90: 'XC',
+               50: 'L', 40: 'XL', 10: 'X',
+               9: 'IX', 5: 'V', 4: 'IV', 1: 'I'}
+        roman = ""
+        for key, val in Map.items():
+            if num >= key:
+                coeff = num // key
+                num = num % key
+                roman += coeff * val
+        return roman

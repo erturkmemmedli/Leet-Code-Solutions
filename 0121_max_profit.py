@@ -20,3 +20,19 @@ class Solution1:
             else:
                 dp[i] = 0
         return max(dp)
+
+# Alternative solution
+
+class Solution2:
+    def maxProfit(self, prices: List[int]) -> int:
+        minimum = prices[0]
+        maximum = prices[0]
+        result = 0
+        for i in range(1, len(prices)):
+            if prices[i] < minimum:
+                minimum = prices[i]
+                maximum = prices[i]
+            else:
+                maximum = prices[i]
+                result = max(result, maximum - minimum)
+        return result

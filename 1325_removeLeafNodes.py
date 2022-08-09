@@ -7,18 +7,10 @@
 
 class Solution:
     def removeLeafNodes(self, root: Optional[TreeNode], target: int) -> Optional[TreeNode]:
-        self.dfs(root, target)
-        if root and not root.left and not root.right and root.val == target: return
-        return root
-        
-    def dfs(self, node, target):
-        if not node:
+        if not root:
             return
-        if not node.left and not node.right:
-            return None if node.val == target else node
-        node.left = self.dfs(node.left,  target)
-        node.right = self.dfs(node.right, target)
-        if not node.left and not node.right:
-            return None if node.val == target else node
-        else:
-            return node
+        root.left = self.removeLeafNodes(root.left,  target)
+        root.right = self.removeLeafNodes(root.right, target)
+        if not root.left and not root.right:
+            return None if root.val == target else root
+        return root

@@ -13,6 +13,32 @@ class Solution:
             heappop(nums)
         pop = heappop(nums)
         return pop if not neg_heap else -pop
+    
+# Alternative solution
+
+import random
+
+class Solution1:
+    def findKthLargest(self, nums: List[List[int]], k: int) -> int:
+        if not nums: return
+        pivot = random.choice(nums)
+        left = [i for i in nums if i < pivot]
+        mid = [i for i in nums if i == pivot]
+        right = [i for i in nums if i > pivot]
+        l, m, r = len(left), len(mid), len(right)
+        if k-1 < r:
+            return self.findKthLargest(right, k)
+        k -= r
+        if k-1 < m:
+            return mid[0]
+        k -= m
+        return self.findKthLargest(left, k)
+    
+# Alternative solution
+
+class Solution2:
+    def findKthLargest(self, nums: List[List[int]], k: int) -> int:
+        return sorted(nums)[-k]
 
 # Alternative solution
 

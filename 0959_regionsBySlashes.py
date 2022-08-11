@@ -9,13 +9,9 @@ class Solution:
                 if symbol == ' ':
                     continue
                 elif symbol == '/':
-                    matrix[3*i+2][3*j] = 0
-                    matrix[3*i+1][3*j+1] = 0
-                    matrix[3*i][3*j+2] = 0
+                    matrix[3*i+2][3*j] = matrix[3*i+1][3*j+1] = matrix[3*i][3*j+2] = 0
                 elif slash[j] == '\\':
-                    matrix[3*i][3*j] = 0
-                    matrix[3*i+1][3*j+1] = 0
-                    matrix[3*i+2][3*j+2] = 0
+                    matrix[3*i][3*j] = matrix[3*i+1][3*j+1] = matrix[3*i+2][3*j+2] = 0
         Q = deque()
         visited = set()
         count = 0

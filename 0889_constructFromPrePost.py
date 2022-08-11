@@ -32,3 +32,17 @@ class Solution:
             root.left = self.div_and_con(TreeNode(pre[0]), pre[1:idx], post[:idx-1])
             root.right = self.div_and_con(TreeNode(post[-1]), pre[idx+1:], post[idx:len(post)-1])
         return root
+
+# Alternative solution
+
+class Solution1:
+    def constructFromPrePost(self, preorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+        if not preorder:
+            return
+        if len(preorder) == 1:
+            return TreeNode(preorder[0])
+        root = TreeNode(preorder[0])
+        index = preorder.index(postorder[-2])
+        root.left = self.constructFromPrePost(preorder[1:index], postorder[:index-1])
+        root.right = self.constructFromPrePost(preorder[index:], postorder[index-1:-1])
+        return root

@@ -27,3 +27,25 @@ class Solution:
             if Queue[0]:
                 Queue.append(deque())
         return List
+
+# Alternative solution
+
+from collections import deque
+
+class Solution1:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root: return []
+        Q = deque([[root]])
+        output = []
+        while Q:
+            level = Q.popleft()
+            output.append([node.val for node in level])
+            next_level = []
+            for node in level:
+                if node.left:
+                    next_level.append(node.left)
+                if node.right:
+                    next_level.append(node.right)
+            if next_level:
+                Q.append(next_level)
+        return output

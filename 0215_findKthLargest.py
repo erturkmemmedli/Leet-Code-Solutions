@@ -1,4 +1,4 @@
-from heapq import heapify, heappop, heappush
+from heapq import heapify, heappop
 
 class Solution:
     def findKthLargest(self, nums: List[List[int]], k: int) -> int:

@@ -51,3 +51,30 @@ class Solution1:
                 if r >= 0 and c >= 0 and r < m and c < n and grid[r][c]:
                     self.dfs(grid, r, c, m, n, self.max_area, self.area, visited)
         return          
+
+# Alternative solution
+
+from collections import deque
+
+class Solution3:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        visited = set()
+        max_area = 0
+        for row in range(m):
+            for col in range(n):
+                if grid[row][col]:
+                    if (row, col) not in visited:
+                        visited.add((row,col))
+                        Q = deque([(row,col)])
+                        area = 1
+                        while Q:
+                            row, col = Q.popleft()
+                            for r, c in [row-1,col], [row,col-1], [row+1,col], [row,col+1]:
+                                if 0 <= r < m and 0 <= c < n and (r,c) not in visited and grid[r][c]:
+                                    visited.add((r,c))
+                                    Q.append((r,c))
+                                    area += 1
+                        max_area = max(max_area, area)
+        return max_area

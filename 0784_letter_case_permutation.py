@@ -34,3 +34,22 @@ class Solution1:
             else:
                 self.backtrack(s[1:], n, result, temp + s[0].lower())
                 self.backtrack(s[1:], n, result, temp + s[0].upper())
+
+# Alternative solution
+
+class Solution2:
+    def letterCasePermutation(self, s: str) -> List[str]:
+        output = []
+        path = ""
+        self.dfs(s, output, path, len(s))
+        return output
+    
+    def dfs(self, string, output, path, n):
+        if len(path) == n:
+            output.append(path)
+            return
+        if 48 <= ord(string[0]) <= 57:
+            self.dfs(string[1:], output, path + string[0], n)
+        else:
+            self.dfs(string[1:], output, path + string[0].lower(), n)
+            self.dfs(string[1:], output, path + string[0].upper(), n)

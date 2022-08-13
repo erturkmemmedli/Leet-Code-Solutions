@@ -19,3 +19,20 @@ class Solution1:
                 hashmap[target-number] = i + 1
             else:
                 return [hashmap[number], i + 1]
+
+# Alternative solution
+
+class Solution2:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        n = len(numbers)
+        for i in range(n):
+            val = target - numbers[i]
+            left, right = i+1, n-1
+            while left <= right:
+                mid = (left+right) // 2
+                if numbers[mid] == val:
+                    return [i+1, mid+1]
+                if numbers[mid] > val:
+                    right = mid-1
+                if numbers[mid] < val:
+                    left = mid+1

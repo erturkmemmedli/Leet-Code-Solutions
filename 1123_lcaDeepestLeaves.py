@@ -38,3 +38,28 @@ class Solution1:
         if depth1 > depth2: return depth1 + 1, lca1
         if depth1 < depth2: return depth2 + 1, lca2
         return depth1 + 1, node
+
+# Alternative solution
+
+from collections import deque
+
+class Solution2:
+    def lcaDeepestLeaves(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        Q = deque([root])
+        while Q:
+            current_level = set()
+            for _ in range(len(Q)):
+                node = Q.popleft()
+                current_level.add(node)
+                if node.left:
+                    node.left.parent = node
+                    Q.append(node.left)
+                if node.right:
+                    node.right.parent = node
+                    Q.append(node.right)
+        while len(current_level) > 1:
+            parent = set()
+            for node in current_level:
+                parent.add(node.parent)
+            current_level = parent
+        return current_level.pop()

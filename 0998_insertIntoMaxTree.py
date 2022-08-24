@@ -30,3 +30,17 @@ class Solution:
                 stack[-1].right = node
             stack.append(node)
         return stack[0]
+
+# Alternative solution
+
+class Solution1:
+    def insertIntoMaxTree(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        if not root:
+            return TreeNode(val)
+        if val > root.val:
+            node = TreeNode(val)
+            node.left = root
+            return node
+        else:
+            root.right = self.insertIntoMaxTree(root.right, val)
+            return root

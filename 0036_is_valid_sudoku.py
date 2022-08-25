@@ -20,3 +20,33 @@ class Solution:
                     else:
                         grids[k].append(board[i][j])
         return True
+
+# Alternative solution
+
+class Solution1:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        for row in board:
+            hashset = set()
+            for element in row:
+                if element != "." and element not in hashset:
+                    hashset.add(element)
+                elif element in hashset:
+                    return False        
+        for col in zip(*board):
+            hashset = set()
+            for element in col:
+                if element != "." and element not in hashset:
+                    hashset.add(element)
+                elif element in hashset:
+                    return False
+        for i in range(0, len(board), 3):
+            for j in range(0, len(board), 3):
+                hashset = set()
+                grid = [x[j:j+3] for x in board[i:i+3]]
+                for a in range(len(grid)):
+                    for b in range(len(grid)):
+                        if grid[a][b] != "." and grid[a][b] not in hashset:
+                            hashset.add(grid[a][b])
+                        elif grid[a][b] in hashset:
+                            return False
+        return True

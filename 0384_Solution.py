@@ -16,3 +16,22 @@ class Solution:
 # obj = Solution(nums)
 # param_1 = obj.reset()
 # param_2 = obj.shuffle()
+
+# Alternative solution
+
+import random
+
+class Solution1:
+    def __init__(self, nums: List[int]):
+        self.nums = nums
+        self.copy = nums[:]
+
+    def reset(self) -> List[int]:
+        return self.nums
+
+    def shuffle(self) -> List[int]:
+        n = len(self.nums)
+        for i in range(n):
+            j = random.randint(0, n-1)
+            self.copy[i], self.copy[j] = self.copy[j], self.copy[i]
+        return self.copy

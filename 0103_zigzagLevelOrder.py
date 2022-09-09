@@ -12,24 +12,45 @@ class Solution:
         if not root:
             return
         queue = deque([[root]])
-        zigzag = [[root.val]]
+        zigzag = [[root]]
         reverse = 1
         while queue:
             level = queue.popleft()
             next_level = []
-            next_zigzag = []
             for node in level:
                 if node.left:
                     next_level.append(node.left)
-                    next_zigzag.append(node.left.val)
                 if node.right:
                     next_level.append(node.right)
-                    next_zigzag.append(node.right.val)
             if next_level:
                 queue.append(next_level)
                 if reverse:
-                    zigzag.append(next_zigzag[::-1])
+                    zigzag.append(next_level[::-1])
                 else:
-                    zigzag.append(next_zigzag)
+                    zigzag.append(next_level)
             reverse ^= 1
+        zigzag = [[node.val for node in level] for level in zigzag]
         return zigzag
+    
+# Alternative solution
+
+class Solution1:
+    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return
+        stack = [[root]]
+        next_level = [root]
+        reverse = 1
+        while next_level:
+            level = stack[-1]
+            next_level = []
+            for node in level:
+                if node.left:
+                    next_level.append(node.left)
+                if node.right:
+                    next_level.append(node.right)
+            if next_level:
+                stack.append(next_level)
+            reverse ^= 1
+        stack = [[node.val for node in level] if i % 2 == 0 else [node.val for node in level[::-1]] for i, level in enumerate(stack)]
+        return stack

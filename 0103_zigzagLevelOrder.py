@@ -40,7 +40,6 @@ class Solution1:
             return
         stack = [[root]]
         next_level = [root]
-        reverse = 1
         while next_level:
             level = stack[-1]
             next_level = []
@@ -51,6 +50,5 @@ class Solution1:
                     next_level.append(node.right)
             if next_level:
                 stack.append(next_level)
-            reverse ^= 1
         stack = [[node.val for node in level] if i % 2 == 0 else [node.val for node in level[::-1]] for i, level in enumerate(stack)]
         return stack

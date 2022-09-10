@@ -49,26 +49,3 @@ class Solution1:
             if num in hashmap:
                 result += hashmap[num]
         return result
-
-# Alternative solution (which gives TLE error)
-
-from collections import defaultdict
-
-class Solution2:
-    def fourSumCount(self, nums1: List[int], nums2: List[int], nums3: List[int], nums4: List[int]) -> int:
-        self.output = 0
-        for num in nums1:
-            self.threeSumCount(nums2, nums3, nums4, -num)
-        return self.output
-            
-    def threeSumCount(self, nums1, nums2, nums3, target):
-        for num in nums1:
-            self.twoSumCount(nums2, nums3, target - num)
-            
-    def twoSumCount(self, nums1, nums2, target):
-        hashmap = defaultdict(int)
-        for num in nums1:
-            hashmap[target - num] += 1
-        for num in nums2:
-            if num in hashmap:
-                self.output += hashmap[num]

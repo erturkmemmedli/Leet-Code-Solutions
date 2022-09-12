@@ -30,3 +30,22 @@ class Solution:
         root.left = self.divide_and_conquer(array[:m])
         root.right = self.divide_and_conquer(array[m+1:])
         return root
+
+# Alternative solution
+
+class Solution1:
+    def sortedListToBST(self, head: Optional[ListNode]) -> Optional[TreeNode]:
+        if not head: return
+        return self.div_and_con(head, None)
+        
+    def div_and_con(self, start, end):
+        if start == end:
+            return
+        if start.next == end:
+            return TreeNode(start.val)
+        fast, slow = start, start
+        while fast != end and fast.next != end:
+            slow = slow.next
+            fast = fast.next.next
+        root = TreeNode(slow.val, self.div_and_con(start, slow), self.div_and_con(slow.next, end))
+        return root

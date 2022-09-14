@@ -32,3 +32,25 @@ class Solution:
             trie.insert(str(i))
         root = trie.get_root()
         return trie.dfs_sort(root)
+
+# Alternative solution
+
+class Solution1:
+    def lexicalOrder(self, n: int) -> List[int]:
+        if n < 10:
+            return list(range(1,n+1))
+        result = []
+        for i in range(1, 10):
+            result.append(i)
+            result += self.trie_dfs(i, n)
+        return result
+            
+    def trie_dfs(self, start, n):
+        result = []
+        for i in range(10):
+            new_start = start * 10 + i
+            if new_start > n:
+                break
+            result.append(new_start)
+            result += self.trie_dfs(new_start, n)
+        return result

@@ -102,3 +102,34 @@ class Solution2:
                 if res:
                     return val * res
         return 0
+
+# Alternative solution
+
+from collections import defaultdict
+
+class Solution3:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        hashmap = defaultdict(list)
+        for i, [a, b] in enumerate(equations):
+            hashmap[a].append((b, values[i]))
+            hashmap[b].append((a, 1/values[i]))
+        output = []
+        for x, y in queries:
+            if x not in hashmap or y not in hashmap:
+                output.append(-1)
+            elif x == y:
+                output.append(1)
+            else:   
+                output.append(self.dfs(hashmap, x, y, set(), 1))
+        return output
+            
+    def dfs(self, hashmap, start, end, visited, result):
+        if start == end:
+            return result
+        if start not in visited:
+            visited.add(start)
+            for path, val in hashmap[start]:
+                ans = self.dfs(hashmap, path, end, visited, val * result)
+                if ans != -1:
+                    return ans
+        return -1

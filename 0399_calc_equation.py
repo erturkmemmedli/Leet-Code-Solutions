@@ -67,3 +67,38 @@ class Solution1:
                 visited = set()
                 output.append(self.DFS(adj, visited, q[0], q[1], 1))
         return output
+
+# Alternative solution
+
+from collections import defaultdict
+
+class Solution2:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        hashmap = defaultdict(list)
+        for i, [a, b] in enumerate(equations):
+            hashmap[a].append((b, values[i]))
+            hashmap[b].append((a, 1/values[i]))
+        output = []
+        for x, y in queries:
+            if x not in hashmap or y not in hashmap:
+                output.append(-1)
+            elif x == y:
+                output.append(1)
+            else:   
+                res = self.dfs(hashmap, x, y, set())
+                if res == 0:
+                    output.append(-1)
+                else:
+                    output.append(res)
+        return output
+            
+    def dfs(self, hashmap, start, end, visited):
+        if start == end:
+            return 1
+        if start not in visited:
+            visited.add(start)
+            for path, val in hashmap[start]:
+                res = self.dfs(hashmap, path, end, visited)
+                if res:
+                    return val * res
+        return 0

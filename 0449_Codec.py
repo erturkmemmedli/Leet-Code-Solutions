@@ -85,3 +85,37 @@ class Codec1:
         root.left = self.binary_build(array[1:index+1])
         root.right = self.binary_build(array[index+1:])
         return root
+
+# Alternative solution
+
+from collections import deque
+from bisect import bisect_left
+
+class Codec2:
+    def serialize(self, root: Optional[TreeNode]) -> str:
+        """Encodes a tree to a single string.
+        """   
+        self.string = ""
+        self.preorder_traversal(root)
+        return self.string
+    
+    def deserialize(self, data: str) -> Optional[TreeNode]:
+        """Decodes your encoded data to tree.
+        """
+        preorder_queue = deque(map(int, data.split()))
+        return self.binary_build(preorder_queue, -float('inf'), float(inf))
+        
+    def preorder_traversal(self, node):
+        if not node: return
+        self.string += str(node.val) + " "
+        self.preorder_traversal(node.left)
+        self.preorder_traversal(node.right)
+        
+    def binary_build(self, queue, minimum, maximum):
+        if not queue: return
+        if minimum < queue[0] < maximum:
+            val = queue.popleft()
+            root = TreeNode(val)
+            root.left = self.binary_build(queue, minimum, val)
+            root.right = self.binary_build(queue, val, maximum)
+            return root

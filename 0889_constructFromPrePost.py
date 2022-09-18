@@ -46,3 +46,24 @@ class Solution1:
         root.left = self.constructFromPrePost(preorder[1:index], postorder[:index-1])
         root.right = self.constructFromPrePost(preorder[index:], postorder[index-1:-1])
         return root
+
+# Alternative solution
+
+class Solution2:
+    def constructFromPrePost(self, preorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+        preorder_map = {val: i for i, val in enumerate(preorder)}
+        self.index = len(postorder)-1
+        return self.recursion(preorder_map, postorder, 0, len(preorder)-1)
+    
+    def recursion(self, preorder_map, postorder, left, right):
+        if left > right:
+            return
+        val = postorder[self.index]
+        self.index -= 1
+        root = TreeNode(val)
+        if left == right:
+            return TreeNode(val)
+        mid = preorder_map[postorder[self.index]]
+        root.right = self.recursion(preorder_map, postorder, mid, right)
+        root.left = self.recursion(preorder_map, postorder, left+1, mid-1)
+        return root

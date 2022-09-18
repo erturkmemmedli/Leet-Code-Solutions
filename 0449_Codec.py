@@ -119,3 +119,47 @@ class Codec2:
             root.left = self.binary_build(queue, minimum, val)
             root.right = self.binary_build(queue, val, maximum)
             return root
+
+# Alternative solution
+
+from collections import deque
+
+class Codec3:
+    def serialize(self, root: Optional[TreeNode]) -> str:
+        """Encodes a tree to a single string.
+        """   
+        if not root: return ""
+        string = []
+        bfs_queue = deque([root])
+        while bfs_queue:
+            node = bfs_queue.popleft()
+            if node:
+                string.append(str(node.val))
+                bfs_queue.extend([node.left, node.right])
+            else:
+                string.append("*")
+        return ' '.join(string)
+    
+    def deserialize(self, data: str) -> Optional[TreeNode]:
+        """Decodes your encoded data to tree.
+        """
+        if not data: return
+        levelorder = deque(data.split())
+        root_node = levelorder.popleft()
+        root = TreeNode(int(root_node))
+        queue = deque([root])
+        while queue:
+            node = queue.popleft()
+            if levelorder[0] != "*":
+                left = levelorder.popleft()
+                node.left = TreeNode(int(left))
+                queue.append(node.left)
+            else:
+                levelorder.popleft()
+            if levelorder[0] != "*":
+                right = levelorder.popleft()
+                node.right = TreeNode(int(right))
+                queue.append(node.right)
+            else:
+                levelorder.popleft()
+        return root

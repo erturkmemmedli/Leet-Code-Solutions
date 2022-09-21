@@ -1,4 +1,27 @@
-class Solution
+from collections import deque
+
+class Solution:
+    def longestOnes(self, nums: List[int], k: int) -> int:     
+        window = deque()
+        maximum = 0
+        i = 0
+        while i < len(nums):
+            while k > 0 and i < len(nums):
+                window.append(nums[i])
+                if i < len(nums) and nums[i] == 0:
+                    k -= 1
+                i += 1
+            while i < len(nums) and nums[i] == 1:
+                window.append(nums[i])
+                i += 1
+            maximum = max(maximum, len(window))
+            if i < len(nums) and nums[i] == 0 and window:
+                pop = window.popleft()
+                if pop == 0:
+                    k += 1
+            elif not window:
+                i += 1
+        return maximum
 
 # Alternative solution (which gives TLE error)
 

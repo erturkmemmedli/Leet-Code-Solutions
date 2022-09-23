@@ -23,3 +23,15 @@ class Solution1:
             x = x >> 1
             y = y >> 1
         return count
+    
+# Alternative solution
+
+class Solution2:
+    def hammingDistance(self, x: int, y: int) -> int:
+        xor = x ^ y
+        count = 0
+        while xor:
+            if xor & 1:
+                count += 1
+            xor >>= 1
+        return count

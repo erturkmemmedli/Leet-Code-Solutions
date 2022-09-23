@@ -65,3 +65,19 @@ class Solution2:
             self.connect(root.left)
             self.connect(root.right)
         return root
+
+# Alternative solution
+
+class Solution3:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if not root: return
+        head = root
+        while root:
+            current, root = root, root.left
+            while current:
+                if current.left:
+                    current.left.next = current.right
+                    if current.next:
+                        current.right.next = current.next.left
+                current = current.next
+        return head

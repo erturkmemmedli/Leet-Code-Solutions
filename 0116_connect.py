@@ -52,3 +52,16 @@ class Solution1:
             if next_level:
                 queue.append(next_level)
         return root
+
+# Alternative solution
+
+class Solution2:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if not root: return
+        if root.left:
+            root.left.next = root.right
+            if root.next:
+                root.right.next = root.next.left
+            self.connect(root.left)
+            self.connect(root.right)
+        return root

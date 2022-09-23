@@ -30,3 +30,25 @@ class Solution:
                     else:
                         break
         return root
+
+# Alternative solution
+
+from collections import deque
+
+class Solution1:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if not root: return
+        queue = deque([[root]])
+        while queue:
+            level = queue.popleft()
+            next_level = []
+            for i, node in enumerate(level):
+                if i + 1 < len(level):
+                    node.next = level[i+1]
+                if node.left:
+                    next_level.append(node.left)
+                if node.right:
+                    next_level.append(node.right)
+            if next_level:
+                queue.append(next_level)
+        return root

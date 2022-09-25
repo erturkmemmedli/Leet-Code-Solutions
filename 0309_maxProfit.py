@@ -1,6 +1,7 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         '''
+        at i-th stock, at most k transactions, 0/1 at the end means how many stocks left at hand
         k (number of transactions) is infinity here
         we have additional constraint such as cooldown
         T[i][k][0] = max(T[i-1][k][0], T[i-1][k][1] + prices[i])

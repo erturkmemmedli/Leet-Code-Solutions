@@ -1,23 +1,21 @@
 class Solution:
     def numTimesAllBlue(self, flips: List[int]) -> int:
-        stack = []
-        minimum = 1
-        prefix_aligned = 0
+        maximum, difference, minimum, prefix_aligned = None, None, 1, 0
         for flip in flips:
-            if flip == minimum and not stack:
+            if flip == minimum and not maximum:
                 prefix_aligned += 1
                 minimum += 1
                 continue
-            if not stack:
-                stack = [flip, flip - minimum]
+            if not maximum:
+                maximum, difference = flip, flip - minimum
             else:
-                if flip < stack[0]:
-                    stack[1] -= 1
+                if flip < maximum:
+                    difference -= 1
                 else:
-                    stack[1] = flip - stack[0] - 1 + stack[1]
-                    stack[0] = flip
-                if stack[1] == 0:
+                    difference = flip - maximum - 1 + difference
+                    maximum = flip
+                if difference == 0:
                     prefix_aligned += 1
-                    minimum = stack[0] + 1
-                    stack = []
+                    minimum = maximum + 1
+                    maximum, difference = None, None
         return prefix_aligned

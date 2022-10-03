@@ -76,3 +76,28 @@ class PreorderTraversalString:
     
     def show(self):
         return self.string
+
+# Alternative solution
+
+class Solution1:
+    def recoverFromPreorder(self, traversal: str) -> Optional[TreeNode]:
+        stack = []
+        i = 0
+        while i < len(traversal):
+            level = 0
+            value = ""
+            while i < len(traversal) and traversal[i] == '-':
+                level += 1
+                i += 1
+            while i < len(traversal) and traversal[i] != "-":
+                value += traversal[i]
+                i += 1
+            node = TreeNode(int(value))
+            while len(stack) > level:
+                stack.pop()
+            if stack and stack[-1].left is None:
+                stack[-1].left = node
+            elif stack:
+                stack[-1].right = node
+            stack.append(node)
+        return stack[0]

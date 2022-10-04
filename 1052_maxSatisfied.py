@@ -43,3 +43,22 @@ class Solution:
                 total -= customers[i]
                 max_customer = max(max_customer, temp + total)
         return max_customer
+
+# Alternative solution
+
+class Solution1:
+    def maxSatisfied(self, customers: List[int], grumpy: List[int], minutes: int) -> int:
+        n = len(customers)
+        maximum_customer = 0
+        for i in range(n):
+            if grumpy[i] == 0:
+                maximum_customer += customers[i]
+                customers[i] = 0
+        after_technique = 0
+        temp = 0
+        for i in range(n):
+            temp += customers[i]
+            if i >= minutes:
+                temp -= customers[i-minutes]
+            after_technique = max(after_technique, temp)
+        return maximum_customer + after_technique

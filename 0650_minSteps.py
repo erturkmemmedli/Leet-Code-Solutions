@@ -1,14 +1,9 @@
 class Solution:
-    def __init__(self):
-        self.condition = 1
-
     def minSteps(self, n: int) -> int:
         if n == 1:
             return 0
-        if self.condition:
-            dp = self.theSieveOfEratosthenes(n)
-            primes = [i for i in dp if i != float('inf')]
-            self.condition = 0
+        dp = self.theSieveOfEratosthenes(n)
+        primes = [i for i in dp if i != float('inf')]
         for i in range(2, n+1):
             if i in primes:
                 continue
@@ -29,3 +24,14 @@ class Solution:
                 for j in range(i, n-i+1, i):
                     table[j+i] = float('inf')
         return table
+
+# Alternative solution
+
+class Solution1:
+    def minSteps(self, n: int) -> int:
+        if n == 1:
+            return 0
+        for i in range(2, int(n ** 0.5) + 1):
+            if n % i == 0:
+                return i + self.minSteps(n//i)
+        return n

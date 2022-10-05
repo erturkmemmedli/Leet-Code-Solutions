@@ -3,35 +3,30 @@ class Solution:
         m = len(matrix)
         n = len(matrix[0])
         self.flag = False
-        row = self.binary_search_row(matrix, 0, m - 1, target)
+        row = self.binary_search_row(matrix, 0, m - 1, target, 0)
         if self.flag: return True
-        if row == -1: return False
-        for i in range(row + 1):
-            if matrix[i][-1] < target:
-                continue
-            elif matrix[i][-1] == target:
+        row_start = self.binary_search_row(matrix, 0, m - 1, target, -1)
+        for i in range(row_start, row + 1):
+            if self.binary_search_column(matrix[i], 0, n-1, target):
                 return True
-            else:
-                if self.binary_search_column(matrix[i], 0, n-1, target):
-                    return True
         return False
     
-    def binary_search_row(self, matrix, left, right, target):
+    def binary_search_row(self, matrix, left, right, target, ind):
         if left == right:
-            if matrix[left][0] > target:
+            if matrix[left][ind] > target:
                 return left - 1
             else:
                 return left
         if left > right:
             return right
         mid = (left + right) // 2
-        if matrix[mid][0] == target:
+        if matrix[mid][ind] == target:
             self.flag = True
             return mid
-        elif matrix[mid][0] < target:
-            return self.binary_search_row(matrix, mid + 1, right, target)
+        elif matrix[mid][ind] < target:
+            return self.binary_search_row(matrix, mid + 1, right, target, ind)
         else:
-            return self.binary_search_row(matrix, left, mid - 1, target)
+            return self.binary_search_row(matrix, left, mid - 1, target, ind)
 
     def binary_search_column(self, array, left, right, target):
         if left > right:
@@ -43,3 +38,27 @@ class Solution:
             return self.binary_search_column(array, mid + 1, right, target)
         else:
             return self.binary_search_column(array, left, mid - 1, target)
+        
+# Alternative solution
+
+class Solution1:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        m = len(matrix)
+        n = len(matrix[0])
+        i = 0
+        j = n-1
+        while i < m and j >= 0:
+            if matrix[i][j] == target:
+                return True
+            if matrix[i][j] > target:
+                j -= 1
+                continue
+            if i < m-1:
+                if matrix[i+1][j] <= target:
+                    i += 1
+                else:
+                    i += 1
+                    j -= 1
+            else:
+                j -= 1
+        return False

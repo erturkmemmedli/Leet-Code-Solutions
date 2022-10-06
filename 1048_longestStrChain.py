@@ -16,3 +16,20 @@ class Solution:
                 if words[i] not in dictionary:
                     dictionary[words[i]] = 1
         return max(dictionary.values())
+  
+# Alternative solution
+
+class Solution1:
+    def longestStrChain(self, words: List[str]) -> int:
+        words.sort(key = len)
+        hashmap = collections.defaultdict(int)
+        for word in words:
+            flag = False
+            for i, char in enumerate(word):
+                part = word[:i] + word[i+1:]
+                if part in hashmap:
+                    hashmap[word] = max(hashmap[word], hashmap[part] + 1)
+                    flag = True
+            if not flag:
+                hashmap[word] = 1
+        return max(hashmap.values())

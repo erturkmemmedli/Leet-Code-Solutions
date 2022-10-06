@@ -19,10 +19,25 @@ class Solution:
         negative = self.backtracing(nums, target, index + 1, currentSum - nums[index])
         self.memoization[(index, currentSum)] = positive + negative
         return self.memoization[(index, currentSum)]
+    
+# Alternative solution
+
+from collections import defaultdict
+
+class Solution1:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        hashmap = defaultdict(int, {0:1})
+        for num in nums:
+            level = defaultdict(int)
+            for key in hashmap:
+                level[key + num] += hashmap[key]
+                level[key - num] += hashmap[key]
+            hashmap = level
+        return hashmap[target]
 
 # Alternative solution (which gives TLE error)
 
-class Solution1:
+class Solution2:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
         self.output = 0
         self.visited = set()
@@ -42,23 +57,3 @@ class Solution1:
             return
         self.dfs(nums[1:], target, path + nums[0], pair + [nums[0]])
         self.dfs(nums[1:], target, path - nums[0], pair + [-nums[0]])
-
-# Alternative solution (which also gives TLE error)
-
-class Solution2:
-    def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        currentSum = 0
-        index = 0
-        zero_effect = 2 ** nums.count(0)
-        nums = [i for i in nums if i]
-        total = self.backtracing(nums, target, index, currentSum)
-        return total * zero_effect
-
-    def backtracing(self, nums, target, index, currentSum):
-        if index == len(nums) and currentSum == target:
-            return 1
-        if index == len(nums):
-            return 0
-        positive = self.backtracing(nums, target, index + 1, currentSum + nums[index])
-        negative = self.backtracing(nums, target, index + 1, currentSum - nums[index])
-        return positive + negative

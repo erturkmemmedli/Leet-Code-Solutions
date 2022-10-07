@@ -20,3 +20,20 @@ class Solution:
                     del(count[i])
                 stack = stack[:-k]
         return stack
+
+# Alternative solution
+
+class Solution1:
+    def removeDuplicates(self, s: str, k: int) -> str:
+        stack = []
+        for char in s:
+            if not stack or stack[-1][0] != char:
+                stack.append((char, 1))
+            else:
+                if stack[-1][0] == char:
+                    if stack[-1][1] == k - 1:
+                        stack = stack[:-k+1]
+                    else:
+                        stack.append((char, stack[-1][1] + 1))
+        stack = [i[0] for i in stack]
+        return "".join(stack)

@@ -7,7 +7,7 @@ class Solution:
         else: ones += 1
         for i in range(1, len(s)):
             if s[i] == '0':
-                if i > 0 and zeros < ones:
+                if zeros < ones:
                     flip = min(flip + 1, ones)
                 zeros += 1
             if s[i] == '1':

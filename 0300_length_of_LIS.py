@@ -28,3 +28,14 @@ class Solution1:
                 maximum = max(array[i], maximum)
             array[i] = maximum
         return max(array)
+
+# Alternative solution
+
+class Solution2:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        dp = [1] * (len(nums) + 1)
+        for i in range(2, len(nums) + 1):
+            for j in range(i-1, 0, -1):
+                if nums[i-1] > nums[j-1]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+        return max(dp)

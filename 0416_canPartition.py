@@ -13,3 +13,20 @@ class Solution:
             for item in hashset.copy():
                 hashset.add(item - num)
         return False
+
+# Alternative solution
+
+class Solution1:
+    def canPartition(self, nums: List[int]) -> bool:
+        total = sum(nums)
+        if total % 2 == 1: return False
+        half = total // 2
+        mxm = max(nums)
+        if mxm > half: return False
+        elif mxm == half: return True
+        dp = [False] * (half + 1)
+        dp[0] = True
+        for num in nums:
+            for i in range(half, num-1, -1):
+                dp[i] = dp[i] or dp[i - num]
+        return dp[half]

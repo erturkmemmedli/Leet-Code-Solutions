@@ -30,3 +30,23 @@ class Solution(object):
             if node.right:
                 Q[-1].append(node.right)
         return root
+
+# Alternative version
+
+class Solution1:
+    def connect(self, root: 'Node') -> 'Node':
+        if not root: return
+        queue = collections.deque([[root]])
+        while queue:
+            level = queue.popleft()
+            nextLevel = []
+            for i, node in enumerate(level):
+                if i < len(level) - 1:
+                    node.next = level[i+1]
+                if node.left:
+                    nextLevel.append(node.left)
+                if node.right:
+                    nextLevel.append(node.right)
+            if nextLevel:
+                queue.append(nextLevel)
+        return root

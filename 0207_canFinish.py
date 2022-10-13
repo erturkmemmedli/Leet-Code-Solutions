@@ -25,8 +25,6 @@ class Solution:
         
 # Alternative solution
 
-from collections import defaultdict
-
 class Solution1:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         adjacecy_matrix = [[] for _ in range(numCourses)]
@@ -38,11 +36,12 @@ class Solution1:
         visited = set()
         while queue:
             node = queue.popleft()
-            visited.add(node)
-            for neighbor in adjacecy_matrix[node]:
-                visit_counts[neighbor] -= 1
-                if visit_counts[neighbor] == -1:
-                    return False
-                if visit_counts[neighbor] == 0:
-                    queue.append(neighbor)
+            if node not in visited:
+                visited.add(node)
+                for neighbor in adjacecy_matrix[node]:
+                    visit_counts[neighbor] -= 1
+                    if visit_counts[neighbor] == -1:
+                        return False
+                    if visit_counts[neighbor] == 0:
+                        queue.append(neighbor)
         return len(visited) == numCourses

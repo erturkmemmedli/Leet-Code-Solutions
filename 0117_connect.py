@@ -50,3 +50,31 @@ class Solution1:
             if nextLevel:
                 queue.append(nextLevel)
         return root
+
+# Alternative solution
+
+class Solution2:
+    def connect(self, root: 'Node') -> 'Node':
+        if not root: return
+        if root.left and root.right:
+            root.left.next = root.right
+        next = root.next
+        while next and next.next:
+            if not next.left and not next.right:
+                next = next.next
+            else:
+                break
+        if next:
+            if root.right:
+                if next.left:
+                    root.right.next = next.left
+                else:
+                    root.right.next = next.right
+            elif root.left:
+                if next.left:
+                    root.left.next = next.left
+                else:
+                    root.left.next = next.right
+        right = self.connect(root.right)
+        left = self.connect(root.left)
+        return root

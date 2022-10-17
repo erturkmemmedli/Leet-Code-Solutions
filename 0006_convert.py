@@ -27,3 +27,23 @@ class Solution:
         for arr in array:
             result += ''.join(arr)
         return result
+    
+# Alternative solution
+
+class Solution1:
+    def convert(self, s: str, numRows: int) -> str:
+        zigzag = [[] for _ in range(numRows)]
+        i = 0
+        j = 0
+        while i < len(s):
+            while j < i + numRows and j < len(s):
+                zigzag[j - i].append(s[j])
+                j += 1
+            while j < i + 2 * numRows - 2 and j < len(s):
+                zigzag[numRows - j + i - 2].append(s[j])
+                j += 1
+            i = j
+        answer = ""
+        for l in zigzag:
+            answer += "".join(l)
+        return answer

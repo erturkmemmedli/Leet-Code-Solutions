@@ -3,7 +3,7 @@ class Solution:
         dp = [[0] * (n + 1) for _ in range(m + 1)]
         for s in strs:
             M = s.count('0')
-            N = s.count('1')
+            N = len(s) - M
             for i in range(m, M - 1, -1):
                 for j in range(n, N - 1, -1):
                     dp[i][j] = max(dp[i][j], 1 + dp[i - M][j - N])

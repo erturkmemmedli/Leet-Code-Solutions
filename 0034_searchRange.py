@@ -30,3 +30,11 @@ class Solution:
             return self.RightSearch(nums, target, left, mid - 1)
         if nums[mid] == target:
             return self.RightSearch(nums, target, mid, right)
+
+# Alternative solution
+
+class Solution1:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        left = bisect.bisect_left(nums, target)
+        right = bisect.bisect_right(nums, target)
+        return [-1, -1] if left == right else [left, right - 1]

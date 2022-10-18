@@ -38,3 +38,26 @@ class Solution2:
             if target == window:
                 return True
         return False
+
+# Alternative solution
+
+from collections import Counter, deque
+
+class Solution3:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        target = Counter(s1)
+        window = deque()
+        countWindow = Counter()
+        for char in s2:
+            if char not in target:
+                window = deque()
+                countWindow = Counter()
+            else:
+                if len(window) == len(s1):
+                    pop = window.popleft()
+                    if countWindow[pop] == 1: del countWindow[pop]
+                    else: countWindow[pop] -= 1
+                window.append(char)
+                countWindow[char] += 1
+                if countWindow == target: return True
+        return False

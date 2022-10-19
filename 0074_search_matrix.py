@@ -39,7 +39,9 @@ class Solution:
 class Solution1:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         firstIndices = [i[0] for i in matrix]
-        row = bisect.bisect_left(firstIndices, target) - 1
-        if row < 0: return True if matrix[row + 1][0] == target else False
+        row = bisect.bisect_left(firstIndices, target)
+        if row < len(matrix) and matrix[row][0] == target: return True
+        else: row -= 1
+        if row < 0: return False
         column = bisect.bisect_left(matrix[row], target)
-        return matrix[row][column] == target
+        return column < len(matrix[row]) and matrix[row][column] == target

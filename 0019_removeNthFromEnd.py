@@ -25,3 +25,26 @@ class Solution:
             head.next = head.next.next
             self.flag = False
         return head
+
+# Alternative solution
+
+class Solution1:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        prev = ListNode()
+        prev.next = head
+        current = head
+        deleted = head
+        c = 1
+        while current:
+            current = current.next
+            if current:
+                if c == n:
+                    prev = deleted
+                    deleted = deleted.next
+                if c < n:
+                    c += 1
+            else:
+                if prev.next == head:
+                    head = head.next
+                prev.next = deleted.next
+        return head

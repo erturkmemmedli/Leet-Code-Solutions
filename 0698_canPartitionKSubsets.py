@@ -1,21 +1,22 @@
-# Alternative solution (which gives TLE error)
-
 class Solution:
     def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
         s = sum(nums)
         if s % k != 0: return False
-        target = [s // k] * k
         nums.sort(reverse = True)
+        subsetSum = s // k
+        subset = [subsetSum] * k
         position = 0
-        return self.dfs(nums, k, target, position)
+        return self.dfs(nums, k, subsetSum, subset, position)
 
-    def dfs(self, nums, k, target, position):
+    def dfs(self, nums, k, subsetSum, subset, position):
         if position == len(nums):
             return True
         for i in range(k):
-            if target[i] >= nums[position]:
-                target[i] -= nums[position]
-                if self.dfs(nums, k, target, position + 1):
+            if subset[i] >= nums[position]:
+                subset[i] -= nums[position]
+                if self.dfs(nums, k, subsetSum, subset, position + 1):
                     return True
-                target[i] += nums[position]
+                subset[i] += nums[position]
+                if subset[i] == subsetSum:
+                    break
         return False

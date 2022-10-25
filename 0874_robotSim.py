@@ -87,13 +87,10 @@ class Solution1:
             if 1 <= command <= 9:
                 if compass[0]:
                     y = self.calculate(x, y, y_direction, min, command, 0, -1)
-
                 elif compass[1]:
                     y = self.calculate(x, y, y_direction, max, -command, -1, 1)
-
                 elif compass[2]:
                     x = self.calculate(y, x, x_direction, min, command, 0, -1)
-
                 elif compass[3]:
                     x = self.calculate(y, x, x_direction, max, -command, -1, 1)
                 maxx = max(maxx, x ** 2 + y ** 2)
@@ -128,7 +125,6 @@ class Solution1:
         else:
             var_2 += factor_1
         return var_2
-
     
 # Alternative solution
 

@@ -149,3 +149,77 @@ class Solution2:
                     y += dy
                     maxx = max(maxx, x**2 + y**2)  
         return maxx
+
+# Alternative solution
+
+from collections import defaultdict as D
+from sortedcontainers import SortedList as L
+from bisect import bisect_left as B
+
+class Solution3:
+    def robotSim(self, commands: list, obstacles: list) -> int:
+        xObstacles, yObstacles = D(L), D(L)
+        for a, b in obstacles:
+            xObstacles[a].add(b)
+            yObstacles[b].add(a)
+        maxDistance = 0
+        north, south, east, west = [0, 1], [0, -1], [1, 0], [-1, 0]
+        direction = north
+        x, y = 0, 0
+        for command in commands:
+            if command == -2:
+                if direction == north: direction = west
+                elif direction == south: direction = east
+                elif direction == east: direction = north
+                elif direction == west: direction = south
+                continue
+            if command == -1:
+                if direction == north: direction = east
+                elif direction == south: direction = west
+                elif direction == east: direction = south
+                elif direction == west: direction = north
+                continue
+            else:
+                print(direction)
+                if direction[1] > 0:
+                    if not obstacles or x not in xObstacles:
+                        y += command
+                    else:
+                        i = B(xObstacles[x], y)
+                        if i <= len(xObstacles[x]) - 1 and xObstacles[x][i] != x:
+                            bound = xObstacles[x][i] - 1
+                            y = min(y + command, bound)
+                        else:
+                            y += command
+                elif direction[1] < 0:
+                    if not obstacles or x not in xObstacles:
+                        y -= command
+                    else:
+                        i = B(xObstacles[x], y)
+                        if i > 0:
+                            bound = xObstacles[x][i - 1] + 1
+                            y = max(y - command, bound)
+                        else:
+                            y -= command
+                elif direction[0] > 0:
+                    if not obstacles or y not in yObstacles:
+                        x += command
+                    else:
+                        i = B(yObstacles[y], x)
+                        if i <= len(yObstacles[y]) - 1 and yObstacles[y][i] != y:
+                            bound = yObstacles[y][i] - 1
+                            x = min(x + command, bound)
+                        else:
+                            x += command
+                elif direction[0] < 0:
+                    if not obstacles or y not in yObstacles:
+                        x -= command
+                    else:
+                        i = B(yObstacles[y], x)
+                        if i > 0:
+                            bound = yObstacles[y][i - 1] + 1
+                            x = max(x - command, bound)
+                        else:
+                            x -= command
+                maxDistance = max(maxDistance, x ** 2 + y ** 2)
+        return maxDistance

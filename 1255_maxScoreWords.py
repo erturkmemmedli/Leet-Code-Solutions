@@ -11,7 +11,6 @@ class Solution:
         return score[ord(char) - 97]
 
     def combination(self, words, score, countLetters, path):
-        print(words, countLetters, path)
         if not words:
             total = sum([self.getScore(score, char) for word in path for char in word])
             self.output = max(self.output, total)

@@ -18,7 +18,8 @@ class MyCircularQueue:
             self.tail = self.head
         else:
             self.tail.next = ListNode(value)
-            self.tail = self.tail.next            
+            self.tail = self.tail.next
+        self.tail.next = self.head   
         self.length += 1
         return True
 
@@ -30,6 +31,8 @@ class MyCircularQueue:
             self.tail = None
         else:
             self.head = self.head.next
+        if self.tail:
+            self.tail.next = self.head
         self.length -= 1
         return True
 

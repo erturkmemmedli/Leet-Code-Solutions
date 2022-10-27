@@ -39,21 +39,22 @@ class Solution1:
         return self.output
 
     def dfs(self, string, path):
-        if ".".join(path) not in self.output:
-            if len(path) == 4:
-                self.output.add(".".join(path))
-                return
-            for _ in range(4):
-                if len(path) < 3:
-                    if string and string[0] != '0':
-                        self.dfs(string[1:], path + [string[:1]])
-                        self.dfs(string[2:], path + [string[:2]])
-                        if int(string[:3]) <= 255:
-                            self.dfs(string[3:], path + [string[:3]])
-                    else:
-                        self.dfs(string[1:], path + [string[:1]])
+        if len(path) == 4 and ".".join(path) not in self.output:
+            self.output.add(".".join(path))
+            return
+        for _ in range(4):
+            if len(path) < 3:
+                if not string:
+                    return
+                elif string[0] != '0':
+                    self.dfs(string[1:], path + [string[:1]])
+                    self.dfs(string[2:], path + [string[:2]])
+                    if int(string[:3]) <= 255:
+                        self.dfs(string[3:], path + [string[:3]])
                 else:
-                    if len(string) == 0 or len(string) > 3 or (len(string) > 1 and string[0] == '0') or int(string[:3]) > 255:
-                        return
-                    else:
-                        self.dfs([], path + [string])
+                    self.dfs(string[1:], path + [string[:1]])
+            else:
+                if len(string) == 0 or len(string) > 3 or (len(string) > 1 and string[0] == '0') or int(string[:3]) > 255:
+                    return
+                else:
+                    self.dfs([], path + [string])

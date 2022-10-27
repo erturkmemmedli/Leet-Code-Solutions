@@ -50,8 +50,6 @@ class Solution1:
                         self.dfs(string[2:], path + [string[:2]])
                         if int(string[:3]) <= 255:
                             self.dfs(string[3:], path + [string[:3]])
-                        else:
-                            return
                     else:
                         self.dfs(string[1:], path + [string[:1]])
                 else:

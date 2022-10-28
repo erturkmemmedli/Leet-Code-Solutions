@@ -24,3 +24,27 @@ class Solution:
                         Q.append(neighbor)
                         visited[neighbor] = False
         return -1 if max(distance) == float('inf') else max(distance)
+
+# Alternative solution
+
+from collections import deque
+
+class Solution1:
+    def networkDelayTime(self, times, n, k):
+        graph = [[] for _ in range(n)]
+        cost = [[] for _ in range(n)]
+        for u, v, w in times:
+            graph[u - 1].append(v - 1)
+            cost[u - 1].append(w)
+        print(graph, cost)
+        distance = [inf] * n
+        distance[k - 1] = 0
+        queue = deque([k - 1])
+        while queue:
+            node = queue.popleft()
+            for i, neighbor in enumerate(graph[node]):
+                if distance[neighbor] > distance[node] + cost[node][i]:
+                    distance[neighbor] = distance[node] + cost[node][i]
+                    queue.append(neighbor)
+        delayTime = max(distance)
+        return delayTime if delayTime != inf else -1

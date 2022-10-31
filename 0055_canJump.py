@@ -20,3 +20,21 @@ class Solution1:
                 if index + i == len(nums) - 1 or (index + i < len(nums) and nums[index + i] != 0):
                     bfsQueue.append((index + i, nums[index + i]))
         return False
+
+# Alternative colution
+
+class Solution2:
+    def canJump(self, nums: List[int]) -> bool:
+        if len(nums) == 1: return True
+        i = 0
+        while i < len(nums):
+            if nums[i] == 0:
+                return False
+            mxm = nums[i]
+            for j in range(i + 1, i + nums[i] + 1):
+                if j + nums[j] >= len(nums) - 1:
+                    return True
+                if j + nums[j] >= mxm:
+                    mxm = j + nums[j]
+                    i = j
+        return True

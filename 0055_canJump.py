@@ -38,3 +38,17 @@ class Solution2:
                     mxm = j + nums[j]
                     i = j
         return True
+
+# Alterntaive solution
+
+class Solution3:
+    def canJump(self, nums: List[int]) -> bool:
+        if len(nums) == 1: return True
+        travel = 0
+        for i in range(len(nums) - 1):
+            if nums[i] == 0:
+                if travel <= i:
+                    return False
+            travel = max(travel, i + nums[i])
+            if travel >= len(nums) - 1: return True
+        return False

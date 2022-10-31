@@ -35,3 +35,30 @@ class Solution(object):
                 node.val = 1
                 return node	
             return
+
+# Alternative solution
+
+class Solution1:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        self.remain = 0
+        return self.add(l1, l2, ListNode())
+
+    def add(self, first, second, root):
+        if first and second:
+            total = first.val + second.val + self.remain
+            self.remain = total // 10
+            root.next = ListNode(total % 10)
+            self.add(first.next, second.next, root.next)
+        elif first:
+            total = first.val + self.remain
+            self.remain = total // 10
+            root.next = ListNode(total % 10)
+            self.add(first.next, None, root.next)
+        elif second:
+            total = second.val + self.remain
+            self.remain = total // 10
+            root.next = ListNode(total % 10)
+            self.add(second, None, root.next)
+        elif self.remain:
+            root.next = ListNode(self.remain)
+        return root.next

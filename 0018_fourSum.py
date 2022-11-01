@@ -34,3 +34,47 @@ class Solution:
                 trgt = target - num
                 self.threeSum(nums, trgt, ex4, output) 
         return [list(i) for i in output]
+
+# Alternative solution
+
+class Solution1:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        result = set()
+        visited = set()
+        for i in range(len(nums)):
+            if nums[i] in visited:
+                continue
+            visited.add(nums[i])
+            new_target = target - nums[i]
+            possible = self.threeSum(nums, new_target, i)
+            for a, b, c in possible:
+                result.add(tuple(sorted([nums[i], a, b, c])))
+        return result
+
+    def threeSum(self, nums, target, ex):
+        result = set()
+        visited = set()
+        for i in range(len(nums)):
+            if i == ex or nums[i] in visited:
+                continue
+            visited.add(nums[i])
+            new_target = target - nums[i]
+            possible = self.twoSum(nums, new_target, ex, i)
+            for a, b in possible:
+                result.add(tuple(sorted([nums[i], a, b])))
+        return result
+
+    def twoSum(self, nums, target, ex1, ex2):
+        dictionary = set()
+        result = set()
+        visited = set()
+        for i, num in enumerate(nums):
+            if i == ex1 or i == ex2 or num in visited:
+                continue
+            if num not in dictionary:
+                dictionary.add(target - num)
+            else:
+                result.add(tuple(sorted([target - num, num])))
+                visited.add(target - num)
+                visited.add(num)
+        return result

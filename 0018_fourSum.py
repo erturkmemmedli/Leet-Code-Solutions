@@ -78,3 +78,31 @@ class Solution1:
                 visited.add(target - num)
                 visited.add(num)
         return result
+
+# Alternative solution
+
+class Solution2:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        def twoSum(first, second, nums, target):
+            dictionary = set()
+            visited = set()
+            for num in nums:
+                if num in visited:
+                    continue
+                if num not in dictionary:
+                    dictionary.add(target - num)
+                else:
+                    result.append([first, second, target - num, num])
+                    visited.add(target - num)
+                    visited.add(num)
+        nums.sort()
+        visited = set()
+        result = []
+        for i in range(len(nums)):
+            for j in range(i + 1, len(nums)):
+                if (nums[i], nums[j]) in visited:
+                    continue
+                visited.add((nums[i], nums[j]))
+                new_target = target - nums[i] - nums[j]
+                twoSum(nums[i], nums[j], nums[j+1:], new_target)
+        return result

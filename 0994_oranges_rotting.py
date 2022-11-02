@@ -25,7 +25,7 @@ class Solution:
 
 from collections import deque
 
-class Solution2:
+class Solution1:
     def orangesRotting(self, grid: List[List[int]]) -> int:
         m = len(grid)
         n = len(grid[0])
@@ -58,3 +58,30 @@ class Solution2:
                 Queue.append(new_rotten_oranges)
                 minute += 1
         return minute if len(visited) == orangeCount else -1
+
+# Alternative solution
+
+class Solution2:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        queue = collections.deque()
+        distance = {}
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 2:
+                    queue.append((i, j))
+                    distance[(i, j)] = 0
+                if grid[i][j] == 1:
+                    distance[(i, j)] = math.inf
+        visited = set()
+        while queue:
+            row, col = queue.popleft()
+            if (row, col) not in visited:
+                visited.add((row, col))
+                for r, c in (row-1, col), (row+1, col), (row, col-1), (row, col+1):
+                    if m > r >= 0 <= c < n and grid[r][c] == 1 and (r, c) not in visited:
+                        distance[(r, c)] = min(distance[(r, c)], distance[(row, col)] + 1)
+                        queue.append((r, c))
+        minimumTime = max(distance.values() or [0])
+        return minimumTime if minimumTime != math.inf else -1

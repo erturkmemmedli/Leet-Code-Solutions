@@ -26,17 +26,17 @@ class MyCalendarThree1:
         self.lazy = collections.defaultdict(int)
 
     def book(self, startTime: int, endTime: int) -> int:
-        self.updateSegmentTreeWithLazyPropagation(startTime, endTime - 1)
+        self.updateSegmentTreeWithLazyPropagation(startTime, endTime)
         return self.segment[1]
 
     def updateSegmentTreeWithLazyPropagation(self, start, end, left = 0, right = 10 ** 9, index = 1):
-        if right < start or left > end:
+        if right <= start or left >= end:
             return
-        if start <= right <= left <= end:
+        if start <= left < right <= end:
             self.segment[index] += 1
             self.lazy[index] += 1
         else:
             mid = (left + right) // 2
             self.updateSegmentTreeWithLazyPropagation(start, end, left, mid, 2 * index)
-            self.updateSegmentTreeWithLazyPropagation(start, end, mid + 1, right, 2 * index + 1)
+            self.updateSegmentTreeWithLazyPropagation(start, end, mid, right, 2 * index + 1)
             self.segment[index] = self.lazy[index] + max(self.segment[2 * index], self.segment[2 * index + 1])

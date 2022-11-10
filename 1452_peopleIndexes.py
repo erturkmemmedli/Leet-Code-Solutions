@@ -26,3 +26,21 @@ class Solution:
         for i in range(len(string)):
             hashValue = (hashValue + ord(string[i]) * (self.prime ** i)) % self.multiplyer
         return hashValue
+
+# Alternative solution
+
+class Solution1:
+    def peopleIndexes(self, favoriteCompanies: List[List[str]]) -> List[int]:
+        n = len(favoriteCompanies)
+        hashmap = [set(i) for i in favoriteCompanies]
+        result = []
+        for i in range(n):
+            isSubset = False
+            for j in range(n):
+                if i != j:
+                    if len(hashmap[i] - hashmap[j]) == 0:
+                        isSubset = True
+                        break
+            if not isSubset:
+                result.append(i)
+        return result

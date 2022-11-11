@@ -43,3 +43,25 @@ class Solution1:
                     if col < n - 1 and mat[row][col] > mat[row][col+1]:
                         mat[row][col] = mat[row][col+1] + 1
         return mat
+
+# Alternative solution
+
+class Solution1:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        m = len(mat)
+        n = len(mat[0])
+        visited = set()
+        queue = collections.deque()
+        for i in range(m):
+            for j in range(n):
+                if mat[i][j] == 0:
+                    queue.append((i, j))
+                    visited.add((i, j))
+        while queue:
+            r, c = queue.popleft()
+            for row, col in (r-1, c), (r+1, c), (r, c-1), (r, c+1):
+                if m > row >= 0 <= col < n and (row, col) not in visited:
+                    mat[row][col] =  mat[r][c] + 1
+                    queue.append((row, col))
+                    visited.add((row, col))
+        return mat

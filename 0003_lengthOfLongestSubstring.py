@@ -12,7 +12,6 @@ class Solution(object):
             maximum = max(maximum, end - start)
         return maximum
 
-   
 # Alternative solution
 
 class Solution1(object):
@@ -28,3 +27,19 @@ class Solution1(object):
                 string = string[string.index(s[i]) + 1:]
                 string += s[i]
         return maximum
+
+# Alternative solution
+
+class Solution2:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        start = 0
+        longest = 0
+        hashmap = {}
+        for i, char in enumerate(s):
+            if char not in hashmap:
+                hashmap[char] = [i]
+            else:
+                hashmap[char].append(i)
+                start = max(start, hashmap[char][-2] + 1)
+            longest = max(longest, i - start + 1)
+        return longest

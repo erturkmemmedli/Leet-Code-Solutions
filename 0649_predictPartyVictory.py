@@ -52,3 +52,24 @@ class Solution:
                 if party == "D":
                     radiant, dire = helper(party, radiant, dire)
         return stack, radiant, dire
+
+# Alternative solution
+
+class Solution1:
+    def predictPartyVictory(self, senate: str) -> str:
+        radiant = collections.deque()
+        dire = collections.deque()
+        for i, party in enumerate(senate):
+            if party == 'R':
+                radiant.append(i)
+            if party == 'D':
+                dire.append(i)
+        n = len(senate)
+        while radiant and dire:
+            r = radiant.popleft()
+            d = dire.popleft()
+            if r < d:
+                radiant.append(n + r)
+            else:
+                dire.append(n + d)
+        return "Radiant" if radiant else "Dire"

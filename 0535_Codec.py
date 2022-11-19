@@ -19,7 +19,7 @@ class Codec:
 import random
 import string
 
-class Codec:
+class Codec1:
     def __init__(self):
         self._encode = {}
         self._decode = {}

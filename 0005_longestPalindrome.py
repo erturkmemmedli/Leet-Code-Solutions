@@ -80,3 +80,21 @@ class Solution2:
                 right = palindrom[i] + i
         length, index = max((p, i) for i, p in enumerate(palindrom))
         return string[index - length + 1: index + length : 2]
+
+# Alternative solution
+
+class Solution3:
+    def longestPalindrome(self, s: str) -> str:
+        self.palindrome = ""
+        for i in range(len(s)):
+            # odd palindrome
+            self.find(s, i, i)
+            # even paindrome
+            self.find(s, i, i + 1)
+        return self.palindrome
+
+    def find(self, s, left, right):
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            if (right - left + 1) > len(self.palindrome):
+                self.palindrome = s[left : right + 1]
+            left, right = left - 1, right + 1

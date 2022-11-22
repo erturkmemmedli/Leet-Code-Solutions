@@ -38,3 +38,20 @@ class Solution:
                     result += provider
                     window.append(num)
         return result
+
+# Alternative solution
+
+class Solution1
+    def numSubarraysWithSum(self, nums: List[int], goal: int) -> int:
+        left, result, total, count = 0, 0, 0, 0
+        for right, num in enumerate(nums):
+            total += num
+            if num == 1:
+                count = 0
+            while total >= goal and left <= right:
+                if total == goal:
+                    count += 1
+                total -= nums[left]
+                left += 1
+            result += count
+        return result

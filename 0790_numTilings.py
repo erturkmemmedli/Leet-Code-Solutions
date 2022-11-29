@@ -11,7 +11,7 @@ class Solution:
 
 # Alternative solution
 
-class Solution:
+class Solution1:
     def numTilings(self, n: int) -> int:
         if n < 3: return n
         a, b, c = 1, 1, 2

@@ -8,3 +8,13 @@ class Solution:
             dp.popleft()
             dp.append([first, second])
         return dp[-1][0] % (10**9 + 7)
+
+# Alternative solution
+
+class Solution:
+    def numTilings(self, n: int) -> int:
+        if n < 3: return n
+        a, b, c = 1, 1, 2
+        for _ in range(n - 2):
+            a, b, c, = b, c, 2 * c + a
+        return c % 1000000007

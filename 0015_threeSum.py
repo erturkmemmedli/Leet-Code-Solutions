@@ -22,3 +22,28 @@ class Solution:
                 my_dict[target] = True
                 my_set = self.twoSum(nums, target, exception, my_set)
         return [list(i) for i in my_set]
+
+# Alternative solution
+
+class Solution1:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        self.output = set()
+        for i in range(len(nums)):
+            if i == 0:
+                self.twoSum(nums[1:], -nums[0])
+            elif nums[i] != nums[i-1]:
+                self.twoSum(nums[:i] + nums[i+1:], -nums[i])
+        return self.output
+                    
+    def twoSum(self, nums, target):
+        i, j = 0, len(nums) - 1
+        while i < j:
+            if nums[i] + nums[j] > target:
+                j -= 1
+            elif nums[i] + nums[j] < target:
+                i += 1
+            else:
+                self.output.add(tuple(sorted([-target, nums[i], nums[j]])))
+                i += 1
+                j -= 1

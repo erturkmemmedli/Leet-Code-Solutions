@@ -38,3 +38,16 @@ class Solution1:
         if len(List) > 1 and List[-1] <= List[-2]:
             self.flag = False
         if root.right: self.inorderTraversal(root.right, List)
+
+# Alternative solution
+
+class Solution2:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        return self.dfs(root, -inf, inf)
+
+    def dfs(self, root, mnm, mxm):
+        if not root:
+            return True
+        if (root.left and not mnm < root.left.val < root.val) or (root.right and not root.val < root.right.val < mxm):
+            return False
+        return self.dfs(root.left, mnm, root.val) and self.dfs(root.right, root.val, mxm)

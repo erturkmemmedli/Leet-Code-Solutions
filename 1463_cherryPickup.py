@@ -18,10 +18,36 @@ class Solution:
             return answer + totalCherry
             
         return dfs(0, 0, n-1)
+    
+# Alternative solution
+
+class Solution1:
+    def cherryPickup(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        self.memo = {}
+
+        def dfs(row, col1, col2):
+            if (row, col1, col2) in self.memo:
+                return self.memo[(row, col1, col2)]
+            if row == m:
+                return 0
+            if col1 != col2:
+                totalCherry = grid[row][col1] + grid[row][col2]
+            else:
+                totalCherry = grid[row][col1]
+            answer = 0
+            for c1 in range(col1-1, col1+2):
+                for c2 in range(col2-1, col2+2):
+                    if 0 <= c1 < n and 0 <= c2 < n:
+                        answer = max(answer, dfs(row+1, c1, c2))
+            self.memo[(row, col1, col2)] = answer + totalCherry
+            return answer + totalCherry
+
+        return dfs(0, 0, n-1)
 
 # Alternative solution (which gives TLE error)
 
-class Solution1:
+class Solution2:
     def cherryPickup(self, grid: List[List[int]]) -> int:
         m, n = len(grid), len(grid[0])
         self.maxPickup = 0
@@ -45,11 +71,10 @@ class Solution1:
                     
 # Alternative solution (which gives TLE error)
 
-class Solution2:
+class Solution3:
     def cherryPickup(self, grid: List[List[int]]) -> int:
         m, n, self.maxPickup = len(grid), len(grid[0]), 0
 
-        @lru_cache
         def dfs(row, col1, col2, count1, count2):
             if row == m-1:
                 self.maxPickup = max(self.maxPickup, count1 + count2)

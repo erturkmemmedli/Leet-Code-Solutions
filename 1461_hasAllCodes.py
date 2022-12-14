@@ -16,3 +16,20 @@ class Solution1:
         for i in range(0, len(s)-k+1):
             hashset.add(s[i:i+k])
         return len(hashset) == 2 ** k
+
+# Alternative solution
+
+class Solution2:
+    def hasAllCodes(self, s: str, k: int) -> bool:
+        total = 1 << k
+        isContained = set()
+        binaryOnes = total - 1
+        hashValue = 0
+        for i in range(len(s)):
+            hashValue = (hashValue << 1) & binaryOnes | int(s[i])
+            if i >= k - 1 and hashValue not in isContained:
+                isContained.add(hashValue)
+                total -= 1
+                if total == 0:
+                    return True
+        return False

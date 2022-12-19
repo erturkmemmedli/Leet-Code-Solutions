@@ -81,7 +81,7 @@ class Solution2:
             pre = node
         return dummy.next
 
-# Alernative solution:
+# Alternative solution
 
 class Solution3:
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
@@ -98,3 +98,41 @@ class Solution3:
             curr = nxt
         head.next = self.reverseKGroup(curr, k)
         return prev
+
+# Alternative solution
+
+class Solution4:
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if k == 1: return head
+        length = self.findLength(head)
+        reverseCount = length // k
+        temp, finalHead, finalTail = head, None, None
+        while reverseCount:
+            reverseCount -= 1
+            newHead, newTail, newNext = self.determineHeadAndTail(temp, k)
+            if not finalHead:
+                finalHead = newHead
+            if not finalTail:
+                finalTail = newTail
+            else:
+                finalTail.next = newHead
+                finalTail = newTail
+            temp = newNext
+        finalTail.next = newNext
+        return finalHead
+
+    def findLength(self, node):
+        temp, length = node, 0
+        while temp:
+            temp, length = temp.next, length + 1
+        return length
+
+    def determineHeadAndTail(self, node, k):
+        prev, curr = None, node
+        while k:
+            k -= 1
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        return prev, node, curr

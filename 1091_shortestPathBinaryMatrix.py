@@ -22,7 +22,7 @@ class Solution:
 
 # Alternative solution
 
-class Solution:
+class Solution1:
     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
         if grid[0][0] == 1 or grid[-1][-1] == 1: return -1
         n = len(grid)
@@ -36,4 +36,23 @@ class Solution:
                 if 0 <= row < n > col >= 0 and (row, col) not in visited and grid[row][col] == 0:
                     heapq.heappush(heap, (distance + 1, row, col))
                     visited.add((row, col))
+        return -1
+
+# Alternative solution
+
+class Solution2:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        if grid[0][0] == 1 or grid[-1][-1] == 1: return -1
+        n = len(grid)
+        heap = [(1, 0, 0)]
+        visited = {(0, 0)}
+        directions = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]
+        while heap:
+            distance, row, col = heapq.heappop(heap)
+            if row == n - 1 and col == n - 1:
+                return distance
+            for i, j in directions:
+                if 0 <= row + i < n > col + j >= 0 and (row + i, col + j) not in visited and grid[row + i][col + j] == 0:
+                    heapq.heappush(heap, (distance + 1, row + i, col + j))
+                    visited.add((row + i, col + j))
         return -1

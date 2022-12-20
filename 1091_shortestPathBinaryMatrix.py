@@ -19,3 +19,21 @@ class Solution:
                             Q.append((ix, jx))
                         distance[ix][jx] = min(distance[ix][jx], distance[i][j] + 1)
         return distance[-1][-1] if distance[-1][-1] != float('inf') else -1
+
+# Alternative solution
+
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        if grid[0][0] == 1 or grid[-1][-1] == 1: return -1
+        n = len(grid)
+        heap = [(1, 0, 0)]
+        visited = {(0, 0)}
+        while heap:
+            distance, r, c = heapq.heappop(heap)
+            if r == n - 1 and c == n - 1:
+                return distance
+            for row, col in [r-1,c-1],[r-1,c],[r-1,c+1],[r,c-1],[r,c+1],[r+1,c-1],[r+1,c],[r+1,c+1]:
+                if 0 <= row < n > col >= 0 and (row, col) not in visited and grid[row][col] == 0:
+                    heapq.heappush(heap, (distance + 1, row, col))
+                    visited.add((row, col))
+        return -1

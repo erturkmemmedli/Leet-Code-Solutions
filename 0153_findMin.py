@@ -7,7 +7,7 @@ class Solution:
         val = nums[mid]
         if left == right:
             return val
-        if val >= nums[0] and nums[0] > nums[-1]:
+        if val >= nums[left] and nums[left] > nums[right]:
             return self.binary_search(nums, mid + 1, right)
         else:
             return self.binary_search(nums, left, mid)

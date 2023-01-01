@@ -28,3 +28,19 @@ class Solution1:
             else:
                 if D[char] != S[i]: return False
         return True
+
+# Alternative solution
+
+class Solution2:
+    def wordPattern(self, pattern: str, s: str) -> bool:
+        s = s.split()
+        if len(pattern) != len(s): return False
+        charmap = {}
+        wordmap = {}
+        for i, char in enumerate(pattern):
+            if char not in charmap and s[i] not in wordmap:
+                charmap[char] = s[i]
+                wordmap[s[i]] = char
+            elif (char in charmap and charmap[char] != s[i]) or (s[i] in wordmap and wordmap[s[i]] != char):
+                return False
+        return True

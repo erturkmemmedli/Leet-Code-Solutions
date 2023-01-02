@@ -21,3 +21,15 @@ class Solution1:
                     for j in range(2, len(word)):
                         if word[j].islower(): return False
         return True
+
+# Alternative solution
+
+class Solution2:
+    def detectCapitalUse(self, word: str) -> bool:
+        count = 0
+        for char in word:
+            if 65 <= ord(char) <= 90:
+                count += 1
+        if len(word) == count or not count: return True
+        elif count > 1: return False
+        else: return word[0].isupper()

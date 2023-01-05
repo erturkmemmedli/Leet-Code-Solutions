@@ -11,5 +11,5 @@ class Solution:
         if count: contiguousOnes.append(count)
         result = 0
         for num in contiguousOnes:
-            result += num * (num + 1) // 2 % 1_000_000_007
-        return result
+            result += num * (num + 1) // 2
+        return result % 1_000_000_007

@@ -30,3 +30,27 @@ class Solution:
                     determineSuitability(r, c)
 
         return volumeOfWater
+
+# Alternative solution
+
+class Solution1:
+    def trapRainWater(self, heightMap: List[List[int]]) -> int:
+        m, n = len(heightMap), len(heightMap[0])
+        heap = []
+        for i in range(m):
+            for j in range(n):
+                if i == 0 or i == m-1 or j == 0 or j == n-1:
+                    heapq.heappush(heap, (heightMap[i][j], i, j))
+                    heightMap[i][j] = -1
+        currentLevel = 0
+        volumeOfWater = 0
+        while heap:
+            height, i, j = heapq.heappop(heap)
+            currentLevel = max(currentLevel, height)
+            for r, c in [i-1, j], [i+1, j], [i, j-1], [i, j+1]:
+                if m > r >= 0 <= c < n and heightMap[r][c] != -1:
+                    heapq.heappush(heap, (heightMap[r][c], r, c))
+                    if heightMap[r][c] < currentLevel:
+                        volumeOfWater += currentLevel - heightMap[r][c]
+                    heightMap[r][c] = -1
+        return volumeOfWater

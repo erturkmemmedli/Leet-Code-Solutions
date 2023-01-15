@@ -38,3 +38,29 @@ class Solution1:
         left = bisect.bisect_left(nums, target)
         right = bisect.bisect_right(nums, target)
         return [-1, -1] if left == right else [left, right - 1]
+
+# Alternative solution
+
+class Solution:
+    def searchRange(self, nums, target):
+        result = [-1, -1]
+        result[0] = self.binarySearch(nums, target, True)
+        result[1] = self.binarySearch(nums, target, False)
+        return result
+        
+    def binarySearch(self, nums, target, findFirstIndex):
+        targetIndex = -1
+        left, right = 0, len(nums) - 1
+        while left <= right:
+            mid = left + (right - left) // 2
+            if nums[mid] == target:
+                targetIndex = mid
+                if findFirstIndex:
+                    right = mid - 1
+                else:
+                    left = mid + 1
+            elif nums[mid] > target:
+                right = mid - 1
+            else:
+                left = mid + 1
+        return targetIndex

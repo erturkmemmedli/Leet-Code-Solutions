@@ -19,3 +19,15 @@ class Solution:
                 if summ / k >= threshold:
                     count += 1
         return count
+
+# Alternative solution
+
+class Solution:
+    def numOfSubarrays(self, arr, k, threshold):
+        windowSum = sum(arr[:k])
+        count = 1 if windowSum / k >= threshold else 0
+        for i in range(len(arr) - k):
+            windowSum += arr[i + k] - arr[i]
+            if windowSum / k >= threshold:
+                count += 1
+        return count

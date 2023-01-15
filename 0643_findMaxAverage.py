@@ -7,3 +7,15 @@ class Solution:
             s = s + nums[i] - nums[i-k]
             avg = max(avg, s / k)
         return avg
+
+# Alternative solution
+
+class Solution:
+    def findMaxAverage(self, nums, k):
+        maxAverage = -float("inf")
+        windowSum = sum(nums[:k])
+        maxAverage = max(maxAverage, windowSum / k)
+        for i in range(len(nums) - k):
+            windowSum += nums[i + k] - nums[i]
+            maxAverage = max(maxAverage, windowSum / k)
+        return maxAverage

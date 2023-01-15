@@ -40,3 +40,11 @@ class Solution2:
             tail += 1
             head -= 1
         return True
+
+# Alternative solution
+
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        if x < 0: return False
+        s = str(x)
+        return s == s[::-1]

@@ -76,4 +76,5 @@ class Solution:
                     if nums[left] == 0:
                         zeroCount -= 1
                     left += 1
+        maxLength = max(maxLength, right - left + 1)    
         return maxLength

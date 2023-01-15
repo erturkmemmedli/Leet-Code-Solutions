@@ -22,3 +22,16 @@ class Solution1:
             if val:
                 count += (val * (val + 1) // 2)
         return count
+
+# Alternative solution
+
+from collections import Counter
+
+class Solution:
+    def numIdenticalPairs(self, nums):
+        counter = Counter(nums)
+        answer = 0
+        for key, val in counter.items():
+            if val > 1:
+                answer += (val - 1) * val // 2
+        return answer

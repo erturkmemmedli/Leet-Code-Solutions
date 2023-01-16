@@ -2,4 +2,3 @@
 - [NeetCode](https://neetcode.io/)
 - [Nick White](https://www.youtube.com/playlist?list=PLU_sdQYzUj2keVENTP0a5rdykRSgg9Wp-)
 - [TECH DOSE](https://www.youtube.com/c/TECHDOSE4u/playlists)
-- [Kevin Naughton Jr.](https://www.youtube.com/channel/UCKvwPt6BifPP54yzH99ff1g)

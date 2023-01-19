@@ -65,3 +65,29 @@ class Solution2:
         elif left < 0:
             squares += [nums[i] ** 2 for i in range(right, len(nums))]
         return squares
+
+# Alternative solution
+
+class Solution:
+    def sortedSquares(self, nums):
+        positiveFirst = len(nums)
+        for i in range(len(nums)):
+            if nums[i] >= 0:
+                positiveFirst = i
+                break
+        negativeLast = positiveFirst - 1
+        result = []
+        while negativeLast >= 0 and positiveFirst < len(nums):
+            if -nums[negativeLast] <= nums[positiveFirst]:
+                result.append(nums[negativeLast] ** 2)
+                negativeLast -= 1
+            else:
+                result.append(nums[positiveFirst] ** 2)
+                positiveFirst += 1
+        while negativeLast >= 0:
+            result.append(nums[negativeLast] ** 2)
+            negativeLast -= 1
+        while positiveFirst < len(nums):
+            result.append(nums[positiveFirst] ** 2)
+            positiveFirst += 1
+        return result

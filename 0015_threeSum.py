@@ -47,3 +47,31 @@ class Solution1:
                 self.output.add(tuple(sorted([-target, nums[i], nums[j]])))
                 i += 1
                 j -= 1
+
+# Alternative solution
+
+class Solution:
+    def threeSum(self, nums):
+        self.triplets = []
+        nums.sort()
+        for i in range(len(nums) - 2):
+            if not self.triplets or nums[i] != self.triplets[-1][0]:
+                self.twoSum(nums, i + 1, -nums[i])
+        return self.triplets
+        
+    def twoSum(self, nums, index, target):
+        i, j = index, len(nums) - 1
+        while i < j:
+            if nums[i] + nums[j] == target:
+                small, big = nums[i], nums[j]
+                self.triplets.append([-target, small, big])
+                i += 1
+                while nums[i] == small and i < j:
+                    i += 1
+                j -= 1
+                while nums[i] == big and i < j:
+                    j -= 1
+            elif nums[i] + nums[j] > target:
+                j -= 1
+            else:
+                i += 1

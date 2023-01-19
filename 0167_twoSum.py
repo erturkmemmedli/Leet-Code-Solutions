@@ -36,3 +36,16 @@ class Solution2:
                     right = mid-1
                 if numbers[mid] < val:
                     left = mid+1
+
+# Alternative solution
+
+class Solution:
+    def twoSum(self, numbers, target):
+        left, right = 0, len(numbers) - 1
+        while left < right:
+            if numbers[left] + numbers[right] == target:
+                return left + 1, right + 1
+            elif numbers[left] + numbers[right] > target:
+                right -= 1
+            else:
+                left += 1

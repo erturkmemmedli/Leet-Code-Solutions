@@ -10,3 +10,17 @@ insert into Employee (id, name, salary, managerId) values ('4', 'Max', '90000', 
 # Write your MySQL query statement below
 
 select name as Employee from Employee e where salary > (select salary from Employee where e.managerId = id)
+
+# Alternative solution
+
+select a.name as Employee
+    from Employee a
+    left join Employee b
+    on a.managerId = b.id
+    where a.salary > b.salary
+    
+# Alternative solution
+
+select a.name as Employee
+    from Employee a, Employee b
+    where a.managerId = b.id and a.salary > b.salary

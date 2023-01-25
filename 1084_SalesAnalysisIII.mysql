@@ -19,5 +19,5 @@ from Product p
 right join Sales s
 on p.product_id = s.product_id
 group by p.product_id
-having min(s.sale_date) >= cast('2019-01-01' as date) and
-       max(s.sale_date) <= cast('2019-03-31' as date)
+having min(s.sale_date) >= '2019-01-01' and
+       max(s.sale_date) <= '2019-03-31'

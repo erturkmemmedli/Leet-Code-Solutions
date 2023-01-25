@@ -24,3 +24,14 @@ select a.name as Employee
 select a.name as Employee
     from Employee a, Employee b
     where a.managerId = b.id and a.salary > b.salary
+
+# Alternative solution (which is not accepted by LeetCode but works in Navicat)
+
+create function find_manager_salary(i int) returns int
+begin
+    declare s int;
+    select salary into s from Employee where i = id;
+    return s;
+end
+    
+select name as Employee from Employee where salary > (select find_manager_salary(managerId) from dual)

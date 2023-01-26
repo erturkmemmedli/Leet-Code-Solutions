@@ -1,4 +1,4 @@
-/*SQL Schema:
+/* SQL Schema:
 Create table If Not Exists ActorDirector (actor_id int, director_id int, timestamp int)
 Truncate table ActorDirector
 insert into ActorDirector (actor_id, director_id, timestamp) values ('1', '1', '0')

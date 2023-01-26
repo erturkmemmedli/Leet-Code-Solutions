@@ -1,4 +1,4 @@
-/*SQL Schema:
+/* SQL Schema:
 Create table If Not Exists Activity (user_id int, session_id int, activity_date date, activity_type ENUM('open_session', 'end_session', 'scroll_down', 'send_message'))
 Truncate table Activity
 insert into Activity (user_id, session_id, activity_date, activity_type) values ('1', '1', '2019-07-20', 'open_session')

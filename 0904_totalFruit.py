@@ -27,3 +27,26 @@ class Solution:
                 del window[char]
                 return index + 1
             index += 1
+
+# Alternative solution
+
+class Solution:
+    def totalFruit(self, fruits: List[int]) -> int:
+        window = {}
+        left = 0
+        maxFruits = 0
+        for right in range(len(fruits)):
+            if len(window) < 2:
+                window[fruits[right]] = window.get(fruits[right], 0) + 1
+                maxFruits = max(maxFruits, right - left + 1)
+            elif fruits[right] in window:
+                window[fruits[right]] += 1
+                maxFruits = max(maxFruits, right - left + 1)
+            else:
+                while len(window) == 2:
+                    window[fruits[left]] -= 1
+                    if window[fruits[left]] == 0:
+                        del window[fruits[left]]
+                    left += 1
+                window[fruits[right]] = 1
+        return maxFruits

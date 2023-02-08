@@ -80,3 +80,18 @@ class Solution:
             return self.traverse(tree.right, k, tree.right_count)
         else:
             return self.traverse(tree.left, k-tree.right_count-1, tree.left_count)
+
+# Alternative solution
+
+import heapq
+
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        heap = []
+        for i in range(k):
+            heapq.heappush(heap, nums[i])
+        for i in range(k, len(nums)):
+            if nums[i] > heap[0]:
+                heapq.heappop(heap)
+                heapq.heappush(heap, nums[i])
+        return heap[0]

@@ -26,3 +26,21 @@ class Solution1:
 class Solution2:
     def frequencySort(self, s: str) -> str:
         return "".join([key * val for key, val in collections.Counter(s).most_common()])
+
+# Alternative solution
+
+from heapq import heappush, heappop
+
+class Solution:
+    def frequencySort(self, s: str) -> str:
+        freq = {}
+        for char in s:
+            freq[char] = freq.get(char, 0) + 1
+        heap = []
+        for k, v in freq.items():
+            heappush(heap, (-v, k))
+        sortedString = ""
+        for _ in range(len(heap)):
+            count, char = heappop(heap)
+            sortedString += char * (-count)
+        return sortedString

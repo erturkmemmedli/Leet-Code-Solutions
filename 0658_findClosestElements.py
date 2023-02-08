@@ -34,3 +34,18 @@ class Solution:
                 i -= 1
                 k -= 1
         return kClosest
+
+# Alternative solution
+
+import heapq
+
+class Solution:
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        heap = []
+        for i in range(k):
+            heapq.heappush(heap, (-abs(arr[i] - x), arr[i]))
+        for i in range(k, len(arr)):
+            if abs(arr[i] - x) < -heap[0][0] or (abs(arr[i] - x) == -heap[0][0] and arr[i] < heap[0][1]):
+                heapq.heappop(heap)
+                heapq.heappush(heap, (-abs(arr[i] - x), arr[i]))
+        return sorted([element for distance, element in heap])

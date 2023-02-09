@@ -18,3 +18,22 @@ class Solution:
             even = even.next
         odd.next = reserved_next
         return reserved_head
+    
+# Alternative solution
+
+class Solution:
+    def oddEvenList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head or not head.next: return head
+        first = head
+        second = head.next
+        odd = first
+        even = second
+        while odd and even:
+            odd.next = even.next
+            if not odd.next:
+                break
+            odd = odd.next
+            even.next = odd.next
+            even = even.next
+        odd.next = second
+        return first

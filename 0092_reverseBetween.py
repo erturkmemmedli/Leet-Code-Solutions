@@ -31,3 +31,30 @@ class Solution:
             head = curr
         back.next = nxt
         return head
+
+# Alternative solution
+
+class Solution:
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+        currPosition = 1
+        tailFromLeft = None
+        reverseHead = None
+        temp = head
+        while currPosition < left:
+            tailFromLeft = temp
+            currPosition += 1
+            temp = temp.next
+        reverseHead = temp
+        prev, curr = None, reverseHead
+        while currPosition <= right:
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+            currPosition += 1
+        if tailFromLeft:
+            tailFromLeft.next = prev
+        else:
+            head = prev
+        reverseHead.next = curr
+        return head

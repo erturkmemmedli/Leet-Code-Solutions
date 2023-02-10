@@ -45,3 +45,18 @@ class Solution:
         self.inorderDFS(node.left)
         self.inorderList.append(node.val)
         self.inorderDFS(node.right)
+
+# Alternative solution
+
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        inorderList = []
+        stack = [(root, False)]
+        while stack:
+            node, visited = stack.pop()
+            if node:
+                if visited:
+                    inorderList.append(node.val)
+                else:
+                    stack.extend([(node.right, False), (node, True), (node.left, False)])
+        return inorderList

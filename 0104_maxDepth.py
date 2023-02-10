@@ -32,3 +32,9 @@ class Solution1:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         if not root: return 0
         return max(1 + self.maxDepth(root.left), 1 + self.maxDepth(root.right))
+
+# Alternative solution
+
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right)) if root else 0

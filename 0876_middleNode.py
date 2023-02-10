@@ -29,3 +29,13 @@ class Solution1:
         for i in range(count//2):
             node = node.next
         return node
+
+# Alternative solution
+
+class Solution:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        fast = slow = head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+        return slow.next if fast and fast.next else slow

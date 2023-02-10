@@ -30,3 +30,18 @@ class Solution1:
         output.append(node.val)
         self.inorder(node.right, output)
         return node
+
+# Alternative solution
+
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        self.inorderList = []
+        self.inorderDFS(root)
+        return self.inorderList
+    
+    def inorderDFS(self, node):
+        if not node:
+            return
+        self.inorderDFS(node.left)
+        self.inorderList.append(node.val)
+        self.inorderDFS(node.right)

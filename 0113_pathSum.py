@@ -21,3 +21,25 @@ class Solution:
             self.dfs(node.left, target, output, path + [node.left.val], pathSum + node.left.val)
         if node.right:
             self.dfs(node.right, target, output, path + [node.right.val], pathSum + node.right.val)
+
+# Alternative solution
+
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+        if not root: return []
+        self.paths = []
+        path = [root.val]
+        self.dfs(root, targetSum, path)
+        return self.paths
+        
+    def dfs(self, node, targetSum, path):
+        if not node:
+            return
+        targetSum -= node.val
+        if not node.left and not node.right and targetSum == 0:
+            self.paths.append(path)
+            return
+        if node.left:
+            self.dfs(node.left, targetSum, path + [node.left.val])
+        if node.right:
+            self.dfs(node.right, targetSum, path + [node.right.val])

@@ -45,3 +45,38 @@ class Solution1:
         self.dfs(node.left, targetSum, currentSum, memo)
         self.dfs(node.right, targetSum, currentSum, memo)
         memo[currentSum] -= 1
+        
+# Alternative solution
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
+        self.total = 0
+        self.dfs(root, targetSum)
+        return self.total
+
+    def dfs(self, node, target):
+        if not node:
+            return {}
+        leftDict = self.dfs(node.left, target)
+        rightDict = self.dfs(node.right, target)
+        if node.val == target:
+            self.total += 1
+        newDict = {node.val: 1}
+        for num in leftDict.keys():
+            newNum = num + node.val
+            newDict[newNum] = newDict.get(newNum, 0) + leftDict[num]
+            if newNum == target:
+                self.total += leftDict[num]
+        for num in rightDict.keys():
+            newNum = num + node.val
+            newDict[newNum] = newDict.get(newNum, 0) + rightDict[num]
+            if newNum == target:
+                self.total += rightDict[num]
+        return newDict

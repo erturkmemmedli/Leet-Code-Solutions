@@ -19,3 +19,37 @@ class Solution:
         temp.next = None
         last.next = head
         return newHead
+
+# Alternative solution
+
+class Solution:
+    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if not head or not k:
+            return head
+        length = 0
+        temp = head
+        while temp:
+            length += 1
+            temp = temp.next
+        k = k % length
+        if k == 0:
+            return head
+        rot = length - k
+        temp = head
+        prev = None
+        while rot:
+            if rot == 1:
+                prev = temp
+            temp = temp.next
+            rot -= 1
+        newHead = temp
+        if prev:
+            prev.next = None
+        tail = None
+        while temp:
+            if not temp.next:
+                tail = temp
+            temp = temp.next
+        if tail:
+            tail.next = head
+        return newHead

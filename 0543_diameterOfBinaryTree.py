@@ -73,3 +73,19 @@ class Solution2:
         left, right = self.calculate(node.left), self.calculate(node.right)
         self.maximum = max(self.maximum, left + right)
         return 1 + max(left, right)
+
+# Alternative solution
+
+class Solution:
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        self.maxDiameter = 0
+        self.dfs(root)
+        return self.maxDiameter
+
+    def dfs(self, node):
+        if not node:
+            return 0
+        left = self.dfs(node.left)
+        right = self.dfs(node.right)
+        self.maxDiameter = max(self.maxDiameter, left + right)
+        return 1 + max(left, right)

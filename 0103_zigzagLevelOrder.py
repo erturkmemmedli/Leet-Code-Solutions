@@ -83,3 +83,33 @@ class Solution2:
                 stack.append(next_level)
         stack = [[node.val for node in level] if i % 2 == 0 else [node.val for node in level[::-1]] for i, level in enumerate(stack)]
         return stack
+
+# Alternative solution
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
+        queue = deque([root])
+        levelOrder = []
+        reverse = 0
+        while queue:
+            levelSize = len(queue)
+            level = []
+            for _ in range(levelSize):
+                node = queue.popleft()
+                level.append(node.val)
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+            levelOrder.append(level[::-1] if reverse else level)
+            reverse ^= 1
+        return levelOrder

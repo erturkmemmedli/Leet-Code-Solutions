@@ -27,3 +27,35 @@ class Solution:
             for j in range(n):
                 if (i, j) not in visited:
                     board[i][j] = 'X'
+
+# Alternative solution
+
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        m, n = len(board), len(board[0])
+        self.visited = set()
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 'O' and (i, j) not in self.visited:
+                    self.region = []
+                    self.isBorderRegion = False
+                    self.traverseRegion(board, m, n, i, j)
+                    if not self.isBorderRegion:
+                        for row, col in self.region:
+                            board[row][col] = 'X'                    
+
+    def traverseRegion(self, board, m, n, row, col):
+        if row < 0 or row >= m or col < 0 or col >= n:
+            self.isBorderRegion = True
+            return
+        if (row, col) in self.visited or board[row][col] == 'X':
+            return
+        self.visited.add((row, col))
+        self.region.append((row, col))
+        self.traverseRegion(board, m, n, row - 1, col)
+        self.traverseRegion(board, m, n, row + 1, col)
+        self.traverseRegion(board, m, n, row, col - 1)
+        self.traverseRegion(board, m, n, row, col + 1)

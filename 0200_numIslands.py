@@ -43,3 +43,24 @@ class Solution1:
             for row, col in [i - 1, j], [i + 1, j], [i, j - 1], [i, j + 1]:
                 if 0 <= row < m and 0 <= col < n and grid[row][col] == '1' and (row, col) not in visited:
                     self.dfs(grid, visited, row, col, m, n)
+
+# Alternative solution
+
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        m, n = len(grid), len(grid[0])
+        numOfIslands = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1':
+                    numOfIslands += 1
+                    self.traverseIsland(grid, m, n, i, j)
+        return numOfIslands
+
+    def traverseIsland(self, matrix, m, n, row, col):
+        if m > row >= 0 <= col < n and matrix[row][col] == '1':
+            matrix[row][col] = '0'
+            self.traverseIsland(matrix, m, n, row, col + 1)
+            self.traverseIsland(matrix, m, n, row + 1, col)
+            self.traverseIsland(matrix, m, n, row, col - 1)
+            self.traverseIsland(matrix, m, n, row - 1, col)

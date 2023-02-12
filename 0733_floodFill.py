@@ -61,3 +61,21 @@ class Solution2:
                     if 0 <= r < m and 0 <= c < n and image[r][c] == start:
                         Q.append([r, c])
         return image
+
+# Alternative solution
+
+class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        m, n = len(image), len(image[0])
+        referenceColor = image[sr][sc]
+        self.dfs(image, m, n, referenceColor, sr, sc, color)
+        return image
+
+    def dfs(self, image, m, n, refColor, row, col, color):
+        if (row < 0 or row >= m) or (col < 0 or col >= n) or image[row][col] == color or image[row][col] != refColor:
+            return
+        image[row][col] = color
+        self.dfs(image, m, n, refColor, row - 1, col, color)
+        self.dfs(image, m, n, refColor, row + 1, col, color)
+        self.dfs(image, m, n, refColor, row, col - 1, color)
+        self.dfs(image, m, n, refColor, row, col + 1, color)

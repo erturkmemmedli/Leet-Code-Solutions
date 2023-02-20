@@ -45,3 +45,34 @@ class Solution1:
                     if visit_counts[neighbor] == 0:
                         queue.append(neighbor)
         return len(visited) == numCourses
+
+# Alternative solution
+
+from collections import deque
+
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        graph = {i : [] for i in range(numCourses)}
+        in_degree = {i : 0 for i in range(numCourses)}
+        
+        for start, end in prerequisites:
+            graph[end].append(start)
+            in_degree[start] += 1
+            
+        queue = deque()
+        
+        for node, degree in in_degree.items():
+            if degree == 0:
+                queue.append(node)
+        
+        output = []
+        
+        while queue:
+            node = queue.popleft()
+            output.append(node)
+            for neighbor in graph[node]:
+                in_degree[neighbor] -= 1
+                if in_degree[neighbor] == 0:
+                    queue.append(neighbor)
+                    
+        return len(output) == numCourses

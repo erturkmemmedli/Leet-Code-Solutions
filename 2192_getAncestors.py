@@ -10,9 +10,6 @@ class Solution:
         queue = deque([node for node, degree in in_degree.items() if not degree])
         answer = [set() for _ in range(n)]
 
-        print(graph)
-        print(in_degree)
-
         while queue:
             node = queue.popleft()
             

@@ -73,3 +73,40 @@ class WordDictionary1:
         if word[index] in node.children:
             return self.dfs(node.children[word[index]], word, index + 1)
         return False
+
+# Alternative solution
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.isEnd = False
+
+class WordDictionary:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def addWord(self, word: str) -> None:
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.isEnd = True
+
+    def search(self, word: str) -> bool:
+        node = self.root
+        return self.dfs(node, word)
+
+    def dfs(self, node, word):
+        if not word:
+            return node.isEnd
+        if node.isEnd and not node.children:
+            return False
+        if word[0] == '.':
+            for child in node.children:
+                if self.dfs(node.children[child], word[1:]):
+                    return True
+        elif word[0] not in node.children:
+            return False
+        else:
+            return self.dfs(node.children[word[0]], word[1:])

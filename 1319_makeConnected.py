@@ -36,3 +36,36 @@ class Solution:
             for child in graph[node]:
                 if child not in self.visited:
                     self.dfs(graph, child)
+
+# Alternative solution
+
+class UnionFind:
+    def __init__(self, n):
+        self.parent = [i for i in range(n)]
+
+    def find(self, a):
+        while a != self.parent[a]:
+            a = self.parent[a]
+        return a
+
+    def union(self, a, b):
+        root_a = self.find(a)
+        root_b = self.find(b)
+        if root_a == root_b:
+            return
+        self.parent[root_b] = root_a
+
+class Solution:
+    def makeConnected(self, n: int, connections: List[List[int]]) -> int:
+        if len(connections) < n - 1:
+            return -1
+
+        uf = UnionFind(n)
+
+        for a, b in connections:
+            uf.union(a, b)
+            
+        for i in range(n):
+            uf.parent[i] = uf.find(i)
+
+        return len(set(uf.parent)) - 1

@@ -21,7 +21,7 @@ class Solution:
             i += 1
         
         while True:
-            medians.append(float(-maxHeap[0]) if k % 2 == 1 else (minHeap[0] - maxHeap[0]) / 2)
+            medians.append(-maxHeap[0] if k % 2 == 1 else (minHeap[0] - maxHeap[0]) / 2)
 
             if i == len(nums):
                 break

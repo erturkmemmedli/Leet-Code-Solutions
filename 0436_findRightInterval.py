@@ -25,3 +25,24 @@ class Solution1:
             if index < len(intervals):
                 answer[i] = intervals[index][2]
         return answer
+
+# Alternative solution
+
+class Solution:
+    def findRightInterval(self, intervals: List[List[int]]) -> List[int]:
+        right_intervals = [-1 for i in range(len(intervals))]
+        start_heap = []
+        end_heap = []
+
+        for i, [start, end] in enumerate(intervals):
+            heappush(start_heap, (start, i))
+            heappush(end_heap, (end, i))
+
+        while start_heap and end_heap:
+            if start_heap[0][0] < end_heap[0][0]:
+                heappop(start_heap)
+            else:
+                _, index = heappop(end_heap)
+                right_intervals[index] = start_heap[0][1]
+
+        return right_intervals

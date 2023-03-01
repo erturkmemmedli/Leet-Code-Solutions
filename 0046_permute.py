@@ -61,3 +61,20 @@ class Solution3:
             return
         for i in range(len(nums)):
             self.dfs(nums[i+1:] + nums[:i], output, element + [nums[i]])
+
+# Alternative solution
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        self.result = []
+        self.backtrack(nums, [], len(nums))
+        return self.result
+
+    def backtrack(self, nums, path, length):
+        if len(path) == length:
+            self.result.append(path[:])
+            return
+        for i in range(len(nums)):
+            path.append(nums[i])
+            self.backtrack(nums[i+1:] + nums[:i], path, length)
+            path.pop()

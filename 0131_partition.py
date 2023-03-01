@@ -24,3 +24,20 @@ class Solution:
             else:
                 return False
         return True
+
+# Alternative solution
+
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        self.result = []
+        self.backtrack(s, [])
+        return self.result
+
+    def backtrack(self, string, path):
+        if not string:
+            self.result.append(path)
+            return
+        for i in range(len(string)):
+            substring = string[:i+1]
+            if substring == substring[::-1]:
+                self.backtrack(string[i+1:], path + [substring])

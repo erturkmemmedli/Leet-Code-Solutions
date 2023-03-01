@@ -22,3 +22,21 @@ class Solution1:
             else:
                 high = mid
         return low
+
+# Alternative solution
+
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        heap = []
+
+        for i in range(len(matrix)):
+            heappush(heap, (matrix[i][0], i, 0))
+
+        while k:
+            root, row, col = heappop(heap)
+            k -= 1
+            
+            if col + 1 < len(matrix[0]):
+                heappush(heap, (matrix[row][col + 1], row, col + 1))
+        
+        return root

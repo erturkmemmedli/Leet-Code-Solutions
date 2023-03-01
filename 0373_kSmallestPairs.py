@@ -36,3 +36,23 @@ class Solution1:
 class Solution2:
     def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
         return heapq.nsmallest(k, ((a, b) for a in nums1 for b in nums2), key = sum)
+
+# Alternative solution
+
+class Solution:
+    def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
+        result = []
+        heap = []
+
+        for i in range(len(nums1)):
+            heappush(heap, (nums1[i] + nums2[0], i, 0))
+
+        while k and heap:
+            summ, row, col = heappop(heap)
+            result.append([nums1[row], nums2[col]])
+            k -= 1
+
+            if col + 1 < len(nums2):
+                heappush(heap, (nums1[row] + nums2[col + 1], row, col + 1))
+            
+        return result

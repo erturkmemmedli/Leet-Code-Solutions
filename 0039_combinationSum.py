@@ -73,3 +73,24 @@ class Solution:
             self.backtrack(nums, target, currState, currSum)
             currSum -= nums[i]
             currState.pop()
+
+# Alternative solution
+
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        self.result =[]
+        self.backtrack(candidates, target, [], 0)
+        return list(self.result)
+
+    def backtrack(self, nums, target, currState, currSum):
+        if currSum > target:
+            return
+        elif currSum == target:
+            self.result.append(currState[:])
+            return
+        for i in range(len(nums)):
+            currState.append(nums[i])
+            currSum += nums[i]
+            self.backtrack(nums[i:], target, currState, currSum)
+            currSum -= nums[i]
+            currState.pop()

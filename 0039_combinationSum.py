@@ -52,3 +52,24 @@ class Solution2:
             return
         for i in range(len(candidates)):
             self.dfs(candidates[i:], target - candidates[i], output, path + [candidates[i]])
+
+# Alternative solution
+
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        self.result = set()
+        self.backtrack(candidates, target, [], 0)
+        return list(self.result)
+
+    def backtrack(self, nums, target, currState, currSum):
+        if currSum > target:
+            return
+        elif currSum == target:
+            self.result.add(tuple(sorted(currState[:])))
+            return
+        for i in range(len(nums)):
+            currState.append(nums[i])
+            currSum += nums[i]
+            self.backtrack(nums, target, currState, currSum)
+            currSum -= nums[i]
+            currState.pop()

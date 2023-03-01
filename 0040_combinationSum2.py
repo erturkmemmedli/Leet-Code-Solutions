@@ -39,3 +39,25 @@ class Solution1:
             if i > 0 and candidates[i] == candidates[i-1]:
                 continue
             self.dfs(candidates[i+1:], target - candidates[i], output, path + [candidates[i]])
+
+# Alternative solution
+
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        candidates.sort()
+        self.result = []
+        self.backtrack(candidates, target, [])
+        return self.result
+
+    def backtrack(self, nums, target, path):
+        if target < 0:
+            return
+        elif target == 0:
+            self.result.append(path[:])
+            return
+        for i in range(len(nums)):
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+            path.append(nums[i])
+            self.backtrack(nums[i+1:], target - nums[i], path)
+            path.pop()

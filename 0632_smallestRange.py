@@ -37,3 +37,29 @@ class Solution1:
             maxValue = max(maxValue, candidate)
             heapq.heappush(numsMerged, (candidate, listIndex, numIndex + 1))
         
+# Alternative solution
+
+class Solution:
+    def smallestRange(self, nums: List[List[int]]) -> List[int]:
+        minHeap = []
+        maxHeap = []
+
+        for i in range(len(nums)):
+            heappush(minHeap, (nums[i][0], i, 0))
+            heappush(maxHeap, (-nums[i][0], i, 0))
+
+        small, big = minHeap[0][0], -maxHeap[0][0]
+
+        while True:
+            root, row, col = heappop(minHeap)
+
+            if col + 1 < len(nums[row]):
+                heappush(minHeap, (nums[row][col + 1], row, col + 1))
+                heappush(maxHeap, (-nums[row][col + 1], row, col + 1))
+            else:
+                break
+
+            if -maxHeap[0][0] - minHeap[0][0] < big - small:
+                small, big = minHeap[0][0], -maxHeap[0][0]
+
+        return [small, big]

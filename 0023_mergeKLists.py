@@ -52,3 +52,33 @@ class Solution1:
                 lists[idx] = llist
                 heapq.heappush(heap, (llist.val, idx))
         return dummy.next
+
+# Alternative solution
+
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        heap = []
+        dictionary = {i: lists[i] for i in range(len(lists))}
+
+        for i, lst in enumerate(lists):
+            if lst:
+                heappush(heap, (lst.val, i))
+
+        head = None
+        temp = None
+
+        while heap:
+            val, idx = heappop(heap)
+
+            if not head:
+                head = dictionary[idx]
+                temp = head
+            else:
+                temp.next = dictionary[idx]
+                temp = temp.next
+
+            if dictionary[idx].next:
+                dictionary[idx] = dictionary[idx].next
+                heappush(heap, (dictionary[idx].val, idx))
+
+        return head

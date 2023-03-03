@@ -15,3 +15,23 @@ class Solution1:
             for j in range(1, n):
                 dp[j] = dp[j-1] + dp[j]
         return dp[-1]
+
+# Alternative solution
+
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        self.memo = {}
+        return self.dp(m, n, 0, 0)
+
+    def dp(self, m, n, row, col):
+        if row == m-1 and col == n-1:
+            return 1
+
+        if row == m or col == n:
+            return 0
+
+        if (row, col) in self.memo:
+            return self.memo[(row, col)]
+
+        self.memo[(row, col)] = self.dp(m, n, row + 1, col) + self.dp(m, n, row, col + 1)
+        return self.memo[(row, col)]

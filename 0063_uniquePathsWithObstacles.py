@@ -32,3 +32,26 @@ class Solution1:
                 if obstacleGrid[i][j] == 0:
                     dp[i][j] = dp[i-1][j] + dp[i][j-1]
         return dp[m-1][n-1]
+
+# Alternative solution
+
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        if obstacleGrid[0][0] == 1 or obstacleGrid[-1][-1] == 1:
+            return 0
+
+        self.memo = {}
+        return self.dp(obstacleGrid, 0, 0)
+
+    def dp(self, grid, row, col):
+        if row == len(grid) - 1 and col == len(grid[0]) - 1:
+            return 1
+        
+        if row == len(grid) or col == len(grid[0]) or grid[row][col] == 1:
+            return 0
+
+        if (row, col) in self.memo:
+            return self.memo[(row, col)]
+
+        self.memo[(row, col)] = self.dp(grid, row + 1, col) + self.dp(grid, row, col + 1)
+        return self.memo[(row, col)]

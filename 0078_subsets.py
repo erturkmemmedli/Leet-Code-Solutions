@@ -25,3 +25,15 @@ class Solution:
             currState.append(nums[i])
             self.backtrack(result, nums, currState, i + 1)
             currState.pop()
+
+# Alternative solution
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        result = [[]]
+        for num in nums:
+            for i in range(len(result)):
+                subset = list(result[i])
+                subset.append(num)
+                result.append(subset)
+        return result

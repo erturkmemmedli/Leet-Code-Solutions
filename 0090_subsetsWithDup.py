@@ -41,3 +41,20 @@ class Solution:
             if i > start and nums[i] == nums[i - 1]:
                 continue
             self.backtrack(nums, currState + [nums[i]], i + 1)
+
+# Alternative solution
+
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        result = [[]]
+        for i in range(len(nums)):
+            start = 0
+            if i > 0 and nums[i] == nums[i-1]:
+                start = end + 1
+            end = len(result) - 1
+            for j in range(start, end + 1):
+                subset = result[j][:]
+                subset.append(nums[i])
+                result.append(subset)
+        return result

@@ -20,3 +20,23 @@ class Solution1:
                 if j >= coins[i]:                  
                     dp[j] += dp[j - coins[i]]
         return dp[-1]
+
+# Alternative solution
+
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        self.memo = {}
+        return self.dp(amount, coins, 0)
+
+    def dp(self, amount, coins, index):
+        if amount == 0:
+            return 1
+
+        if amount < 0 or index == len(coins):
+            return 0
+
+        if (amount, index) in self.memo:
+            return self.memo[(amount, index)]
+
+        self.memo[(amount, index)] = self.dp(amount - coins[index], coins, index) + self.dp(amount, coins, index + 1)
+        return self.memo[(amount, index)]

@@ -53,3 +53,35 @@ class Solution2:
         else:
             self.dfs(string[1:], output, path + string[0].lower(), n)
             self.dfs(string[1:], output, path + string[0].upper(), n)
+
+# Alternative solution
+
+class Solution:
+    def letterCasePermutation(self, s: str) -> List[str]:
+        result = []
+        combinations = deque([""])
+
+        for char in s:
+            for _ in range(len(combinations)):
+                string = combinations.popleft()
+
+                if char.isdigit():
+                    new_string = string + char
+
+                    if len(new_string) == len(s):
+                        result.append(new_string)
+                    else:
+                        combinations.append(new_string)
+
+                else:
+                    new_string1 = string + char.lower()
+                    new_string2 = string + char.upper()
+
+                    if len(new_string1) == len(s):
+                        result.append(new_string1)
+                        result.append(new_string2)
+                    else:
+                        combinations.append(new_string1)
+                        combinations.append(new_string2)
+
+        return result

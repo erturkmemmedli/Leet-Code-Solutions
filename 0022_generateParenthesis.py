@@ -25,3 +25,19 @@ class Solution1:
             if path.count('(') > path.count(')'):
                 self.dfs(n, output, path + ')')
             return
+
+# Alternative solution
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        if n == 0:
+            return [""]
+
+        result = []
+
+        for i in range(n):
+            for left in self.generateParenthesis(i):
+                for right in self.generateParenthesis(n - i - 1):
+                    result.append("(" + left + ")" + right)
+
+        return result

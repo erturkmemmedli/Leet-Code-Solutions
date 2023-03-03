@@ -30,3 +30,27 @@ class Solution1:
             for i in range(half, num-1, -1):
                 dp[i] = dp[i] or dp[i - num]
         return dp[half]
+
+# Alternative solution
+
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        s = sum(nums)
+        if s % 2 == 1:
+            return False
+
+        self.memo = {}
+        return self.dp(nums, s//2, 0)
+
+    def dp(self, nums, target, index):
+        if target == 0:
+            return True
+
+        if target < 0 or index == len(nums):
+            return False
+
+        if (target, index) in self.memo:
+            return self.memo[(target, index)]
+
+        self.memo[(target, index)] = self.dp(nums, target - nums[index], index + 1) or self.dp(nums, target, index + 1)
+        return self.memo[(target, index)]

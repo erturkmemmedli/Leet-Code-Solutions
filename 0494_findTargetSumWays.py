@@ -57,3 +57,20 @@ class Solution2:
             return
         self.dfs(nums[1:], target, path + nums[0], pair + [nums[0]])
         self.dfs(nums[1:], target, path - nums[0], pair + [-nums[0]])
+
+# Alternative solution
+
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        self.memo = {}
+        return self.dp(nums, target, 0)
+
+    def dp(self, nums, target, index):
+        if index == len(nums):
+            return 1 if target == 0 else 0
+        
+        if (target, index) in self.memo:
+            return self.memo[(target, index)]
+
+        self.memo[(target, index)] = self.dp(nums, target - nums[index], index + 1) + self.dp(nums, target + nums[index], index + 1)
+        return self.memo[(target, index)]

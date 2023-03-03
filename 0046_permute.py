@@ -78,3 +78,21 @@ class Solution:
             path.append(nums[i])
             self.backtrack(nums[i+1:] + nums[:i], path, length)
             path.pop()
+
+# Alternative solution
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        result = []
+        permutations = deque([[]])
+        for num in nums:
+            for _ in range(len(permutations)):
+                permutation = permutations.popleft()
+                for i in range(len(permutation) + 1):
+                    subset = permutation[:]
+                    subset.insert(i, num)
+                    if len(subset) == len(nums):
+                        result.append(subset)
+                    else:
+                        permutations.append(subset)
+        return result

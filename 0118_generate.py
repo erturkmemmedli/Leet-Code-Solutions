@@ -31,3 +31,16 @@ class Solution2:
             temp = [1] + [triangle[i-1][j] + triangle[i-1][j-1] for j in range(1,i)] + [1]
             triangle.append(temp)
         return triangle
+
+# Alternative solution
+
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        pascal = [[1]]
+        for i in range(numRows - 1):
+            dp = [1]
+            for i in range(len(pascal[-1]) - 1):
+                dp.append(pascal[-1][i] + pascal[-1][i + 1])
+            dp.append(1)
+            pascal.append(dp)
+        return pascal

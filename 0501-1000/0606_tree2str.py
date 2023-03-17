@@ -19,3 +19,23 @@ class Solution:
             return val + left
         if not root.left and not root.right:
             return val
+
+# Alternative solution
+
+class Solution:
+    def tree2str(self, root: Optional[TreeNode]) -> str:
+        tree_string = ""
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            if node == "(" or node == ")" or node == "()":
+                tree_string += node
+            elif node:
+                tree_string += str(node.val)
+                if node.right and node.left:
+                    stack += [")", node.right, "(", ")", node.left, "("]
+                elif node.right:
+                    stack += [")", node.right, "(", "()"]
+                elif node.left:
+                    stack += [")", node.left, "("]
+        return tree_string

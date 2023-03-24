@@ -14,3 +14,23 @@ class Solution:
                         break
                 d[nums2[i]] = temp   
         return [d[num] for num in nums1]
+
+# Alternative solution
+
+class Solution:
+    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        n = len(nums2)
+        stack = []
+        next_greater = {}
+        i = n - 1
+        
+        while i >= 0:
+            while stack and stack[-1] <= nums2[i]:
+                stack.pop()
+                
+            next_greater[nums2[i]] = stack[-1] if stack else -1
+            
+            stack.append(nums2[i])
+            i -= 1
+            
+        return [next_greater[i] for i in nums1]

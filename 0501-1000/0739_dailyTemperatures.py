@@ -11,3 +11,22 @@ class Solution:
                     answer[index] = i - index
                 stack.append((temperatures[i], i))
         return answer
+
+# Alternative solution
+
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        n = len(temperatures)
+        output = [None] * n
+        stack = []
+        i = n - 1
+        
+        while i >= 0:
+            while stack and stack[-1][0] <= temperatures[i]:
+                stack.pop()
+                
+            output[i] = 0 if not stack else stack[-1][1] - i
+            stack.append((temperatures[i], i))
+            i -= 1
+            
+        return output

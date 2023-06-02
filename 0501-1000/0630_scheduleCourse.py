@@ -6,7 +6,7 @@ class Solution:
 
         for duration, end_time in courses:
             current_time += duration
-            heappush(heap, -current_time)
+            heappush(heap, -duration)
 
             if current_time > end_time:
                 current_time += heappop(heap)

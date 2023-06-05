@@ -20,16 +20,48 @@ class UnionFind:
 
 class Solution:
     def minCostToSupplyWater(self, n: int, wells: List[int], pipes: List[List[int]]) -> int:
-        uf = UnionFind(n + 1)
-        total_cost = 0
+        
+        def Kruskal():
+            uf = UnionFind(n + 1)
+            total_cost = 0
 
-        for i, cost in enumerate(wells):
-            pipes.append((0, i + 1, cost))
+            for i, cost in enumerate(wells):
+                pipes.append((0, i + 1, cost))
 
-        pipes.sort(key = lambda x : x[2])
+            pipes.sort(key = lambda x : x[2])
 
-        for a, b, cost in pipes:
-            if uf.union(a, b, cost):
-                total_cost += cost
+            for a, b, cost in pipes:
+                if uf.union(a, b, cost):
+                    total_cost += cost
 
-        return total_cost
+            return total_cost
+
+        def Prim():
+            graph = defaultdict(list)
+
+            for u, v, cost in pipes:
+                graph[u].append([v, cost])
+                graph[v].append([u, cost])
+
+            for u, cost in enumerate(wells, 1):
+                graph[u].append([0, cost])
+                graph[0].append([u, cost])
+
+            heap = [(0, 0)]
+            visited = set()
+            total_cost = 0
+
+            while heap:
+                cost, node = heappop(heap)
+
+                if node not in visited:
+                    visited.add(node)
+                    total_cost += cost
+                    
+                    for neighbor, c in graph[node]:
+                        if neighbor not in visited:
+                            heappush(heap, [c, neighbor])
+
+            return total_cost
+
+        return Prim()

@@ -40,3 +40,57 @@ class Twitter:
 # param_2 = obj.getNewsFeed(userId)
 # obj.follow(followerId,followeeId)
 # obj.unfollow(followerId,followeeId)
+
+# Alternative solution
+
+class TweetNode:
+    def __init__(self, userId, tweetId, next = None, prev = None):
+        self.userId = userId
+        self.tweetId = tweetId
+        self.next = next
+        self.prev = prev
+
+class TweetList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def addTweet(self, tweet):
+        if not self.head:
+            self.head = tweet
+            self.tail = tweet
+
+        else:
+            self.tail.next = tweet
+            tweet.prev = self.tail
+            self.tail = self.tail.next
+
+class Twitter:
+
+    def __init__(self):
+        self.userTweetMap = defaultdict(set)
+        self.userFollowMap = defaultdict(set)
+        self.tweetList = TweetList()
+
+    def postTweet(self, userId: int, tweetId: int) -> None:
+        tweet = TweetNode(userId, tweetId)
+        self.tweetList.addTweet(tweet)
+        self.userTweetMap[userId].add(tweetId)
+        self.userFollowMap[userId].add(userId)
+
+    def getNewsFeed(self, userId: int) -> List[int]:
+        mostRecentTweets = []
+        current = self.tweetList.tail
+
+        while current and len(mostRecentTweets) < 10:
+            if current.userId in self.userFollowMap[userId]:
+                mostRecentTweets.append(current.tweetId)
+            current = current.prev
+
+        return mostRecentTweets
+
+    def follow(self, followerId: int, followeeId: int) -> None:
+        self.userFollowMap[followerId].add(followeeId)
+
+    def unfollow(self, followerId: int, followeeId: int) -> None:
+        self.userFollowMap[followerId].discard(followeeId)

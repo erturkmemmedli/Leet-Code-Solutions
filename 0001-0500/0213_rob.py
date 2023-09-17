@@ -39,3 +39,19 @@ class Solution:
             dp[j - 1] = max(dp[j + 1] + nums[j], dp[j])
         backward = dp[0]
         return max(forward, backward)
+
+# Alternative solution
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+            
+        prev_0, curr_0 = 0, nums[0]
+        prev_1, curr_1 = 0, nums[1]
+
+        for i in range(1, len(nums) - 1):
+            prev_0, curr_0 = curr_0, max(prev_0 + nums[i], curr_0)
+            prev_1, curr_1 = curr_1, max(prev_1 + nums[i + 1], curr_1)
+
+        return max(curr_0, curr_1)

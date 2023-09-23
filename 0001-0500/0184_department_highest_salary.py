@@ -20,4 +20,4 @@ def department_highest_salary(employee: pd.DataFrame, department: pd.DataFrame) 
     max_salaries_for_departments = df.groupby("Department")["Salary"].agg('max').to_dict()
     df = df[[max_salaries_for_departments[df.loc[i, "Department"]] == salaries[i] for i in range(len(df))]]
 
-    return df
+    return df if len(df) else pd.DataFrame(columns=["Employee", "Department", "Salary"])

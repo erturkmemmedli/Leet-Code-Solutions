@@ -1,3 +1,9 @@
+'''
+Pandas Schema:
+data = [[1, 100], [2, 200], [3, 300]]
+employee = pd.DataFrame(data, columns=['Id', 'Salary']).astype({'Id':'Int64', 'Salary':'Int64'})
+'''
+
 import pandas as pd
 
 def nth_highest_salary(employee: pd.DataFrame, N: int) -> pd.DataFrame:

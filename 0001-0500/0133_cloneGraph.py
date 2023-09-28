@@ -32,13 +32,38 @@ class Solution:
 
 # Alternative solution
 
-"""
-# Definition for a Node.
-class Node:
-    def __init__(self, val = 0, neighbors = None):
-        self.val = val
-        self.neighbors = neighbors if neighbors is not None else []
-"""
+class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        if not node: return
+        
+        hashmap = {}
+        visited = set()
+        queue = deque([node])
+
+        while queue:
+            curr_node = queue.popleft()
+            
+            if curr_node in visited:
+                continue
+
+            visited.add(curr_node)
+
+            if curr_node.val not in hashmap:
+                hashmap[curr_node.val] = []
+            
+            for neighbor in curr_node.neighbors:
+                if neighbor not in visited:
+                    queue.append(neighbor)
+                hashmap[curr_node.val].append(neighbor.val)
+
+        nodes = [Node(i + 1) for i in range(len(hashmap))]
+
+        for key, val in hashmap.items():
+            nodes[key - 1].neighbors = [nodes[n - 1] for n in val]
+
+        return nodes[node.val - 1]
+
+# Alternative solution
 
 from typing import Optional
 class Solution:

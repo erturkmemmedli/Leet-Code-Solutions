@@ -85,3 +85,37 @@ class Solution2:
                         queue.append((r, c))
         minimumTime = max(distance.values() or [0])
         return minimumTime if minimumTime != math.inf else -1
+
+# Alternative solution
+
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        rotten_oranges = deque()
+        fresh_orange = 0
+        destroyed_orange = 0
+        time_spent_for_rotten = 0
+
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    fresh_orange += 1
+                elif grid[i][j] == 2:
+                    rotten_oranges.append((i, j))
+                
+        while rotten_oranges:
+            level_size = len(rotten_oranges)
+
+            for _ in range(level_size):
+                r, c = rotten_oranges.popleft()
+
+                for row, col in [r-1, c], [r, c-1], [r+1, c], [r, c+1]:
+                    if m > row >= 0 <= col < n and grid[row][col] == 1:
+                        rotten_oranges.append((row, col))
+                        grid[row][col] = 2
+                        destroyed_orange += 1
+            
+            if rotten_oranges:
+                time_spent_for_rotten += 1
+
+        return time_spent_for_rotten if fresh_orange == destroyed_orange else -1

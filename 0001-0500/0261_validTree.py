@@ -62,3 +62,41 @@ class Solution:
                 return False        
 
         return uf.cc == 1
+
+# Alternative solution
+
+class UnionFind:
+    def __init__(self, n):
+        self.parent = [i for i in range(n)]
+        self.rank = [1 for i in range(n)]
+        self.cc = n
+
+    def find(self, a):
+        if a != self.parent[a]:
+            a = self.find(self.parent[a])
+        return a
+
+    def union(self, a, b):
+        root_a = self.find(a)
+        root_b = self.find(b)
+
+        if root_a != root_b:
+            if self.rank[root_b] < self.rank[root_a]:
+                self.rank[root_a] += self.rank[root_b]
+                self.parent[root_b] = root_a
+            else:
+                self.rank[root_b] += self.rank[root_a]
+                self.parent[root_a] = root_b
+
+            self.cc -= 1
+            return True
+
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        uf = UnionFind(n)
+
+        for node1, node2 in edges:
+            if not uf.union(node1, node2):
+                return False  
+
+        return uf.cc == 1        

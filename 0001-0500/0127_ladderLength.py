@@ -88,3 +88,37 @@ class Solution:
             if diff > 1:
                 return False
         return diff == 1
+
+# Alternative solution
+
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        wordSet = set(wordList)
+
+        if endWord not in wordSet:
+            return 0
+
+        queue = deque([endWord])
+        visited = {endWord}
+        path_length = 1
+
+        while queue:
+            level_size = len(queue)
+
+            for _ in range(level_size):
+                word = queue.popleft()
+
+                for i in range(len(word)):
+                    for char in string.ascii_lowercase:
+                        new_word = word[:i] + char + word[i+1:]
+
+                        if new_word == beginWord:
+                            return path_length + 1
+
+                        if new_word in wordSet and new_word not in visited:
+                            visited.add(new_word)
+                            queue.append(new_word)
+                    
+            path_length += 1
+
+        return 0

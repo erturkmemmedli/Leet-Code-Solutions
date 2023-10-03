@@ -29,6 +29,8 @@ class Solution:
         for a, b in edges:
             if not uf.union(a, b):
                 return False
+                
+        return True
 
 # Alternative solution
 
@@ -60,5 +62,3 @@ class Solution:
                 return False        
 
         return uf.cc == 1
-        
-        return True

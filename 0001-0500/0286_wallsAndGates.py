@@ -80,3 +80,29 @@ class Solution:
             self.dfs(rooms, m, n, row, col - 1, rooms[row][col], visited)
             self.dfs(rooms, m, n, row, col + 1, rooms[row][col], visited)
             visited.remove((row, col))
+
+# Alternative solution
+
+class Solution:
+    def wallsAndGates(self, rooms: List[List[int]]) -> None:
+        """
+        Do not return anything, modify rooms in-place instead.
+        """
+        m, n = len(rooms), len(rooms[0])
+        queue = deque()
+
+        for i in range(m):
+            for j in range(n):
+                if rooms[i][j] == 0:
+                    queue.append((i, j))
+                
+        while queue:
+            level_size = len(queue)
+
+            for _ in range(level_size):
+                r, c = queue.popleft()
+
+                for row, col in (r-1, c), (r, c-1), (r+1, c), (r, c+1):
+                    if m > row >= 0 <= col < n and rooms[row][col] == 2**31-1:
+                        rooms[row][col] = rooms[r][c] + 1
+                        queue.append((row, col))

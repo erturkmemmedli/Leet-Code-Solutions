@@ -68,3 +68,48 @@ class Solution1:
             for xi, yi in dictionary:
                 dictionary[(xi, yi)] = min(dictionary[(xi, yi)], abs(x - xi) + abs(y - yi))
         return cost
+
+# Alternative solution
+
+class UnionFind:
+    def __init__(self, n):
+        self.parent = [i for i in range(n)]
+
+    def find(self, node):
+        while node != self.parent[node]:
+            node = self.parent[node]
+        return node
+
+    def union(self, node_a, node_b):
+        parent_a = self.find(node_a)
+        parent_b = self.find(node_b)
+
+        if parent_a != parent_b:
+            self.parent[parent_b] = parent_a
+            return True
+
+
+class Solution:
+    def minCostConnectPoints(self, points: List[List[int]]) -> int:
+        uf = UnionFind(len(points))
+        cost_heap = []
+
+        for i in range(len(points)):
+            for j in range(i + 1, len(points)):
+                distance = self.manhattanDistance(points[i], points[j])
+                heappush(cost_heap, (distance, i, j))
+            
+        min_cost = 0
+
+        while cost_heap:
+            distance, x, y = heappop(cost_heap)
+
+            if uf.union(x, y):
+                min_cost += distance
+
+        return min_cost
+
+    def manhattanDistance(self, coord1, coord2):
+        x1, y1 = coord1
+        x2, y2 = coord2
+        return abs(x1 - x2 )+ abs(y1 - y2)

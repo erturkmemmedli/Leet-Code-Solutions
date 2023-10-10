@@ -14,3 +14,30 @@ class Solution:
             kid = self.graph[node].pop()
             self.dfs(kid)
         self.EulerPath.append(node)
+
+# Alternative solution (which gives TLE error)
+
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        graph = defaultdict(list)
+
+        for source, destination in tickets:
+            graph[source].append(destination)
+
+        for key in graph.keys():
+            graph[key] = sorted(graph[key], reverse=True)
+
+        
+        def dfs(node, output):
+            if len(output) == len(tickets) + 1:
+                return True
+
+            for i in range(len(graph[node])-1, -1, -1):
+                candidate = graph[node].pop(i)
+                output.append(candidate)
+                if dfs(candidate, output):
+                    return output
+                output.pop()
+                graph[node].insert(i, candidate)
+
+        return dfs("JFK", ['JFK'])

@@ -46,3 +46,43 @@ class Solution:
             i += 1
 
         return len(a) <= len(b)
+
+# Alternative solution
+
+class Solution:
+    def alienOrder(self, words: List[str]) -> str:
+        graph = {}
+        indegree = {}
+        
+        for word in words:
+            for char in word:
+                graph[char] = []
+                indegree[char] = 0
+
+        for i in range(1, len(words)):
+            first = words[i - 1]
+            second = words[i]
+
+            for i in range(min(len(first), len(second))):
+                if first[i] != second[i]:
+                    graph[first[i]].append(second[i])
+                    indegree[second[i]] += 1
+                    break
+
+                if i == min(len(first), len(second)) - 1 and len(first) > len(second):
+                    return ""
+
+        toposort = ""
+        queue = deque([key for key, val in indegree.items() if val == 0])
+
+        while queue:
+            node = queue.popleft()
+            toposort += node
+
+            for neighbor in graph[node]:
+                indegree[neighbor] -= 1
+
+                if indegree[neighbor] == 0:
+                    queue.append(neighbor)
+
+        return toposort if len(toposort) == len(graph) else ""

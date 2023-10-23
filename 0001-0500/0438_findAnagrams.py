@@ -49,3 +49,41 @@ class Solution:
                     anagrams.append(headWindow + 1)
                 headWindow += 1
         return anagrams
+
+# Alternative solution
+
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        if len(p) > len(s):
+            return []
+
+        window = {}
+        match = []
+
+        for char in p:
+            window[char] = window.get(char, 0) + 1
+
+        for i in range(len(p)):
+            window[s[i]] = window.get(s[i], 0) - 1
+
+            if window[s[i]] == 0:
+                del window[s[i]]
+
+        if not window:
+            match.append(0)
+
+        for i in range(len(p), len(s)):
+            window[s[i - len(p)]] = window.get(s[i - len(p)], 0) + 1
+
+            if window[s[i - len(p)]] == 0:
+                del window[s[i - len(p)]]
+
+            window[s[i]] = window.get(s[i], 0) - 1
+
+            if window[s[i]] == 0:
+                del window[s[i]]
+
+            if not window:
+                match.append(i - len(p) + 1)
+        
+        return match

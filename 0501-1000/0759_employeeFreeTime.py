@@ -41,7 +41,6 @@ class Solution:
 
         for i in range(1, len(schedule)):
             merged_schedule = self.merge_intervals(merged_schedule, schedule[i])
-            print([(i.start, i.end ) for i in merged_schedule])
 
         for i in range(1, len(merged_schedule)):
             output.append(Interval(merged_schedule[i-1].end, merged_schedule[i].start))

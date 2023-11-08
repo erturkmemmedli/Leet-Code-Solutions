@@ -49,3 +49,45 @@ class Solution:
             else:
                 return mid
         return left if flag else right
+
+# Alternative solution
+
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        left = self.binary_search(intervals, newInterval[0], True)
+        right = self.binary_search(intervals, newInterval[1], False)
+        
+        final_intervals = []
+
+        for i in range(left):
+            final_intervals.append(intervals[i])
+        
+        if right >= left:
+            newInterval[0] = min(newInterval[0], intervals[left][0])
+            newInterval[1] = max(newInterval[1], intervals[right][1])
+
+        final_intervals.append(newInterval)
+
+        for i in range(right + 1, len(intervals)):
+            final_intervals.append(intervals[i])
+
+        return final_intervals
+
+
+    def binary_search(self, intervals, target, is_left):
+        left = 0
+        right = len(intervals) - 1
+
+        while left <= right:
+            mid = left + (right - left) // 2
+
+            if intervals[mid][0] <= target <= intervals[mid][1]:
+                return mid
+
+            elif intervals[mid][0] > target:
+                right = mid - 1
+
+            else:
+                left = mid + 1
+            
+        return left if is_left else right

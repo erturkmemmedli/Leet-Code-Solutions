@@ -50,3 +50,23 @@ class Solution:
                     left += 1
                 window[fruits[right]] = 1
         return maxFruits
+
+# Alternative solution
+
+class Solution:
+    def totalFruit(self, fruits: List[int]) -> int:
+        basket = {}
+        longest = 0
+        i = j = 0
+
+        while i < len(fruits):
+            while len(basket) == 2 and fruits[i] not in basket:
+                basket[fruits[j]] -= 1
+                if not basket[fruits[j]]: del basket[fruits[j]] 
+                j += 1
+            
+            basket[fruits[i]] = basket.get(fruits[i], 0) + 1
+            longest = max(longest, i - j + 1)
+            i += 1
+        
+        return longest

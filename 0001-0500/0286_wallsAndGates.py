@@ -106,3 +106,33 @@ class Solution:
                     if m > row >= 0 <= col < n and rooms[row][col] == 2**31-1:
                         rooms[row][col] = rooms[r][c] + 1
                         queue.append((row, col))
+
+# Alternative solution
+
+from collections import deque
+
+class Solution:
+    def wallsAndGates(self, rooms):
+        """
+        Do not return anything, modify rooms in-place instead.
+        """
+        m, n = len(rooms), len(rooms[0])
+        queue = deque()
+        visited = set()
+        
+        for i in range(m):
+            for j in range(n):
+                if rooms[i][j] == 0:
+                    queue.append((i, j))
+                    visited.add((i, j))
+                
+        while queue:
+            r, c = queue.popleft()
+            
+            for row, col in (r-1, c), (r, c-1), (r+1, c), (r, c+1):
+                if m > row >= 0 <= col < n and (row, col) not in visited and rooms[row][col] != -1:
+                    rooms[row][col] = rooms[r][c] + 1
+                    visited.add((row, col))
+                    queue.append((row, col))
+                
+        return rooms

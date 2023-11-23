@@ -13,7 +13,7 @@ class Solution:
             if (step, mask) in memo:
                 return memo[(step, mask)]
             
-            for color in {'1', '2', '3'} - {mask[col], mask[col-1]}:
+            for color in {'R', 'G', 'B'} - {mask[col], mask[col-1]}:
                 new_mask = mask[:col] + color + mask[col+1:]
                 result += dp(step+1, new_mask)
                 result %= (10**9 + 7)
@@ -21,4 +21,4 @@ class Solution:
             memo[(step, mask)] = result
             return result
 
-        return dp(0, "0" * (m + 1))
+        return dp(0, "-" * (m + 1))

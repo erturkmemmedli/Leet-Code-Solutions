@@ -86,3 +86,47 @@ class Solution:
                     queue.append(neighbor)
 
         return toposort if len(toposort) == len(graph) else ""
+
+# Alternative solution
+
+from collections import deque
+
+class Solution:
+    def alienOrder(self, words):
+        alphabet = set()
+        
+        for word in words:
+            alphabet |= set(word)
+            
+        graph = {i : [] for i in alphabet}
+        indegree = {i : 0 for i in alphabet}
+        
+        for i in range(1, len(words)):
+            prev = words[i - 1]
+            curr = words[i]
+            flag = False
+            
+            for j in range(min(len(curr), len(prev))):
+                if prev[j] != curr[j]:
+                    graph[prev[j]].append(curr[j])
+                    indegree[curr[j]] += 1
+                    flag = True
+                    break
+            
+            if not flag and len(prev) > len(next):
+                return ""
+                    
+        queue = deque([key for key, val in indegree.items() if val == 0])
+        order = ""
+        
+        while queue:
+            node = queue.popleft()
+            order += node
+            
+            for child in graph[node]:
+                indegree[child] -= 1
+                
+                if indegree[child] == 0:
+                    queue.append(child)
+                    
+        return order if len(order) == len(alphabet) else ""

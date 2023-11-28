@@ -99,3 +99,24 @@ class Solution:
                 self.dfs(node.children[i], 10 * (current + i))
             elif i != 0:
                 return
+
+# Alternative solurion
+
+class Solution:
+    def lexicalOrder(self, n: int) -> List[int]:
+        return self.builder(0, n)
+
+    def builder(self, num, n):
+        result = []
+
+        for i in range(0, 10):
+            if i == 0 and num < 10:
+                continue
+                
+            if num + i <= n:
+                result.append(num + i)
+
+            if (num + i) * 10 <= n:
+                result += self.builder((num + i) * 10, n)
+
+        return result

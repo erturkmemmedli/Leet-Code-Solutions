@@ -55,3 +55,82 @@ class Solution:
                 if roots > 1:
                     return False
         return True
+
+# Alternative solution
+
+class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+
+    def find(self, a):
+        while a != self.parent[a]:
+            a = self.parent[a]
+        
+        return a
+
+    def union(self, a, b):
+        ra = self.find(a)
+        rb = self.find(b)
+
+        if ra == rb:
+            return False
+        
+        if self.rank[ra] >= self.rank[rb]:
+            if self.rank[ra] == self.rank[rb]:
+                self.rank[ra] += 1
+            
+            self.parent[rb] = ra
+        
+        else:
+            self.parent[ra] = rb
+
+        return True
+
+
+class Solution:
+    def maxNumEdgesToRemove(self, n: int, edges: List[List[int]]) -> int:
+        common = []
+        bob = []
+        alice = []
+
+        for typ, u, v in edges:
+            match typ:
+                case 1:
+                    alice.append((u - 1, v - 1))
+                case 2:
+                    bob.append((u - 1, v - 1))
+                case 3:
+                    common.append((u - 1, v - 1))
+   
+        uf = UnionFind(n)
+        removable = 0
+
+        for u, v in common:
+            if not uf.union(u, v):
+                removable += 1
+
+        uf_bob = UnionFind(n)
+        uf_bob.parent = uf.parent.copy()
+        uf_bob.rank = uf.rank.copy()
+
+        for u, v in bob:
+            if not uf_bob.union(u, v):
+                removable += 1
+            
+        uf_alice = UnionFind(n)
+        uf_alice.parent = uf.parent.copy()
+        uf_alice.rank = uf.rank.copy()
+
+        for u, v in alice:
+            if not uf_alice.union(u, v):
+                removable += 1
+
+        parent_bob = uf_bob.find(0)
+        parent_alice = uf_alice.find(0)
+
+        for i in range(n):
+            if uf_bob.find(i) != parent_bob or uf_alice.find(i) != parent_alice:
+                return -1
+
+        return removable

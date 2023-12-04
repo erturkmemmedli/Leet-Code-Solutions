@@ -46,3 +46,24 @@ class Solution:
                 right_intervals[index] = start_heap[0][1]
 
         return right_intervals
+
+# Alternative solution
+
+class Solution:
+    def findRightInterval(self, intervals: List[List[int]]) -> List[int]:
+        intervals = sorted([(start, end, index) for index, [start, end] in enumerate(intervals)])
+        heap = []
+        right_intervals = [-1] * len(intervals)
+
+        for start, end, index in intervals:
+            if start == end:
+                right_intervals[index] = index
+                continue
+                
+            while heap and start >= heap[0][0]:
+                e, i = heappop(heap)
+                right_intervals[i] = index
+            
+            heappush(heap, (end, index))
+
+        return right_intervals

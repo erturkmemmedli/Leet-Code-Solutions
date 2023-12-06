@@ -56,3 +56,30 @@ class Solution:
                 heappush(heap, (nums1[row] + nums2[col + 1], row, col + 1))
             
         return result
+
+# Alterntive solution
+
+class Solution:
+    def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
+        n = len(nums1)
+        m = len(nums2)
+        memo = {(0, 0)}
+        pairs = []
+        heap = [(nums1[0] + nums2[0], 0, 0)]
+
+        while heap:
+            s, i1, i2 = heappop(heap)
+            pairs.append([nums1[i1], nums2[i2]])
+            k -= 1
+
+            if k == 0:
+                return pairs
+
+            if (i1 + 1, i2) not in memo and i1 + 1 < n:
+                heappush(heap, (nums1[i1 + 1] + nums2[i2], i1 + 1, i2))
+                memo.add((i1 + 1, i2))
+            if (i1, i2 + 1) not in memo and i2 + 1 < m:
+                heappush(heap, (nums1[i1] + nums2[i2 + 1], i1, i2 + 1))
+                memo.add((i1, i2 + 1))
+            
+        return pairs

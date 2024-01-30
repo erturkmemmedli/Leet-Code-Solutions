@@ -66,3 +66,35 @@ class Solution:
                 heappush(heap, (nums2[idx + 1], arr_no, idx + 1))
         
         return heap[0][0] if total_length & 1 else (val + heap[0][0]) / 2
+
+# Alternative solution
+
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        m, n = len(nums1), len(nums2)
+        total = m + n
+        mid = total // 2
+        even = total % 2 == 0
+        count = i = j = 0
+
+        while i < m and j < n:
+            if (not even and count == mid) or (even and count == mid - 1):
+                break
+
+            if nums1[i] < nums2[j]:
+                i += 1
+            else:
+                j += 1
+            
+            count += 1
+        
+        if i == m:
+            idx = j + mid - count
+            return nums2[idx] if not even else (nums2[idx] + nums2[idx - 1]) / 2
+        if j == n:
+            idx = i + mid - count
+            return nums1[idx] if not even else (nums1[idx] + nums1[idx - 1]) / 2
+        if not even:
+            return min(nums1[i], nums2[j])
+        else:
+            return sum(sorted(nums1[i:i+2] + nums2[j:j+2])[:2]) / 2

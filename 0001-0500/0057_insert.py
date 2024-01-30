@@ -91,3 +91,30 @@ class Solution:
                 left = mid + 1
             
         return left if is_left else right
+
+# Alternative solution
+
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        low, high = newInterval
+
+        def binary_search(target, cond):
+            left = 0
+            right = len(intervals) - 1
+
+            while left <= right:
+                mid = left + (right - left) // 2
+
+                if intervals[mid][0] <= target <= intervals[mid][1]:
+                    return mid if cond else mid + 1
+                elif intervals[mid][0] > target:
+                    right = mid - 1
+                elif intervals[mid][1] < target:
+                    left = mid + 1
+            
+            return left
+        
+        start = binary_search(low, True)
+        end = binary_search(high, False)
+
+        return intervals[:start] + [newInterval if start == end else [min(low, intervals[start][0]), max(high, intervals[end-1][1])]] + intervals[end:]

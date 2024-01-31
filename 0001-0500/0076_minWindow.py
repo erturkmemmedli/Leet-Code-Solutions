@@ -55,3 +55,55 @@ class Solution1:
                         frequency[s[left]] += 1
                     left += 1
         return s[startIndex : startIndex + (minLength if minLength != float("inf") else 0)]
+
+# Alternative solution
+
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        if len(s) < len(t):
+            return ""
+
+        hashmap = {}
+
+        for char in t:
+            hashmap[char] = hashmap.get(char, 0) + 1
+        
+        start = None
+        end = 0
+        minimum = float('inf')
+        result = ""
+
+        while end < len(s):
+            if s[end] in hashmap:
+                if start == None:
+                    start = end
+
+                hashmap[s[end]] -= 1
+
+                if all(val <= 0 for val in hashmap.values()):
+                    if minimum > end - start + 1:
+                        minimum = end - start + 1
+                        result = s[start : end + 1]
+
+                    flag = False
+
+                    while start < len(s):
+                        if s[start] in hashmap and not flag:
+                            hashmap[s[start]] += 1
+
+                            if hashmap[s[start]] > 0:
+                                flag = True
+
+                        elif s[start] in hashmap and flag:
+                            break
+
+                        start += 1
+
+                        if all(val <= 0 for val in hashmap.values()):
+                            if minimum > end - start + 1:
+                                minimum = end - start + 1
+                                result = s[start : end + 1]
+            
+            end += 1
+        
+        return result

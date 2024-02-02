@@ -42,3 +42,31 @@ class Solution:
             max_area = max(max_area, stack[-1][0] * stack[-1][1])
             
         return max_area
+
+# Alternative solution
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        stack = [[-float('inf'), 0]]
+        max_area = 0
+
+        for height in heights:
+            width = 0
+            h = stack[-1][0]
+
+            while stack[-1][0] > height:
+                h, w = stack.pop()
+                width += w
+                max_area = max(max_area, h * width)
+
+            max_area = max(max_area, height * (width + 1))
+            stack.append([height, width + 1])
+        
+        width = 0
+
+        while len(stack) > 1:
+            h, w = stack.pop()
+            width += w
+            max_area = max(max_area, h * width)
+        
+        return max_area

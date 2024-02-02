@@ -64,3 +64,22 @@ class Solution:
                     break
                 
         return dp[0] == 1
+
+# Alternative solution
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        seen = {s}
+        wordDict = set(wordDict)
+
+        def dp(s):
+            if not s:
+                return True
+
+            for i in range(len(s)):
+                if s[:i+1] in wordDict and s[i+1:] not in seen:
+                    seen.add(s[i+1:])
+                    if dp(s[i+1:]):
+                        return True
+            
+        return dp(s)

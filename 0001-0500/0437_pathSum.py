@@ -73,3 +73,24 @@ class Solution:
             if newNum == target:
                 self.total += rightDict[num]
         return newDict
+
+# Alternative solution
+
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
+        self.count = 0
+        memo = defaultdict(int, {0: 1})
+
+        def dfs(root, curr):
+            if not root:
+                return
+
+            curr += root.val
+            self.count += memo[curr - targetSum]
+            memo[curr] += 1
+            dfs(root.left, curr)
+            dfs(root.right, curr)
+            memo[curr] -= 1
+
+        dfs(root, 0)
+        return self.count

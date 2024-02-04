@@ -60,3 +60,24 @@ class Solution:
             i += 1
 
         return medians
+
+# Alternative solution
+
+from sortedcontainers import SortedList
+
+class Solution:
+    def medianSlidingWindow(self, nums: List[int], k: int) -> List[float]:
+        window = SortedList()
+        answer = []
+
+        for i in range(k):
+            window.add(nums[i])
+
+        answer.append(window[k//2] if k & 1 else( window[k//2 - 1] + window[k//2]) / 2)
+
+        for i in range(k, len(nums)):
+            window.remove(nums[i-k])
+            window.add(nums[i])
+            answer.append(window[k//2] if k & 1 else( window[k//2 - 1] + window[k//2]) / 2)
+        
+        return answer

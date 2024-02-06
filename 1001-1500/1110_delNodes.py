@@ -45,3 +45,39 @@ class Solution:
                 else:
                     self.dfs(to_delete, node.right)
         return node
+
+# Alternative solution
+
+class Solution:
+    def delNodes(self, root: Optional[TreeNode], to_delete: List[int]) -> List[TreeNode]:
+        to_delete = set(to_delete)
+        candidates = deque([(root, True)])
+        output = []
+
+        while candidates:
+            node, addable = candidates.popleft()
+
+            if node.val in to_delete:
+                if node.left:
+                    candidates.append((node.left, True))
+                if node.right:
+                    candidates.append((node.right, True))
+
+            else:
+                if addable:
+                    output.append(node)
+
+                if node.left:
+                    if node.left.val in to_delete:
+                        candidates.append((node.left, True))
+                        node.left = None
+                    else:
+                        candidates.append((node.left, False))
+                if node.right:
+                    if node.right.val in to_delete:
+                        candidates.append((node.right, True))
+                        node.right = None
+                    else:
+                        candidates.append((node.right, False))
+
+        return output

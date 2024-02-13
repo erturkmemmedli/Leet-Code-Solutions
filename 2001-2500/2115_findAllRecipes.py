@@ -23,3 +23,33 @@ class Solution:
                         queue.append(ingredient)
         
         return output
+
+# Alternative solution
+
+class Solution:
+    def findAllRecipes(self, recipes: List[str], ingredients: List[List[str]], supplies: List[str]) -> List[str]:
+        # construct directed graph, direction from ingredients to recipes
+        # construct indegree to determine whether recipe is reached
+        graph = defaultdict(list)
+        indegree = defaultdict(int)
+
+        for i, recipe in enumerate(recipes):
+            for ingredient in ingredients[i]:
+                graph[ingredient].append(recipe)
+                indegree[recipe] += 1
+
+        queue = deque(supplies)
+        result_list = []
+
+        while queue:
+            supply = queue.popleft()
+
+            if supply in graph:
+                for recipe in graph[supply]:
+                    indegree[recipe] -= 1
+
+                    if indegree[recipe] == 0:
+                        result_list.append(recipe)
+                        queue.append(recipe)
+
+        return result_list

@@ -10,3 +10,20 @@ class Solution:
                 y_prev = y
                 continue
         return chain_length
+
+# Alternative solution
+
+class Solution:
+    def findLongestChain(self, pairs: List[List[int]]) -> int:
+        pairs.sort()
+        stack = []
+
+        for pair in pairs:
+            i = bisect_left(stack, pair[0])
+
+            if i == len(stack):
+                stack.append(pair[1])
+            else:
+                stack[i] = min(stack[i], pair[1])
+
+        return len(stack)

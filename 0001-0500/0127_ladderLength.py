@@ -122,3 +122,36 @@ class Solution:
             path_length += 1
 
         return 0
+
+# Alternative solution
+
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        graph = set(wordList)
+
+        if endWord not in graph: return 0
+
+        level = {beginWord}
+        length = 0
+
+        while level:
+            graph -= level
+            length += 1
+
+            if endWord in level: break
+
+            new_level = set()
+
+            for word in level:
+                for i in range(len(word)):
+                    for char in string.ascii_lowercase:
+                        new_word = word[:i] + char + word[i+1:]
+
+                        if new_word in graph:
+                            new_level.add(new_word)
+                        
+            level = new_level
+        
+        if endWord not in new_level: return 0
+        
+        return length

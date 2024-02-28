@@ -94,3 +94,71 @@ class Twitter:
 
     def unfollow(self, followerId: int, followeeId: int) -> None:
         self.userFollowMap[followerId].discard(followeeId)
+
+# Alternative solution
+
+class ListNode:
+    def __init__(self, tweet_id, time, prev=None, next=None):
+        self.tweet_id = tweet_id
+        self.time = time
+        self.prev = prev
+        self.next = next
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def insert(self, node):
+        if not self.head:
+            self.head = node
+            self.tail = self.head
+        else:
+            self.tail.next = node
+            node.prev = self.tail
+            self.tail = self.tail.next
+
+
+class Twitter:
+    def __init__(self):
+        self.follow_map = defaultdict(set)
+        self.user_tweet_map = defaultdict(LinkedList)
+        self.timestamp = 0
+
+    def postTweet(self, userId: int, tweetId: int) -> None:
+        node = ListNode(tweetId, self.timestamp)
+        self.user_tweet_map[userId].insert(node)
+        self.timestamp += 1
+        self.follow_map[userId].add(userId)
+
+    def getNewsFeed(self, userId: int) -> List[int]:
+        print(self.user_tweet_map)
+        print(self.follow_map)
+        heap = []
+        output = []
+
+        if userId not in self.follow_map:
+            return []
+
+        for user in self.follow_map[userId]:
+            if user in self.user_tweet_map:
+                node = self.user_tweet_map[user].tail
+                time = node.time
+                heappush(heap, (-time, node))
+        
+        while heap and len(output) < 10:
+            _, node = heappop(heap)
+            id = node.tweet_id
+            if node.prev:
+                time = node.prev.time
+                heappush(heap, (-time, node.prev))
+            output.append(id)
+        
+        return output
+
+    def follow(self, followerId: int, followeeId: int) -> None:
+        self.follow_map[followerId].add(followeeId)
+
+    def unfollow(self, followerId: int, followeeId: int) -> None:
+        self.follow_map[followerId].discard(followeeId)

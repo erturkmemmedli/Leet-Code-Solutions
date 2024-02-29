@@ -163,3 +163,110 @@ class Codec3:
             else:
                 levelorder.popleft()
         return root
+
+# Alternative solution
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class BST:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, root, val):
+        if not root:
+            return TreeNode(val)
+
+        elif val < root.val:
+            root.left = self.insert(root.left, val)
+
+        elif val > root.val:
+            root.right = self.insert(root.right, val)
+
+        return root
+
+
+class Codec:
+
+    def serialize(self, root: Optional[TreeNode]) -> str:
+        """Encodes a tree to a single string.
+        """
+        if not root:
+            return ""
+
+        tree_nodes = [str(root.val)]
+        queue = deque([root])
+
+        while queue:
+            node = queue.popleft()
+
+            if node.left:
+                queue.append(node.left)
+                tree_nodes.append(str(node.left.val))
+            if node.right:
+                queue.append(node.right)
+                tree_nodes.append(str(node.right.val))
+
+        return " ".join(tree_nodes)
+
+    def deserialize(self, data: str) -> Optional[TreeNode]:
+        """Decodes your encoded data to tree.
+        """
+        if not data:
+            return
+
+        tree = BST()
+        root = tree.root
+
+        for val in data.split():
+            root = tree.insert(root, int(val))
+        
+        return root
+
+# Alternative solution
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Codec:
+    def serialize(self, root: Optional[TreeNode]) -> str:
+        """Encodes a tree to a single string.
+        """
+        string = []
+
+        def dfs(node):
+            if not node: return
+            string.append(str(node.val))
+            dfs(node.left)
+            dfs(node.right)
+        
+        dfs(root)
+        return '*'.join(string)
+
+    def deserialize(self, data: str) -> Optional[TreeNode]:
+        """Decodes your encoded data to tree.
+        """
+        data = data.split('*')
+        data = list(map(lambda x: int(x), data)) if data[0] else []
+        
+        def dfs(left, right):
+            if left >= right:
+                return
+                
+            root = TreeNode(data[left])
+            idx = bisect_left(data, data[left], lo = left + 1, hi = right)
+
+            root.left = dfs(left + 1, idx)
+            root.right = dfs(idx, right)
+
+            return root
+
+        return dfs(0, len(data))

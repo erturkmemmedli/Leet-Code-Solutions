@@ -58,3 +58,53 @@ class Solution:
                     result = [a, b]
 
             return result
+
+# Alternative solution
+
+class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+
+    def find(self, a):
+        while a != self.parent[a]:
+            a = self.parent[a]
+        return a
+    
+    def union(self, a, b):
+        ra = self.find(a)
+        rb = self.find(b)
+        if ra != rb:
+            if self.rank[ra] < self.rank[rb]:
+                self.parent[ra] = rb
+            elif self.rank[ra] == self.rank[rb]:
+                self.parent[rb] = ra
+                self.rank[ra] += 1
+            else:
+                self.parent[rb] = ra
+            return True
+        return False
+
+class Solution:
+    def findRedundantDirectedConnection(self, edges: List[List[int]]) -> List[int]:
+        n = len(edges)
+        indegree = {i : [] for i in range(n)}
+
+        problems = []
+
+        for a, b in edges:
+            indegree[b - 1].append([a, b])
+            if len(indegree[b - 1]) == 2:
+                problems.extend(indegree[b - 1])
+                break
+
+        uf = UnionFind(n)
+
+        for a, b in edges:
+            if [a, b] not in problems:
+                if not uf.union(a - 1, b - 1):
+                    return [a, b]
+
+        for a, b in problems:
+            if not uf.union(a - 1, b - 1):
+                return [a, b]

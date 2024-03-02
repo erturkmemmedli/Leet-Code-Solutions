@@ -51,3 +51,27 @@ class Solution1:
                             self.color[neighbor] = 1 # if node is 2 - Black, neigbor is 1 - Red
                         queue.append(neighbor)
         return True
+
+# Alternative solution
+
+class Solution:
+    def isBipartite(self, graph: List[List[int]]) -> bool:
+        n = len(graph)
+        color = [None] * n
+
+        for i in range(len(graph)):
+            if color[i] == None:
+                color[i] = 0
+                queue = deque([i])
+
+                while queue:
+                    node = queue.popleft()
+
+                    for neighbor in graph[node]:
+                        if color[neighbor] == color[node]:
+                            return False
+                        if color[neighbor] == None:
+                            color[neighbor] = color[node] ^ 1
+                            queue.append(neighbor)
+                
+        return True

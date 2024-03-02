@@ -101,3 +101,35 @@ class Solution1:
                 stack[-1].right = node
             stack.append(node)
         return stack[0]
+
+# Alternative solution
+
+class Solution:
+    def recoverFromPreorder(self, traversal: str) -> Optional[TreeNode]:
+        hashmap = defaultdict(list)
+        val = ""
+        depth = 0
+
+        def build_tree(val, depth):
+            val = int(val)
+            node = TreeNode(val)
+            hashmap[depth].append(node)
+            if depth - 1 in hashmap:
+                if not hashmap[depth - 1][-1].left:
+                    hashmap[depth - 1][-1].left = node
+                else:
+                    hashmap[depth - 1][-1].right = node
+        
+        for i, char in enumerate(traversal):
+            if char != '-':
+                val += char
+                if i == len(traversal) - 1:
+                    build_tree(val, depth)
+            else:
+                if val:
+                    build_tree(val, depth)
+                    val = ""
+                    depth = 0
+                depth += 1
+
+        return hashmap[0][0]

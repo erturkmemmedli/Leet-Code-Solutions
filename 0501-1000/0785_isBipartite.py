@@ -75,3 +75,31 @@ class Solution:
                             queue.append(neighbor)
                 
         return True
+
+# Alternative solution
+
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        graph = {i : [] for i in range(n)}
+        time_distance = [float('inf')] * n
+        
+        for u, v, w in times:
+            graph[u - 1].append((v - 1, w))
+        
+        heap = [(0, k - 1)]
+        time_distance[k - 1] = 0
+        visited = set()
+        
+        while heap:
+            time, node = heappop(heap)
+            visited.add(node)
+
+            if len(visited) == n:
+                return time
+            
+            for neighbor, duration in graph[node]:
+                if time_distance[neighbor] > time + duration:
+                    time_distance[neighbor] = time + duration
+                    heappush(heap, (time + duration, neighbor))
+
+        return -1

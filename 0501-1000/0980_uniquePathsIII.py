@@ -62,3 +62,38 @@ class Solution:
                 self.dfs(grid, m, n, row, col, count + 1)
 
         grid[i][j] = temp
+
+# Alternative solution
+
+class Solution:
+    def uniquePathsIII(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        src = None
+        mask = 0
+        memo = {}
+
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    src = (i, j)
+                if grid[i][j] in [-1, 1]:
+                    mask ^= 1 << (i * n + j)
+                
+        def dp(r, c, mask):
+            if mask == (1 << m * n) - 1 and grid[r][c] == 2:
+                return 1
+
+            if (r, c, mask) in memo:
+                return memo[(r, c, mask)]
+
+            memo[(r, c, mask)] = 0
+
+            for row, col in (r-1, c), (r, c-1), (r+1, c), (r, c+1):
+                if m > row >= 0 <= col < n and grid[row][col] != -1:
+                    new_mask = mask ^ (1 << (row * n + col))
+                    if not mask & (1 << (row * n + col)):
+                        memo[(r, c, mask)] += dp(row, col, new_mask)
+
+            return memo[(r, c, mask)]
+
+        return dp(src[0], src[1], mask)

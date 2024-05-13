@@ -31,3 +31,21 @@ class Solution1:
             if c[i][0] - c[i-1][0] == 1:
                 out = max(out, c[i][1] + c[i-1][1])
         return out
+
+# Alternative solution
+
+class Solution:
+    def findLHS(self, nums: List[int]) -> int:
+        num_map = {}
+        length = 0
+
+        num_map = Counter(nums)
+            
+        for key in sorted(num_map.keys()):
+            if key - 1 in num_map:
+                a = num_map[key]
+                b = num_map[key - 1]
+
+                length = max(length, a + b)
+        
+        return length

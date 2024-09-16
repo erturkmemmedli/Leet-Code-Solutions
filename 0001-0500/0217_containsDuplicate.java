@@ -8,3 +8,12 @@ class Solution {
         return false;
     }
 }
+
+// Alternative solution
+
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        HashSet<Integer> set = Arrays.stream(nums).boxed().collect(Collectors.toCollection(HashSet::new));
+        return nums.length != set.size();
+    }
+}

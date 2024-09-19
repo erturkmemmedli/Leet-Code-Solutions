@@ -40,3 +40,71 @@ class Solution {
         return output;
     }
 }
+
+// Alternative solution
+
+class TrieNode {
+    HashMap<Character, TrieNode> children;
+    List<String> suggestions;
+    boolean isEnd;
+
+    public TrieNode() {
+        this.children = new HashMap<>();
+        this.suggestions = new ArrayList<>();
+        this.isEnd = false;
+    }
+}
+
+
+class Trie {
+    TrieNode root;
+
+    public Trie() {
+        this.root = new TrieNode();
+    }
+    
+    public void insert(String word) {
+        TrieNode node = this.root;
+
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            if (!node.children.containsKey(c)) {
+                node.children.put(c, new TrieNode());
+            }
+            node = node.children.get(c);
+            if (node.suggestions.size() < 3) {
+                node.suggestions.add(word);
+            }
+        }
+
+        node.isEnd = true;
+    }
+    
+}
+
+class Solution {
+    public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+        Arrays.sort(products);
+        Trie trie = new Trie();
+        
+        for (String product: products) {
+            trie.insert(product);
+        }
+
+        List<List<String>> suggestions = new ArrayList<>();
+        TrieNode node = trie.root;
+
+        for (int i = 0; i < searchWord.length(); i++) {
+            char c = searchWord.charAt(i);
+            if (node != null && node.children.containsKey(c)) {
+                node = node.children.get(c);
+                suggestions.add(node.suggestions);
+            } else {
+                node = null;
+                suggestions.add(new ArrayList<>());
+            }
+        }
+
+        return suggestions;
+    }
+}

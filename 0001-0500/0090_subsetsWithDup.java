@@ -17,10 +17,9 @@ class Solution {
             if (i > index && nums[i] == nums[i - 1]) {
                 continue;
             }
-            List<Integer> newPath = new ArrayList<>(path);
-            newPath.add(nums[i]);
-            backtrack(nums, output, newPath, i + 1);
-            newPath.remove(newPath.size() - 1);
+            path.add(nums[i]);
+            backtrack(nums, output, path, i + 1);
+            path.remove(path.size() - 1);
         }
     }
 }

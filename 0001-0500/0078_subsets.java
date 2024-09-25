@@ -13,10 +13,9 @@ class Solution {
         }
 
         for (int i = index; i < nums.length; i++) {
-            List<Integer> newPath = new ArrayList<>(path);
-            newPath.add(nums[i]);
-            backtrack(nums, output, newPath, i + 1);
-            newPath.remove(newPath.size() - 1); 
+            path.add(nums[i]);
+            backtrack(nums, output, path, i + 1);
+            path.remove(path.size() - 1); 
         }
     }
 }

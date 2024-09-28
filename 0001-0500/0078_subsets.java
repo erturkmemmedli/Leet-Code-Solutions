@@ -19,3 +19,23 @@ class Solution {
         }
     }
 }
+
+// Alternative solution
+
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> output = new ArrayList<>();
+        output.add(new ArrayList<>());
+
+        for (int num: nums) {
+            int n = output.size();
+            for (int i = 0; i < n; i++) {
+                List<Integer> newList = new ArrayList<>(output.get(i));
+                newList.add(num);
+                output.add(newList);
+            }
+        }
+
+        return output;
+    }
+}

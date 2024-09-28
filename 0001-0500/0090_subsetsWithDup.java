@@ -23,3 +23,32 @@ class Solution {
         }
     }
 }
+
+// Alternative solution
+
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> output = new ArrayList<>();
+        output.add(new ArrayList<>());
+        int n = nums.length;
+        int end = 0;
+
+        for (int i = 0; i < n; i++) {
+            int start = 0;
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                start = end + 1;
+            }
+            int k = output.size();
+            end = k - 1;
+
+            for (int j = start; j < end + 1; j++) {
+                List<Integer> list = new ArrayList<>(output.get(j));
+                list.add(nums[i]);
+                output.add(list);
+            }
+        }
+
+        return output;
+    }
+}

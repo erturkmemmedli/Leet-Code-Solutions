@@ -29,6 +29,6 @@ def queries_stats(queries: pd.DataFrame) -> pd.DataFrame:
         'query_name': k,
         'quality': round(v['quality'] / v['count'], 2),
         'poor_query_percentage': round(v['poor_query_count'] / v['count'] * 100, 2)
-        } for k, v in query_map.items())
+    } for k, v in query_map.items())
 
     return df

@@ -1,3 +1,5 @@
+import java.math.BigInteger;
+
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -8,6 +10,7 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+
 class Solution {
     public ListNode doubleIt(ListNode head) {
         StringBuilder numStr = new StringBuilder();
@@ -18,9 +21,9 @@ class Solution {
             temp = temp.next;
         }
 
-        long num = Long.valueOf(numStr.toString());
-        num *= 2;
-        String doubledNum = Long.toString(num);
+        BigInteger num = new BigInteger(numStr.toString());
+        num = num.multiply(BigInteger.valueOf(2));
+        String doubledNum = num.toString();
         
         ListNode dummy = new ListNode();
         ListNode curr = dummy;

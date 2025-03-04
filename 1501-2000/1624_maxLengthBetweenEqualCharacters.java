@@ -13,8 +13,8 @@ class Solution {
 
         for (Map.Entry<Character, List<Integer>> entry: map.entrySet()) {
             List<Integer> list = entry.getValue();
-            for (int i = 1; i < list.size(); i++) {
-                maxRange = Math.max(maxRange, list.get(i) - list.get(i - 1) - 1);
+            if (list.size() > 1) {
+                maxRange = Math.max(maxRange, list.get(list.size() - 1) - list.get(0) - 1);
             }
         }
 

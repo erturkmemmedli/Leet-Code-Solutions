@@ -15,6 +15,8 @@ class Solution:
             else:
                 primes = primes[i:]
                 break
+        else:
+            primes = []
 
         if len(primes) < 2:
             return [-1, -1]

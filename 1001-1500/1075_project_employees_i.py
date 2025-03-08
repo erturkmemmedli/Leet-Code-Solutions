@@ -12,5 +12,5 @@ def project_employees_i(project: pd.DataFrame, employee: pd.DataFrame) -> pd.Dat
     df = pd.merge(project, employee, on='employee_id', how='left')
     df_final = df.groupby('project_id')[['project_id', 'experience_years']].agg('mean')
     df_final.rename(columns={'experience_years': 'average_years'}, inplace=True)
-    df_final['average_years'] = df_final['average_years'].apply(lambda x: round(x, 2))
+    df_final['average_years'] = df_final['average_years'].round(2)
     return df_final

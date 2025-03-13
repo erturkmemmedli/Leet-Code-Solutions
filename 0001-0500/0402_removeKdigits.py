@@ -67,3 +67,43 @@ class Solution:
             
         result = num[i:]
         return result if result else "0"
+
+# Alternative solution
+
+sys.set_int_max_str_digits(10 ** 5)
+
+class Solution:
+    def removeKdigits(self, num: str, k: int) -> str:
+        stack = []
+
+        for i, digit in enumerate(num):
+            while stack and stack[-1] > digit:
+                stack.pop()
+                k -= 1
+
+                if k == 0:
+                    return str(int("".join(stack) + num[i:]))
+            
+            stack.append(digit)
+        
+        return str(int("".join(stack)[:-k])) if stack and len(stack) != k else "0"
+
+# Alternative solution
+
+class Solution:
+    def removeKdigits(self, num: str, k: int) -> str:
+        stack = deque()
+
+        for i in range(len(num)):
+            while k and stack and stack[-1] > num[i]:
+                stack.pop()
+                k -= 1
+
+            stack.append(num[i])
+
+        for _ in range(k): stack.pop()
+
+        while len(stack) > 1 and stack[0] == '0':
+            stack.popleft()
+
+        return "".join(stack) or '0'

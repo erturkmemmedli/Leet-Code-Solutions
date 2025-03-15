@@ -27,3 +27,40 @@ class Solution:
         if remain:
             result += '1'
         return result[::-1]
+
+# Alternative solution
+
+class Solution:
+    def addStrings(self, num1: str, num2: str) -> str:
+        i = len(num1) - 1
+        j = len(num2) - 1
+        flag = False
+        result = ""
+
+        while i >= 0 and j >= 0:
+            a = ord(num1[i]) - ord('0')
+            b = ord(num2[j]) - ord('0')
+            div, mod = divmod(a + b + (1 if flag else 0), 10)
+            result += chr(mod + ord('0'))
+            flag = div == 1
+            i -= 1
+            j -= 1
+        
+        while i >= 0:
+            a = ord(num1[i]) - ord('0')
+            div, mod = divmod(a + (1 if flag else 0), 10)
+            flag = div == 1
+            result += chr(mod + ord('0'))
+            i -= 1
+           
+        while j >= 0:
+            b = ord(num2[j]) - ord('0')
+            div, mod = divmod(b + (1 if flag else 0), 10)
+            flag = div == 1
+            result += chr(mod + ord('0'))
+            j -= 1
+
+        if flag:
+            result += '1'
+
+        return result[::-1]

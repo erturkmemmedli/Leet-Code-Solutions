@@ -45,3 +45,24 @@ class Solution:
             i += 1
             
         return longest
+
+# Alternative solution
+
+class Solution:
+    def lengthOfLongestSubstringKDistinct(self, s, k):
+        window = {}
+        answer = 0
+        start = 0
+        
+        for end in range(len(s)):
+            window[s[end]] = window.get(s[end], 0) + 1
+            
+            if len(window) > k:
+                window[s[start]] -= 1
+                if window[s[start]] == 0:
+                    del window[s[start]]
+                start += 1
+                
+            answer = max(answer, end - start + 1)
+        
+        return answer

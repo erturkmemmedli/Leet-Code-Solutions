@@ -64,3 +64,21 @@ class Solution:
                         del hashmap[s[left]]
                     left += 1
         return length
+
+# Alternative solution
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        window = set()
+        start = 0
+        answer = 0
+
+        for end in range(len(s)):
+            while s[end] in window:
+                window.remove(s[start])
+                start += 1
+
+            window.add(s[end])
+            answer = max(answer, len(window))
+
+        return answer

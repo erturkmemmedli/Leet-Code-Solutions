@@ -24,3 +24,26 @@ class Solution:
                     break
             maxConfusion = max(maxConfusion, len(trueWindow), len(falseWindow))
         return maxConfusion
+
+# Alternative solution
+
+class Solution:
+    def maxConsecutiveAnswers(self, answerKey: str, k: int) -> int:
+        true = false = start = answer = 0
+
+        for end in range(len(answerKey)):
+            if answerKey[end] == 'T':
+                true += 1
+            else:
+                false += 1
+
+            while true > k and false > k:
+                if answerKey[start] == 'T':
+                    true -= 1
+                else:
+                    false -= 1
+                start += 1
+            
+            answer = max(answer, end - start + 1)
+
+        return answer

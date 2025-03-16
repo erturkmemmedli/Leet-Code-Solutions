@@ -41,3 +41,24 @@ class Solution:
             i += 1
         
         return longest
+
+# Alternative solution
+
+class Solution:
+    def lengthOfLongestSubstringTwoDistinct(self, s):
+        window = {}
+        start = 0
+        answer = 0
+        
+        for end in range(len(s)):
+            window[s[end]] = window.get(s[end], 0) + 1
+            
+            while len(window) > 2:
+                window[s[start]] -= 1
+                if window[s[start]] == 0:
+                    del window[s[start]]
+                start += 1
+                
+            answer = max(answer, end - start + 1)
+        
+        return answer

@@ -43,3 +43,34 @@ class Solution:
             self.dfs(node.left, targetSum, path + [node.left.val])
         if node.right:
             self.dfs(node.right, targetSum, path + [node.right.val])
+
+# Alternative solution
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+        output = []
+
+        def dfs(root, target, path):
+            if not root:
+                return
+
+            if not root.right and not root.left:
+                if target == root.val:
+                    path.append(root.val)
+                    output.append(path[:])
+                    path.pop()
+                return
+            
+            path.append(root.val)
+            dfs(root.left, target - root.val, path)
+            dfs(root.right, target - root.val, path)
+            path.pop()
+
+        dfs(root, targetSum, [])
+        return output

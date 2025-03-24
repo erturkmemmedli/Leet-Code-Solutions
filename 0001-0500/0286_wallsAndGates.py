@@ -136,3 +136,24 @@ class Solution:
                     queue.append((row, col))
                 
         return rooms
+
+# Alternative solution (must be tested in premium account)
+
+class Solution:
+    def wallsAndGates(self, rooms):
+        m, n = len(rooms), len(rooms[0])
+        queue = deque()
+        
+        for i in range(m):
+            for j in range(n):
+                if rooms[i][j] == 0:
+                    queue.append((i, j))
+                    
+        while queue:
+            r, c = queue.popleft()
+            
+            for row, col in (r-1, c), (r, c-1), (r+1, c), (r, c+1):
+                if m > row >= 0 <= col < n and rooms[row][col] > rooms[r][c]:
+                    rooms[row][col] = rooms[r][c] + 1
+                    queue.append((row, col))
+                    

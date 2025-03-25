@@ -60,3 +60,38 @@ class Solution:
                     board[row][col] = 'B'
                     for r, c in self.direction:
                         self.dfs(board, m, n, row + r, col + c)
+
+# Alternative solution
+
+class Solution:
+    def updateBoard(self, board: List[List[str]], click: List[int]) -> List[List[str]]:
+        m, n = len(board), len(board[0])
+        r, c = click
+
+        if board[r][c] == "M":
+            board[r][c] = "X"
+            return board
+
+        queue = deque([(r, c)])
+        visited = {(r, c)}
+
+        while queue:
+            r, c = queue.popleft()
+            mines = 0
+
+            for row, col in [r-1,c-1], [r-1,c], [r-1,c+1], [r,c-1], [r,c+1], [r+1,c-1], [r+1,c], [r+1,c+1]:
+                if m > row >= 0 <= col < n and board[row][col] == "M":
+                    mines += 1
+
+            if mines > 0:
+                board[r][c] = str(mines)
+                continue
+            
+            board[r][c] = "B"
+
+            for row, col in [r-1,c-1], [r-1,c], [r-1,c+1], [r,c-1], [r,c+1], [r+1,c-1], [r+1,c], [r+1,c+1]:
+                if m > row >= 0 <= col < n and board[row][col] == "E" and (row, col) not in visited:
+                    visited.add((row, col))
+                    queue.append((row, col))
+
+        return board

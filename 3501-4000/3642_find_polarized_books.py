@@ -21,6 +21,7 @@ reading_sessions = pd.DataFrame({
 import pandas as pd
 
 def find_polarized_books(books: pd.DataFrame, reading_sessions: pd.DataFrame) -> pd.DataFrame:
+    round2 = lambda x: round(x + 0.00001, 2)
     books['overall_count'] = 0
     books['low_count'] = 0
     books['high_count'] = 0
@@ -37,7 +38,8 @@ def find_polarized_books(books: pd.DataFrame, reading_sessions: pd.DataFrame) ->
         books.loc[books.book_id == row.book_id, 'max_rating'] = max(maximum, row.session_rating)
 
     books['rating_spread'] = books['max_rating'] - books['min_rating']
-    books['polarization_score'] = (books['low_count'] + books['high_count']) / books['overall_count']
+    polarized_count = (books['low_count'] + books['high_count'])
+    books['polarization_score'] = round2(polarized_count / books['overall_count'])
 
     df = books[
         (books['overall_count'] >= 5) &
@@ -47,7 +49,6 @@ def find_polarized_books(books: pd.DataFrame, reading_sessions: pd.DataFrame) ->
         (books['high_count'] >= 1)
     ]
     
-    df['polarization_score'] = round(df['polarization_score'], 2)
     df.drop(columns=['overall_count', 'low_count', 'high_count', 'min_rating', 'max_rating'], inplace=True)
     df.sort_values(by=['polarization_score', 'title'], ascending=[0, 0], inplace=True)
 

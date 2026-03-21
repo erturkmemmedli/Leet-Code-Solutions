@@ -80,3 +80,24 @@ class Solution:
             j += 1   
 
         return result  
+
+# Alternative solution
+
+class Solution:
+    def employee_free_time(self, schedule: '[[Interval]]') -> '[Interval]':
+        intervals = []
+        
+        for employee in schedule:
+            for interval in employee:
+                intervals.append([interval.start, interval.end])
+    
+        intervals.sort(key = lambda x: [x[0], x[1]])
+        result = []
+        last = intervals[0][1]
+        
+        for i in range(1, len(intervals)):
+            if intervals[i][0] > last:
+                result.append(Interval(last, intervals[i][0]))
+            last = max(last, intervals[i][1])
+    
+        return result

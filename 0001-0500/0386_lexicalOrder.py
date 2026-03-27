@@ -100,7 +100,7 @@ class Solution:
             elif i != 0:
                 return
 
-# Alternative solurion
+# Alternative solution
 
 class Solution:
     def lexicalOrder(self, n: int) -> List[int]:
@@ -120,3 +120,23 @@ class Solution:
                 result += self.builder((num + i) * 10, n)
 
         return result
+
+# Alternative solution
+
+class Solution:
+    def lexicalOrder(self, n: int) -> List[int]:
+        trie = []
+
+        @lru_cache
+        def build_order(curr, n):
+            if curr > n:
+                return
+
+            for i in range(curr, curr//10*10+10):
+                if i > n:
+                    break
+                trie.append(i)
+                build_order(i * 10, n)
+
+        build_order(1, n)
+        return trie

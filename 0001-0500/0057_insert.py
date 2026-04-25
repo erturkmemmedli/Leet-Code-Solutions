@@ -145,11 +145,8 @@ class Solution:
 
 class Solution:
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
-        interval_starts = [i for i, _ in intervals]
-        interval_ends = [i for _, i in intervals]
-
-        x = bisect_left(interval_starts, newInterval[0])
-        y = bisect_left(interval_ends, newInterval[1])
+        x = bisect_left(intervals, newInterval[0], key=lambda x: x[0])
+        y = bisect_left(intervals, newInterval[1], key=lambda x: x[1])
 
         if x > 0 and newInterval[0] <= intervals[x-1][1]:
             left_part = intervals[:x-1]
@@ -164,5 +161,7 @@ class Solution:
         else:
             right_part = intervals[y:]
             right = newInterval[1]
+
+        return left_part + [[left, right]] + right_part
 
         return left_part + [[left, right]] + right_part

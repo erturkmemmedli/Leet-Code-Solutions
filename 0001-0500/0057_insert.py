@@ -163,5 +163,3 @@ class Solution:
             right = newInterval[1]
 
         return left_part + [[left, right]] + right_part
-
-        return left_part + [[left, right]] + right_part

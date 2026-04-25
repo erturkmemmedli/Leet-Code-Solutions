@@ -19,3 +19,24 @@ class RLEIterator:
 # Your RLEIterator object will be instantiated and called as such:
 # obj = RLEIterator(encoding)
 # param_1 = obj.next(n)
+
+# ALternative solution
+
+class RLEIterator:
+
+    def __init__(self, encoding: List[int]):
+        self.encoding = encoding
+        self.index = 0
+
+    def next(self, n: int) -> int:
+        if self.index == len(self.encoding):
+            return -1
+        count = self.encoding[self.index] - n
+        while count < 0 and self.index < len(self.encoding):
+            self.index += 2
+            if self.index == len(self.encoding):
+                return -1
+            count += self.encoding[self.index]
+            
+        self.encoding[self.index] = count
+        return self.encoding[self.index + 1]

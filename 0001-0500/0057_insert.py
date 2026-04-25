@@ -118,3 +118,51 @@ class Solution:
         end = binary_search(high, False)
 
         return intervals[:start] + [newInterval if start == end else [min(low, intervals[start][0]), max(high, intervals[end-1][1])]] + intervals[end:]
+
+# Alternative solution
+
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        result = []
+        a, b = newInterval
+
+        for i in range(len(intervals)):
+            x, y = intervals[i]
+            if y < a:
+                result.append(intervals[i])
+            elif x > b:
+                result.append([a, b])
+                result.extend(intervals[i:])
+                break
+            else:
+                a, b = min(a, x), max(b, y)
+        else:
+            result.append([a, b])
+        
+        return result
+        
+# Alternative solution
+
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        interval_starts = [i for i, _ in intervals]
+        interval_ends = [i for _, i in intervals]
+
+        x = bisect_left(interval_starts, newInterval[0])
+        y = bisect_left(interval_ends, newInterval[1])
+
+        if x > 0 and newInterval[0] <= intervals[x-1][1]:
+            left_part = intervals[:x-1]
+            left = intervals[x-1][0]
+        else:
+            left_part = intervals[:x]
+            left = newInterval[0]
+
+        if y < len(intervals) and newInterval[1] >= intervals[y][0]:
+            right_part = intervals[y+1:]
+            right = intervals[y][1]
+        else:
+            right_part = intervals[y:]
+            right = newInterval[1]
+
+        return left_part + [[left, right]] + right_part

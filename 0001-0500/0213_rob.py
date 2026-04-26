@@ -55,3 +55,22 @@ class Solution:
             prev_1, curr_1 = curr_1, max(prev_1 + nums[i + 1], curr_1)
 
         return max(curr_0, curr_1)
+
+# Alternative solution
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+
+        def solve(numbers):
+            @lru_cache
+            def dfs(idx):
+                if idx >= len(numbers):
+                    return 0
+                a = dfs(idx + 2) + numbers[idx]
+                b = dfs(idx + 1)
+                return max(a, b)
+            return dfs(0)
+
+        return max(solve(nums[1:]), solve(nums[:-1]))

@@ -20,13 +20,17 @@ class Solution:
                     calculate(tokens)
                 stack.append([tokens, dict(dictionary)])
                 tokens = ['']
+                # print('case 1:','stack:',st,'tokens:',tokens,'dict:',d)
             elif char == ')':
                 result = calculate(tokens)
                 tokens, dictionary = stack.pop()
                 tokens[-1] += result
+                # print('case 2:','stack:',st,'tokens:',tokens,'dict:',d)
             elif char == ' ':
                 tokens.append('')
+                # print('case 3:','stack:',st,'tokens:',tokens,'dict:',d)
             else:
                 tokens[-1] += char
+                # print('case 4:','stack:',st,'tokens:',tokens,'dict:',d)
 
         return int(tokens[0])

@@ -31,3 +31,42 @@ class Solution:
             i += 1
         
         return counter.most_common()[0][0]
+
+# Alternative solution
+
+class Solution:
+    def mostBooked(self, n: int, meetings: List[List[int]]) -> int:
+        meetings.sort(key=lambda x: x[0])
+        room_counter = defaultdict(int)
+
+        room_heap = []
+        meeting_heap = []
+
+        for i in range(n):
+            heappush(room_heap, i)
+
+        for start, end in meetings:
+            while meeting_heap and meeting_heap[0][0] <= start:
+                _, r = heappop(meeting_heap)
+                heappush(room_heap, r)
+
+            if room_heap:
+                room = heappop(room_heap)
+                room_counter[room] += 1
+                heappush(meeting_heap, (end, room))
+            else:
+                m, r = heappop(meeting_heap)
+                room_counter[r] += 1
+                heappush(meeting_heap, (m + end - start, r))
+
+        max_used = 0
+        min_room = n
+        
+        for k, v in room_counter.items():
+            if v > max_used:
+                max_used = v
+                min_room = k
+            elif v == max_used:
+                min_room = min(min_room, k)
+
+        return min_room

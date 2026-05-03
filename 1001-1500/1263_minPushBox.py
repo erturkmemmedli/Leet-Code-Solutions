@@ -48,3 +48,60 @@ class Solution:
                         queue.append((distance + 1, new_box, box))
 
         return -1
+
+# Alternative solution
+
+from heapq import heappush, heappop
+
+class Solution:
+    def minPushBox(self, grid: List[List[str]]) -> int:
+        m, n = len(grid), len(grid[0])
+        directions = [-1, 0, 1, 0, -1]
+
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 'T':
+                    target_pos = (i, j)
+                if grid[i][j] == 'B':
+                    box_pos = (i, j)
+                if grid[i][j] == 'S':
+                    person_pos = (i, j)
+
+        def heuristic(row, col):
+            return abs(target_pos[0] - row) + abs(target_pos[1] - col)
+
+        def is_valid_pos(row, col):
+            return m > row >= 0 <= col < n and grid[row][col] != '#'
+
+        heap = [[heuristic(*box_pos), 0, person_pos, box_pos]]
+        visited = set()
+
+        while heap:
+            _, distance, person_pos, box_pos = heappop(heap)
+
+            if box_pos == target_pos:
+                return distance
+            
+            if (person_pos + box_pos) in visited:
+                continue
+
+            visited.add(person_pos + box_pos)
+
+            for i in range(4):
+                new_person_pos = (person_pos[0] + directions[i], person_pos[1] + directions[i + 1])
+
+                if not is_valid_pos(*new_person_pos):
+                    continue
+
+                if new_person_pos == box_pos:
+                    new_box_pos = (box_pos[0] + directions[i], box_pos[1] + directions[i + 1])
+
+                    if not is_valid_pos(*new_box_pos):
+                        continue
+
+                    new_dist = distance + 1
+                    heappush(heap, (heuristic(*new_box_pos) + new_dist, new_dist, new_person_pos, new_box_pos))
+                else:
+                    heappush(heap, (heuristic(*box_pos) + distance, distance, new_person_pos, box_pos))
+
+        return -1

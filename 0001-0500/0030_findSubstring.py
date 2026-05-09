@@ -33,3 +33,42 @@ class Solution:
                 string = ""
             
         return output
+
+# Alternative solution
+
+class Solution:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        window = Counter(words)
+        total = sum(len(w) for w in words)
+        k = len(words[0])
+        output = []
+        successful_visits = set()
+        unsuccessful_visits = set()
+        for i in range(len(s) - total + 1):
+            new_check = s[i:i+total]
+            if new_check in successful_visits:
+                output.append(i)
+                continue
+            elif new_check in successful_visits:
+                continue
+            j = i
+            temp = window.copy()
+            string = ""
+            while j < i + total:
+                while len(string) < k:
+                    string += s[j]
+                    j += 1
+                if string in temp:
+                    temp[string] -= 1
+                    if temp[string] == 0:
+                        del temp[string]
+                    if not temp:
+                        successful_visits.add(new_check)
+                        output.append(i)
+                    string = ""
+                else:
+                    string = ""
+                    unsuccessful_visits.add(new_check)
+                    break
+                string = ""
+        return output

@@ -24,3 +24,21 @@ class Solution:
         x2, y2 = pts2
         slope = (y2 - y1) / (x2 - x1)
         return slope
+
+# Alternative solution
+
+class Solution:
+    def maxPoints(self, points: List[List[int]]) -> int:
+        def calculateSlope(point1, point2):
+            x1, y1 = point1
+            x2, y2 = point2
+            return (y2 - y1) / (x2 - x1) if x2 - x1 != 0 else 'inf'
+
+        answer = 1
+        for i in range(len(points)):
+            slope_map = defaultdict(int)
+            for j in range(i + 1, len(points)):
+                slope = calculateSlope(points[i], points[j])
+                slope_map[slope] += 1
+                answer = max(answer, slope_map[slope] + 1)
+        return answer

@@ -41,3 +41,23 @@ class Solution:
                 graph[node].insert(i, candidate)
 
         return dfs("JFK", ['JFK'])
+
+# Alternative solution
+
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        tickets.sort(key=lambda x: x[1])
+        graph = defaultdict(deque)
+        order = []
+
+        for a, b in tickets:
+            graph[a].append(b)
+
+        def dfs(airport):
+            while graph[airport]:
+                departure = graph[airport].popleft()
+                dfs(departure)
+            order.append(airport)
+                                        
+        dfs('JFK')
+        return order[::-1]
